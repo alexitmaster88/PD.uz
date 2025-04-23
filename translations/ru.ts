@@ -128,6 +128,18 @@ const ru = {
   popular_courses: "Популярные курсы",
   special_offers: "Специальные предложения",
   testimonial: "Отзыв",
+
+  // Social Media Feed
+  all_platforms: "Все платформы",
+  view_more_posts: "Показать больше постов",
+
+  // Reviews
+  found_helpful: "считают это полезным",
+  helpful: "Полезно",
+  show_more_reviews: "Показать больше отзывов",
+  show_less: "Показать меньше",
+  leave_review: "Оставить отзыв",
+  write_review: "Написать отзыв",
 }
 
 export default ru

@@ -6,6 +6,7 @@ import { useLanguage } from "@/contexts/language-context"
 import { type LanguageContent, useLanguageContent } from "@/utils/language-content"
 import { Calendar, GraduationCap } from "lucide-react"
 import type { JSX } from "react"
+import Image from "next/image"
 
 const LanguageSpecificCulturalContent = () => {
   const { t } = useLanguage()
@@ -225,14 +226,10 @@ const LanguageSpecificCulturalContent = () => {
             <TabsContent key={category.id} value={category.id} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {category.items.map((item, index) => (
-                  <Card key={index}>
+                  <Card key={index} className="overflow-hidden">
                     {item.image && (
-                      <div className="aspect-video w-full overflow-hidden">
-                        <img
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="aspect-video w-full overflow-hidden relative">
+                        <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
                       </div>
                     )}
                     <CardHeader>

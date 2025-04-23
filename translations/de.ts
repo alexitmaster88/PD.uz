@@ -131,6 +131,18 @@ const de = {
   popular_courses: "Beliebte Kurse",
   special_offers: "Sonderangebote",
   testimonial: "Erfahrungsbericht",
+
+  // Social Media Feed
+  all_platforms: "Alle Plattformen",
+  view_more_posts: "Mehr Beiträge anzeigen",
+
+  // Reviews
+  found_helpful: "fanden dies hilfreich",
+  helpful: "Hilfreich",
+  show_more_reviews: "Mehr Bewertungen anzeigen",
+  show_less: "Weniger anzeigen",
+  leave_review: "Bewertung abgeben",
+  write_review: "Bewertung schreiben",
 }
 
 export default de

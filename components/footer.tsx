@@ -3,6 +3,7 @@
 import type React from "react"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Facebook, Instagram, Twitter } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 
@@ -24,7 +25,9 @@ const Footer = () => {
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4">Deutsches Sprachzentrum</h3>
+            <div className="mb-4">
+              <Image src="/ICOProfideutsch2.png" alt="Profi Deutsch Logo" width={150} height={40} className="h-auto" />
+            </div>
             <p className="text-sm text-muted-foreground mb-4">{t("about_us")}</p>
             <div className="flex space-x-4">
               <LangLink href="#" className="text-muted-foreground hover:text-foreground">
@@ -74,14 +77,14 @@ const Footer = () => {
               <p>Amir Temur Straße 107A</p>
               <p>Taschkent, Usbekistan</p>
               <p>Telefon: +998 71 123 4567</p>
-              <p>E-Mail: info@deutsch-usbekistan.uz</p>
+              <p>E-Mail: info@profideutsch.uz</p>
             </address>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
           <p>
-            &copy; {new Date().getFullYear()} Deutsches Sprachzentrum in Usbekistan. {t("all_rights_reserved")}
+            &copy; {new Date().getFullYear()} Profi Deutsch in Usbekistan. {t("all_rights_reserved")}
           </p>
         </div>
       </div>

@@ -7,8 +7,12 @@ import { LanguageProvider } from "@/contexts/language-context"
 const inter = Inter({ subsets: ["latin", "cyrillic"] })
 
 export const metadata = {
-  title: "Deutsches Sprachzentrum in Usbekistan",
+  title: "Profi Deutsch in Usbekistan",
   description: "Lernen Sie Deutsch, Usbekisch, Englisch und Russisch in unserem Sprachzentrum in Usbekistan",
+  icons: {
+    icon: "/PDico.png",
+    apple: "/PDico.png",
+  },
     generator: 'v0.dev'
 }
 
@@ -22,6 +26,7 @@ export default function RootLayout({
       <head>
         {/* Add Framer Motion */}
         <link rel="preload" href="/_next/static/chunks/framer-motion.js" as="script" />
+        <link rel="icon" href="/PDico.png" />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>

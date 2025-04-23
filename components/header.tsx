@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
@@ -29,10 +30,14 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <LangLink href="/" className="flex items-center space-x-2">
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight">Deutsches Sprachzentrum</span>
-              <span className="text-xs text-muted-foreground">in Usbekistan</span>
-            </div>
+            <Image
+              src="/ICOProfideutsch2.png"
+              alt="Profi Deutsch Logo"
+              width={180}
+              height={50}
+              className="h-auto"
+              priority
+            />
           </LangLink>
         </div>
 

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 import { type LanguageContent, useLanguageContent } from "@/utils/language-content"
+import Image from "next/image"
 
 const LanguageSpecificCourses = () => {
   const [courseLanguage, setCourseLanguage] = useState("deutsch")
@@ -36,7 +37,7 @@ const LanguageSpecificCourses = () => {
           description: "Melden Sie sich 4 Wochen im Voraus an und erhalten Sie 15% Rabatt",
           price: "2.125.000 UZS",
           discount: "2.500.000 UZS",
-          image: "/images/course-german.png",
+          image: "/images/german-classroom-1.png",
         },
       ],
     },
@@ -51,7 +52,7 @@ const LanguageSpecificCourses = () => {
           description: "Register 4 weeks in advance and get 15% off",
           price: "2,125,000 UZS",
           discount: "2,500,000 UZS",
-          image: "/images/course-english.png",
+          image: "/images/german-classroom-2.png",
         },
       ],
     },
@@ -66,7 +67,7 @@ const LanguageSpecificCourses = () => {
           description: "Зарегистрируйтесь за 4 недели и получите скидку 15%",
           price: "2 125 000 UZS",
           discount: "2 500 000 UZS",
-          image: "/images/course-russian.png",
+          image: "/images/students-1.png",
         },
       ],
     },
@@ -81,13 +82,21 @@ const LanguageSpecificCourses = () => {
           description: "4 hafta oldin ro'yxatdan o'ting va 15% chegirma oling",
           price: "2,125,000 UZS",
           discount: "2,500,000 UZS",
-          image: "/images/course-uzbek.png",
+          image: "/images/students-2.png",
         },
       ],
     },
   }
 
   const currentCourses = useLanguageContent(languageSpecificCourses)
+
+  // Course images by language
+  const courseImages = {
+    deutsch: "/images/course-german.png",
+    usbekisch: "/images/course-uzbek.png",
+    englisch: "/images/course-english.png",
+    russisch: "/images/course-russian.png",
+  }
 
   // Base course data (same structure as before)
   const courseData = {
@@ -184,10 +193,20 @@ const LanguageSpecificCourses = () => {
           <h3 className="text-xl font-semibold mb-4">{t("popular_courses")}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {currentCourses.popularCourses.map((course, index) => (
-              <Card key={index} className="bg-primary/5 border-primary/20">
-                <CardContent className="pt-6">
-                  <p className="font-medium">{course}</p>
-                </CardContent>
+              <Card key={index} className="bg-primary/5 border-primary/20 overflow-hidden">
+                <div className="relative h-32">
+                  <Image
+                    src={`/images/language-learning-${(index % 2) + 1}.png`}
+                    alt={course}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                    <div className="p-4">
+                      <p className="font-medium text-white">{course}</p>
+                    </div>
+                  </div>
+                </div>
               </Card>
             ))}
           </div>
@@ -242,6 +261,20 @@ const LanguageSpecificCourses = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {courseData[lang].map((course, index) => (
                   <Card key={index} className="flex flex-col">
+                    <div className="relative h-40 w-full">
+                      <Image
+                        src={courseImages[lang] || "/images/language-learning-1.png"}
+                        alt={`${lang} ${course.level}`}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                        <div className="p-4">
+                          <h3 className="text-xl font-bold text-white">{course.level}</h3>
+                          <p className="text-sm text-white/80">{course.title}</p>
+                        </div>
+                      </div>
+                    </div>
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>

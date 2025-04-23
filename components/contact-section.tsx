@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card"
 import { Phone, Mail, Clock, CheckCircle } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
+import Image from "next/image"
 
 const ContactSection = () => {
   const { t } = useLanguage()
@@ -55,8 +56,14 @@ const ContactSection = () => {
   }
 
   return (
-    <section id="kontakt" className="py-16 md:py-24 bg-secondary/50">
-      <div className="container">
+    <section id="kontakt" className="py-16 md:py-24 bg-secondary/50 relative overflow-hidden">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0 z-0">
+        <Image src="/images/german-culture-2.png" alt="Contact background" fill className="object-cover opacity-10" />
+        <div className="absolute inset-0 bg-secondary/70"></div>
+      </div>
+
+      <div className="container relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("contact_us_title")}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("contact_questions")}</p>
@@ -209,8 +216,8 @@ const ContactSection = () => {
                     </div>
                     <div>
                       <h4 className="font-bold mb-1">{t("email")}</h4>
-                      <p className="text-muted-foreground">info@deutsch-usbekistan.uz</p>
-                      <p className="text-muted-foreground">kurse@deutsch-usbekistan.uz</p>
+                      <p className="text-muted-foreground">info@profideutsch.uz</p>
+                      <p className="text-muted-foreground">kurse@profideutsch.uz</p>
                     </div>
                   </div>
                 </CardContent>

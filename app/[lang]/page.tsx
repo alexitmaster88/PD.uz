@@ -10,6 +10,8 @@ import YouTubePlayer from "@/components/youtube-player"
 import PhotoGallery from "@/components/photo-gallery"
 import LanguageSpecificTestimonials from "@/components/language-specific-testimonials"
 import LanguageSpecificCulturalContent from "@/components/language-specific-cultural-content"
+import SocialMediaFeed from "@/components/social-media-feed"
+import LanguageSpecificReviews from "@/components/language-specific-reviews"
 
 export default function Home() {
   const { t } = useLanguage()
@@ -68,9 +70,11 @@ export default function Home() {
         </div>
       </section>
       <LanguageSpecificCourses />
+      <SocialMediaFeed />
       <LanguageSpecificCulturalContent />
       <MapSection />
       <BenefitsSection />
+      <LanguageSpecificReviews />
       <ContactSection />
     </>
   )

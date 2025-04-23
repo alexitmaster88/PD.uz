@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 import { useLanguage } from "@/contexts/language-context"
 import { AlertCircle, X } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -35,10 +36,10 @@ const LanguageSpecificHero = () => {
 
   // Language-specific hero images
   const heroImages: LanguageContent<string> = {
-    de: "/images/hero-de.png", // German-themed image showing Brandenburg Gate with German language students
-    en: "/images/hero-en.png", // English-themed image showing international students learning German
-    ru: "/images/hero-ru.png", // Russian-themed image showing Russian speakers in a German class
-    uz: "/images/hero-uz.png", // Uzbek-themed image showing Uzbek students with German cultural elements
+    de: "/images/german-classroom-1.png",
+    en: "/images/german-classroom-2.png",
+    ru: "/images/uzbek-german-1.png",
+    uz: "/images/uzbek-german-2.png",
   }
 
   // Language-specific hero content
@@ -94,16 +95,26 @@ const LanguageSpecificHero = () => {
 
   return (
     <section className="relative">
-      {/* Background with language-specific colors */}
-      <div className={`absolute inset-0 ${currentBackground}`} />
+      {/* Background with language-specific colors and image */}
+      <div className={`absolute inset-0 ${currentBackground} opacity-70`} />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
+      <div className="absolute inset-0 overflow-hidden">
+        <Image
+          src={currentHeroContent.image || "/placeholder.svg"}
+          alt={currentHeroContent.imageAlt}
+          fill
+          className="object-cover opacity-20"
+          priority
+        />
+      </div>
 
       <div className="container relative py-20 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-6"
+            className="space-y-6 max-w-3xl mx-auto"
           >
             {/* Language detection alert */}
             <AnimatePresence>
@@ -113,7 +124,7 @@ const LanguageSpecificHero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className="w-full max-w-lg mb-6"
+                  className="w-full max-w-lg mx-auto mb-6"
                 >
                   <Alert className="bg-primary/10 border-primary/20">
                     <AlertCircle className="h-4 w-4 text-primary" />
@@ -149,7 +160,7 @@ const LanguageSpecificHero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="flex flex-wrap gap-4 pt-4"
+              className="flex flex-wrap justify-center gap-4 pt-4"
             >
               <Button size="lg" asChild>
                 <LangLink href="#kurse">{currentHeroContent.cta}</LangLink>
@@ -164,7 +175,7 @@ const LanguageSpecificHero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}
-              className="flex gap-6 pt-8"
+              className="flex justify-center gap-6 pt-8"
             >
               {["de", "uz", "en", "ru"].map((lang, index) => (
                 <motion.button
@@ -186,17 +197,11 @@ const LanguageSpecificHero = () => {
                     className="language-flag"
                     whileHover={{ rotate: [0, -5, 5, -5, 0], transition: { duration: 0.5 } }}
                   >
-                    <div
-                      className={
-                        lang === "de"
-                          ? "w-full h-full bg-gradient-to-b from-black via-[#DD0000] to-[#FFCE00]"
-                          : lang === "uz"
-                            ? "w-full h-full bg-gradient-to-b from-[#0099B5] via-white to-[#1EB53A]"
-                            : lang === "en"
-                              ? "w-full h-full bg-[#012169]"
-                              : "w-full h-full bg-gradient-to-b from-white via-[#0039A6] to-[#D52B1E]"
-                      }
-                    ></div>
+                    <img
+                      src={`/images/flag-${lang}.png`}
+                      alt={`${lang === "de" ? "German" : lang === "uz" ? "Uzbek" : lang === "en" ? "English" : "Russian"} flag`}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
                   </motion.div>
                   <span className="text-sm mt-1">
                     {lang === "de" ? "Deutsch" : lang === "uz" ? "O'zbekcha" : lang === "en" ? "English" : "Русский"}
@@ -204,23 +209,6 @@ const LanguageSpecificHero = () => {
                 </motion.button>
               ))}
             </motion.div>
-          </motion.div>
-
-          {/* Hero image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="relative hidden lg:block"
-          >
-            <div className="relative overflow-hidden rounded-lg shadow-xl">
-              <img
-                src={currentHeroContent.image || "/placeholder.svg"}
-                alt={currentHeroContent.imageAlt}
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay" />
-            </div>
           </motion.div>
         </div>
       </div>

@@ -129,6 +129,18 @@ const uz = {
   popular_courses: "Mashhur kurslar",
   special_offers: "Maxsus takliflar",
   testimonial: "Fikr-mulohaza",
+
+  // Social Media Feed
+  all_platforms: "Barcha platformalar",
+  view_more_posts: "Ko'proq postlarni ko'rish",
+
+  // Reviews
+  found_helpful: "buni foydali deb topdi",
+  helpful: "Foydali",
+  show_more_reviews: "Ko'proq sharhlarni ko'rsatish",
+  show_less: "Kamroq ko'rsatish",
+  leave_review: "Sharh qoldiring",
+  write_review: "Sharh yozing",
 }
 
 export default uz

@@ -124,6 +124,18 @@ const en = {
   popular_courses: "Popular Courses",
   special_offers: "Special Offers",
   testimonial: "Testimonial",
+
+  // Social Media Feed
+  all_platforms: "All Platforms",
+  view_more_posts: "View More Posts",
+
+  // Reviews
+  found_helpful: "found this helpful",
+  helpful: "Helpful",
+  show_more_reviews: "Show More Reviews",
+  show_less: "Show Less",
+  leave_review: "Leave a Review",
+  write_review: "Write a Review",
 }
 
 export default en
