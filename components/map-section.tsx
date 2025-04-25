@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
 import { useLanguage } from "@/contexts/language-context"
+import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 
 interface LocationInfo {
@@ -20,7 +20,7 @@ interface LocationsData {
 }
 
 const MapSection = () => {
-  const [activeRegion, setActiveRegion] = useState<string | null>(null)
+  const [activeRegion, setActiveRegion] = useState<string | null>("tashkent_city")
   const { t, language } = useLanguage()
 
   const locations: LocationsData = {
@@ -152,87 +152,111 @@ const MapSection = () => {
     },
   }
 
+  const handleRegionClick = (region: string) => {
+    setActiveRegion(region)
+  }
+
+  // Create a list of regions for the sidebar
+  const regionsList = Object.keys(locations).map((key) => ({
+    id: key,
+    name: locations[key].name,
+  }))
+
   return (
-    <section id="standorte" className="py-16 md:py-24 bg-secondary/50">
+    <section id="standorte" className="py-16 md:py-24 bg-secondary/10">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("our_locations")}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("discover_centers")}</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left side: Larger map */}
-          <div className="relative lg:w-2/3 h-[600px]">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6131894.988904507!2d60.3737383220778!3d41.77313717822868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b20a5d676b1%3A0xca0a6dad7e841e20!2sUzbekistan!5e0!3m2!1sen!2sus!4v1712252633626!5m2!1sen!2sus"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-lg shadow-md"
-            ></iframe>
-          </div>
-
-          {/* Right side: Regions list and selected location details */}
-          <div className="lg:w-1/3">
-            <h3 className="text-xl font-bold mb-4">{t("our_locations")}</h3>
-            <div className="grid grid-cols-2 gap-2 mb-6 max-h-[400px] overflow-y-auto">
-              {Object.entries(locations).map(([key, location]) => (
-                <Card
-                  key={key}
-                  className={`cursor-pointer transition-all ${activeRegion === key ? "ring-2 ring-primary" : ""}`}
-                  onClick={() => setActiveRegion(key)}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left side: List of regions */}
+          <div className="lg:col-span-1">
+            <h3 className="text-xl font-semibold mb-4">{t("our_locations")}</h3>
+            <div className="space-y-2">
+              {regionsList.map((region) => (
+                <div
+                  key={region.id}
+                  className={`p-3 rounded-md cursor-pointer transition-colors ${
+                    activeRegion === region.id
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary hover:bg-secondary/80"
+                  }`}
+                  onClick={() => handleRegionClick(region.id)}
                 >
-                  <CardContent className="p-3">
-                    <h3 className="font-bold text-sm">{location.name}</h3>
-                  </CardContent>
-                </Card>
+                  {region.name}
+                </div>
               ))}
             </div>
+          </div>
 
-            {activeRegion && (
-              <Card className="overflow-hidden">
-                <div className="relative h-36 w-full">
-                  <Image
-                    src={locations[activeRegion].image || "/images/german-classroom-1.png"}
-                    alt={locations[activeRegion].name}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
-                    <div className="p-4">
-                      <h3 className="text-xl font-bold text-white">{locations[activeRegion].name}</h3>
+          {/* Right side: Map and location details */}
+          <div className="lg:col-span-2">
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                {activeRegion && (
+                  <div className="grid grid-cols-1 md:grid-cols-2">
+                    {/* Map */}
+                    <div className="h-[400px] relative">
+                      <iframe
+                        src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10000!2d${locations[activeRegion].coordinates.lng}!3d${locations[activeRegion].coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1619955076921!5m2!1sen!2s`}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
+
+                    {/* Location details */}
+                    <div className="p-6">
+                      <div className="mb-4">
+                        <h3 className="text-2xl font-bold">{locations[activeRegion].name}</h3>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <p className="font-medium">{t("address")}</p>
+                          <p className="text-muted-foreground">{locations[activeRegion].address}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-medium">{t("phone")}</p>
+                          <p className="text-muted-foreground">{locations[activeRegion].phone}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-medium">{t("email")}</p>
+                          <p className="text-muted-foreground">{locations[activeRegion].email}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-medium">{t("available_courses")}</p>
+                          <ul className="list-disc list-inside text-muted-foreground">
+                            {locations[activeRegion].courses.map((course, index) => (
+                              <li key={index}>{course}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <CardContent className="pt-4">
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <h4 className="font-semibold">{t("address")}</h4>
-                      <p>{locations[activeRegion].address}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">{t("contact_info")}:</h4>
-                      <p>
-                        {t("phone")} {locations[activeRegion].phone}
-                      </p>
-                      <p>
-                        {t("email")} {locations[activeRegion].email}
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">{t("available_courses")}</h4>
-                      <ul className="list-disc pl-5">
-                        {locations[activeRegion].courses.map((course, index) => (
-                          <li key={index}>{course}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Location image */}
+            {activeRegion && locations[activeRegion].image && (
+              <div className="mt-6 aspect-video relative overflow-hidden rounded-lg">
+                <Image
+                  src={locations[activeRegion].image || "/placeholder.svg"}
+                  alt={locations[activeRegion].name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             )}
           </div>
         </div>
