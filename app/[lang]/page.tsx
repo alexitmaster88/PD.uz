@@ -12,6 +12,7 @@ import LanguageSpecificTestimonials from "@/components/language-specific-testimo
 import LanguageSpecificCulturalContent from "@/components/language-specific-cultural-content"
 import SocialMediaFeed from "@/components/social-media-feed"
 import LanguageSpecificReviews from "@/components/language-specific-reviews"
+import Image from "next/image"
 
 export default function Home() {
   const { t } = useLanguage()
@@ -52,8 +53,21 @@ export default function Home() {
   return (
     <>
       <LanguageSpecificHero />
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container">
+      <section className="py-16 md:py-24 relative bg-[#aef2ea]/50">
+        {/* Background image with blur effect */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&q=80"
+            alt="Aerial view of Munich"
+            fill
+            className="object-cover opacity-85 filter blur-[1.5px]"
+            priority
+          />
+          <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+        </div>
+
+        {/* Content */}
+        <div className="container relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("welcome_center")}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("intro_video_description")}</p>
@@ -64,8 +78,21 @@ export default function Home() {
         </div>
       </section>
       <LanguageSpecificTestimonials />
-      <section className="py-16 md:py-24 bg-secondary/20">
-        <div className="container max-w-4xl mx-auto">
+      <section className="py-16 md:py-24 relative">
+        {/* Background image with blur effect */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1600454021970-351eff4a6554?auto=format&fit=crop&q=80"
+            alt="View of a building across a pond"
+            fill
+            className="object-cover opacity-85 filter blur-[1px]"
+            priority
+          />
+          <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+        </div>
+
+        {/* Content */}
+        <div className="container max-w-4xl mx-auto relative z-10">
           <PhotoGallery photos={photos} title={t("photo_gallery_title")} />
         </div>
       </section>

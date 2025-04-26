@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 import { type LanguageContent, useLanguageContent } from "@/utils/language-content"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 
 interface Testimonial {
   name: string
@@ -153,8 +154,21 @@ const LanguageSpecificTestimonials = () => {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-secondary/20">
-      <div className="container">
+    <section className="py-16 md:py-24 relative">
+      {/* Background image with blur effect */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80"
+          alt="People sitting on bench near lake"
+          fill
+          className="object-cover opacity-85 filter blur-[1.5px]"
+          priority
+        />
+        <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+      </div>
+
+      {/* Content */}
+      <div className="container relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{currentTestimonials.title}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{currentTestimonials.description}</p>

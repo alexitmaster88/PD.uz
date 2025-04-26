@@ -100,10 +100,10 @@ const LanguageSpecificHero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src={currentHeroContent.image || "/placeholder.svg"}
-          alt={currentHeroContent.imageAlt}
+          src="https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&q=80"
+          alt="Berlin cityscape aerial view"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-20 filter blur-[1.3px]"
           priority
         />
       </div>
@@ -114,7 +114,7 @@ const LanguageSpecificHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-6 max-w-3xl mx-auto"
+            className="space-y-6 max-w-3xl mx-auto min-h-[400px]"
           >
             {/* Language detection alert */}
             <AnimatePresence>
@@ -181,8 +181,8 @@ const LanguageSpecificHero = () => {
                 <motion.button
                   key={lang}
                   onClick={() => setLanguage(lang as "de" | "uz" | "en" | "ru")}
-                  className={`flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 ${
-                    language === lang ? "scale-110 ring-2 ring-primary rounded-full" : ""
+                  className={`flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none w-16 h-20 ${
+                    language === lang ? "scale-110 font-medium" : ""
                   }`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
@@ -203,7 +203,7 @@ const LanguageSpecificHero = () => {
                       className="w-6 h-6 rounded-full object-cover"
                     />
                   </motion.div>
-                  <span className="text-sm mt-1">
+                  <span className="text-sm mt-1 line-clamp-2 text-center">
                     {lang === "de" ? "Deutsch" : lang === "uz" ? "O'zbekcha" : lang === "en" ? "English" : "Русский"}
                   </span>
                 </motion.button>
