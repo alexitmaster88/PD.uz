@@ -1,5 +1,5 @@
 import { ReactNode, createElement, Fragment } from 'react';
-import { useLanguage } from ../translations; // Adjust as needed
+import { useLanguage } from '../translations';
 import { EnvironmentUtils } from 'aws-cdk-lib/cx-api';
 import translations from '../translations';
 
