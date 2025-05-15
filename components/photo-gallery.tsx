@@ -65,7 +65,7 @@ const PhotoGallery = ({ photos, title, autoScroll = true, autoScrollInterval = 3
   }, [autoScroll, autoScrollInterval, photos.length])
 
   return (
-    <div className="relative">
+    <div className="relative bg-background/82">
       <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-6">{title || t("photo_gallery_title")}</h2>
 
       <div className="relative group">

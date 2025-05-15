@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, createElement, Fragment } from "react"
+import type { ReactNode } from "react"
 import { useLanguage } from "@/contexts/language-context"
 import type { JSX } from "react/jsx-runtime"
 
@@ -25,5 +25,5 @@ export function LanguageSpecificContent({
   content: LanguageContent<ReactNode>
 }): JSX.Element | null {
   const { language } = useLanguage()
-  return createElement(Fragment, null, content[language]);
+  return <>{content[language]}</>
 }

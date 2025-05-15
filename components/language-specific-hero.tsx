@@ -94,7 +94,7 @@ const LanguageSpecificHero = () => {
   }
 
   return (
-    <section className="relative">
+    <section className="relative bg-background/82">
       {/* Background with language-specific colors and image */}
       <div className={`absolute inset-0 ${currentBackground} opacity-70`} />
       <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />

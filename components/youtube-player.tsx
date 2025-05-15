@@ -76,7 +76,7 @@ const YouTubePlayer = ({ videoId, title, autoplay = false }: YouTubePlayerProps)
   }
 
   return (
-    <Card className="overflow-hidden shadow-xl rounded-xl border-0 transition-all hover:shadow-2xl w-full max-w-[1200px] mx-auto">
+    <Card className="overflow-hidden shadow-xl rounded-xl border-0 transition-all hover:shadow-2xl w-full max-w-[1200px] mx-auto bg-background/82">
       <div className="relative">
         <div id={`youtube-player-${videoId}`} className="aspect-video w-full"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300">

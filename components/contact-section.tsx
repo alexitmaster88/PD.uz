@@ -56,7 +56,7 @@ const ContactSection = () => {
   }
 
   return (
-    <section id="kontakt" className="py-16 md:py-24 bg-secondary/50 relative overflow-hidden">
+    <section id="kontakt" className="py-16 md:py-24 bg-background/82 relative overflow-hidden">
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
         <Image src="/images/german-culture-2.png" alt="Contact background" fill className="object-cover opacity-10" />

@@ -1,6 +1,6 @@
 const uz = {
   // Hero Section
-  welcome: "O'zbekiston Respublikasidagi Nemis til markaziga xush kelibsiz",
+  welcome: "O'zbekistondagi Nemis til markaziga xush kelibsiz",
   discover:
     "Biz bilan tillar dunyosini kashf eting. Nemis, o'zbek, ingliz va rus tillarida yuqori sifatli kurslarni taklif etamiz.",
   explore_courses: "Kurslarni ko'rish",
