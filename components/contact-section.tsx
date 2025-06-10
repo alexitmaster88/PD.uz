@@ -69,8 +69,8 @@ const ContactSection = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("contact_questions")}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="h-full flex flex-col">
             <h3 className="text-2xl font-bold mb-6">{t("send_message")}</h3>
 
             {isSubmitted ? (
@@ -189,7 +189,7 @@ const ContactSection = () => {
             )}
           </div>
 
-          <div>
+          <div className="h-full flex flex-col">
             <h3 className="text-2xl font-bold mb-6">{t("contact_info")}</h3>
 
             <div className="grid gap-6">

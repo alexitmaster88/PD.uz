@@ -31,11 +31,14 @@ const YouTubePlayer = ({ videoId, title, autoplay = false }: YouTubePlayerProps)
         videoId: videoId,
         playerVars: {
           autoplay: autoplay ? 1 : 0,
-          controls: 0,
-          rel: 0,
-          showinfo: 0,
+          controls: 1, // Enable YouTube controls
+          rel: 1, // Allow related videos
+          showinfo: 1, // Show video info
           mute: 0,
-          modestbranding: 1,
+          modestbranding: 0, // Show YouTube branding
+          fs: 1, // Allow fullscreen
+          cc_load_policy: 1, // Show captions
+          iv_load_policy: 1, // Show annotations
         },
         events: {
           onStateChange: (event: any) => {
@@ -75,11 +78,15 @@ const YouTubePlayer = ({ videoId, title, autoplay = false }: YouTubePlayerProps)
     }
   }
 
+  const handleVideoClick = () => {
+    togglePlay()
+  }
+
   return (
-    <Card className="overflow-hidden shadow-xl rounded-xl border-0 transition-all hover:shadow-2xl w-full max-w-[1200px] mx-auto bg-background/82">
-      <div className="relative">
+    <Card className="overflow-hidden shadow-xl rounded-xl border-0 transition-all hover:shadow-2xl w-full max-w-[1500px] mx-auto bg-background/82">
+      <div className="relative" onClick={handleVideoClick} style={{ cursor: "pointer" }}>
         <div id={`youtube-player-${videoId}`} className="aspect-video w-full"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <div className="absolute bottom-0 left-0 right-0 p-6 backdrop-blur-sm bg-black/20">
             <div className="flex items-center justify-between">
               <div className="text-white font-medium text-lg truncate">{title || t("video")}</div>

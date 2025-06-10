@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/contexts/language-context"
 import { type LanguageContent, useLanguageContent } from "@/utils/language-content"
 import { type SocialMediaPost, formatDate, useSocialMediaPosts } from "@/utils/social-media-utils"
-import { Facebook, Instagram, Linkedin, MessageCircle, ThumbsUp, Twitter, Share2 } from "lucide-react"
+import { Facebook, Instagram, Linkedin, MessageCircle, ThumbsUp, MessageSquare, Share2 } from "lucide-react"
 
 const SocialMediaFeed = () => {
   const { t, language } = useLanguage()
@@ -73,8 +73,8 @@ const SocialMediaFeed = () => {
         url: "#",
       },
       {
-        id: "de-tw-1",
-        platform: "twitter",
+        id: "de-tg-1",
+        platform: "telegram",
         author: {
           name: "Profi Deutsch",
           handle: "ProfiDeutschUZ",
@@ -175,8 +175,8 @@ const SocialMediaFeed = () => {
         url: "#",
       },
       {
-        id: "ru-tw-1",
-        platform: "twitter",
+        id: "ru-tg-1",
+        platform: "telegram",
         author: {
           name: "Profi Deutsch",
           handle: "ProfiDeutschUZ",
@@ -257,8 +257,8 @@ const SocialMediaFeed = () => {
         return <Facebook className="h-5 w-5" />
       case "instagram":
         return <Instagram className="h-5 w-5" />
-      case "twitter":
-        return <Twitter className="h-5 w-5" />
+      case "telegram":
+        return <MessageSquare className="h-5 w-5" />
       case "linkedin":
         return <Linkedin className="h-5 w-5" />
       default:
@@ -285,9 +285,9 @@ const SocialMediaFeed = () => {
               <Instagram className="h-4 w-4" />
               <span>Instagram</span>
             </TabsTrigger>
-            <TabsTrigger value="twitter" className="flex items-center gap-2">
-              <Twitter className="h-4 w-4" />
-              <span>Twitter</span>
+            <TabsTrigger value="telegram" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              <span>Telegram</span>
             </TabsTrigger>
             <TabsTrigger value="linkedin" className="flex items-center gap-2">
               <Linkedin className="h-4 w-4" />

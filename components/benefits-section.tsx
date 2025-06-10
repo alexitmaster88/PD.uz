@@ -1,9 +1,6 @@
 "use client"
-
-import { Card, CardContent } from "@/components/ui/card"
 import { Globe2, BookOpen, Award, Users, Briefcase, GraduationCap } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-import Image from "next/image"
 
 const BenefitsSection = () => {
   const { t } = useLanguage()
@@ -53,29 +50,6 @@ const BenefitsSection = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("why_learn_german")}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("discover_benefits")}</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {benefits.map((benefit, index) => (
-            <Card key={index} className="border-none shadow-md overflow-hidden">
-              <div className="relative h-48 w-full">
-                <Image src={benefit.image || "/placeholder.svg"} alt={benefit.title} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                  <div className="p-4">
-                    <h3 className="text-xl font-bold mb-1 text-white">{benefit.title}</h3>
-                  </div>
-                </div>
-              </div>
-              <CardContent className="pt-4">
-                <div className="flex flex-col">
-                  <div className="mb-3 p-2 bg-primary/10 rounded-full w-12 h-12 flex items-center justify-center">
-                    {benefit.icon}
-                  </div>
-                  <p className="text-muted-foreground">{benefit.description}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
         </div>
 
         <div className="mt-16 bg-secondary/50 rounded-lg p-8 text-center">

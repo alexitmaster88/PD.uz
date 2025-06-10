@@ -49,6 +49,38 @@ const LanguageSpecificTestimonials = () => {
           image: "/images/testimonial-de.png",
           location: "Berlin, Deutschland",
         },
+        {
+          name: "Lukas Becker",
+          role: "Geschäftsführer",
+          company: "Becker Import-Export GmbH",
+          text: "Die Sprachkurse haben mir ermöglicht, meine Geschäftsbeziehungen in Usbekistan erheblich zu verbessern. Die Lehrer verstehen die kulturellen Nuancen und haben mir nicht nur die Sprache, sondern auch wichtige Geschäftsetikette beigebracht.",
+          image: "/images/testimonial-de.png",
+          location: "Hamburg, Deutschland",
+        },
+        {
+          name: "Hannah Müller",
+          role: "Doktorandin",
+          company: "Humboldt-Universität zu Berlin",
+          text: "Für meine Forschung zur zentralasiatischen Geschichte war das Erlernen des Usbekischen unerlässlich. Die strukturierte Methodik und die kompetenten Lehrkräfte haben mir geholfen, in nur sechs Monaten ein fortgeschrittenes Niveau zu erreichen.",
+          image: "/images/testimonial-de.png",
+          location: "Berlin, Deutschland",
+        },
+        {
+          name: "Felix Hoffmann",
+          role: "Ingenieur",
+          company: "Siemens AG",
+          text: "Als Expatriate in Taschkent war es mir wichtig, mich mit den Einheimischen verständigen zu können. Der Usbekisch-Kurs für Berufstätige passte perfekt in meinen vollen Terminkalender und die Lernerfolge waren beeindruckend schnell sichtbar.",
+          image: "/images/testimonial-de.png",
+          location: "Frankfurt, Deutschland",
+        },
+        {
+          name: "Emma Wagner",
+          role: "Medizinstudentin",
+          company: "Charité Berlin",
+          text: "Für mein Auslandssemester am Medizinischen Institut Taschkent brauchte ich sowohl Russisch als auch Usbekisch. Das Zentrum bot mir ein kombiniertes Programm an, das mir den Einstieg in beide Sprachen gleichzeitig ermöglichte.",
+          image: "/images/testimonial-de.png",
+          location: "Berlin, Deutschland",
+        },
       ],
     },
     en: {
@@ -71,6 +103,38 @@ const LanguageSpecificTestimonials = () => {
           image: "/images/testimonial-en.png",
           location: "Manchester, UK",
         },
+        {
+          name: "Michael Brown",
+          role: "Software Engineer",
+          company: "Tech Innovations Ltd",
+          text: "When I got a job offer from a German tech company, I had only three months to learn the basics. The center's specialized IT German course was exactly what I needed, focusing on technical vocabulary and business communication.",
+          image: "/images/testimonial-en.png",
+          location: "San Francisco, USA",
+        },
+        {
+          name: "Olivia Davis",
+          role: "Art Historian",
+          company: "Metropolitan Museum",
+          text: "The German for Academics course helped me tremendously with my research on German Expressionism. The teachers focused on academic writing and reading skills, which was perfect for my needs.",
+          image: "/images/testimonial-en.png",
+          location: "New York, USA",
+        },
+        {
+          name: "Robert Thompson",
+          role: "Diplomat",
+          company: "British Foreign Service",
+          text: "As a diplomat posted to Uzbekistan, I needed to learn both German and Uzbek. The center offered a flexible program that allowed me to progress in both languages simultaneously. The cultural insights provided were invaluable.",
+          image: "/images/testimonial-en.png",
+          location: "London, UK",
+        },
+        {
+          name: "Sophia Martinez",
+          role: "Medical Researcher",
+          company: "International Health Organization",
+          text: "The specialized medical German course prepared me perfectly for my research fellowship at Charité Hospital in Berlin. The focus on medical terminology and patient communication was exactly what I needed.",
+          image: "/images/testimonial-en.png",
+          location: "Toronto, Canada",
+        },
       ],
     },
     ru: {
@@ -89,6 +153,38 @@ const LanguageSpecificTestimonials = () => {
           name: "Елена Смирнова",
           role: "Переводчик",
           text: "Я работаю переводчиком и решила добавить немецкий язык в свой профессиональный портфель. Методика преподавания в центре помогла мне быстро освоить язык и начать принимать заказы на переводы.",
+          image: "/images/testimonial-ru.png",
+          location: "Ташкент, Узбекистан",
+        },
+        {
+          name: "Игорь Соколов",
+          role: "Инженер",
+          company: "Газпром",
+          text: "Работая над совместным проектом с немецкими коллегами, я понял, что мне необходимо улучшить свой немецкий. Бизнес-курс в центре был идеально адаптирован под мои профессиональные потребности.",
+          image: "/images/testimonial-ru.png",
+          location: "Санкт-Петербург, Россия",
+        },
+        {
+          name: "Наталья Козлова",
+          role: "Студентка",
+          company: "МГУ",
+          text: "Я готовилась к учебе в Берлинском университете и выбрала интенсивный курс немецкого. Преподаватели помогли мне не только с языком, но и с подготовкой к TestDaF, который я успешно сдала с первого раза.",
+          image: "/images/testimonial-ru.png",
+          location: "Москва, Россия",
+        },
+        {
+          name: "Дмитрий Новиков",
+          role: "Врач",
+          company: "Городская клиническая больница",
+          text: "Специализированный курс медицинского немецкого помог мне подготовиться к стажировке в клинике Германии. Особенно ценным было изучение профессиональной терминологии и практика общения с пациентами.",
+          image: "/images/testimonial-ru.png",
+          location: "Екатеринбург, Россия",
+        },
+        {
+          name: "Анна Иванова",
+          role: "Юрист",
+          company: "Международная юридическая фирма",
+          text: "Для работы с немецкими клиентами мне требовался юридический немецкий. Центр разработал для меня индивидуальную программу, которая включала изучение правовой терминологии и составление документов.",
           image: "/images/testimonial-ru.png",
           location: "Ташкент, Узбекистан",
         },
@@ -113,6 +209,38 @@ const LanguageSpecificTestimonials = () => {
           image: "/images/testimonial-uz.png",
           location: "Samarqand, O'zbekiston",
         },
+        {
+          name: "Jahongir Aliyev",
+          role: "Biznesmen",
+          company: "Aliyev Import-Export",
+          text: "Nemis hamkorlar bilan biznesni kengaytirish uchun men nemis tilini o'rganishim kerak edi. Markazdagi biznes-nemis kursi menga nafaqat til, balki nemis biznes madaniyatini ham o'rgatdi.",
+          image: "/images/testimonial-uz.png",
+          location: "Buxoro, O'zbekiston",
+        },
+        {
+          name: "Gulnora Karimova",
+          role: "Shifokor",
+          company: "Respublika Klinikasi",
+          text: "Germaniyada malaka oshirish uchun men tibbiy nemis tilini o'rganishim kerak edi. Markazdagi maxsus kurs menga tibbiy atamalarni va bemorlar bilan muloqot qilishni o'rgatdi.",
+          image: "/images/testimonial-uz.png",
+          location: "Toshkent, O'zbekiston",
+        },
+        {
+          name: "Rustam Umarov",
+          role: "Muhandis",
+          company: "O'zbekiston Temir Yo'llari",
+          text: "Nemis kompaniyasi bilan hamkorlik loyihasida ishlaganim uchun texnik nemis tilini o'rganishim kerak edi. Markazdagi o'qituvchilar menga kerakli texnik terminologiyani tez o'zlashtirishga yordam berishdi.",
+          image: "/images/testimonial-uz.png",
+          location: "Toshkent, O'zbekiston",
+        },
+        {
+          name: "Dilnoza Mahmudova",
+          role: "Talaba",
+          company: "O'zbekiston Milliy Universiteti",
+          text: "TestDaF imtihoniga tayyorlanish uchun men markazga keldim. O'qituvchilarning professional yondashuvi va maxsus tayyorgarlik dasturi tufayli men yuqori ball bilan imtihonni topshirdim.",
+          image: "/images/testimonial-uz.png",
+          location: "Namangan, O'zbekiston",
+        },
       ],
     },
   }
@@ -130,14 +258,6 @@ const LanguageSpecificTestimonials = () => {
     setActiveIndex((prev) => (prev - 1 + testimonialsCount) % testimonialsCount)
   }
 
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextTestimonial()
-    }, 8000)
-    return () => clearInterval(interval)
-  }, [testimonialsCount])
-
   const variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 200 : -200,
@@ -152,6 +272,14 @@ const LanguageSpecificTestimonials = () => {
       opacity: 0,
     }),
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextTestimonial()
+    }, 5000) // Auto-scroll every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [testimonialsCount])
 
   return (
     <section className="py-16 md:py-24 relative bg-background/82">

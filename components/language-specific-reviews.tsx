@@ -352,6 +352,21 @@ const LanguageSpecificReviews = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{currentSectionContent.description}</p>
         </div>
 
+        <div className="mb-8 text-center">
+          <h3 className="text-xl font-semibold mb-4">{t("leave_review")}</h3>
+          <div className="flex justify-center gap-4">
+            <Button variant="outline" className="flex items-center gap-2">
+              <Star className="h-4 w-4" /> Google
+            </Button>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Facebook className="h-4 w-4" /> Facebook
+            </Button>
+            <Button variant="outline" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" /> {t("write_review")}
+            </Button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-6">
           {displayedReviews.map((review) => (
             <Card key={review.id} className="overflow-hidden">
@@ -416,21 +431,6 @@ const LanguageSpecificReviews = () => {
             </Button>
           </div>
         )}
-
-        <div className="mt-12 text-center">
-          <h3 className="text-xl font-semibold mb-4">{t("leave_review")}</h3>
-          <div className="flex justify-center gap-4">
-            <Button variant="outline" className="flex items-center gap-2">
-              <Star className="h-4 w-4" /> Google
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Facebook className="h-4 w-4" /> Facebook
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              <MessageSquare className="h-4 w-4" /> {t("write_review")}
-            </Button>
-          </div>
-        </div>
       </div>
     </section>
   )

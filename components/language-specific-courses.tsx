@@ -188,65 +188,6 @@ const LanguageSpecificCourses = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{currentCourses.description}</p>
         </div>
 
-        {/* Popular courses for the current language audience */}
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold mb-4">{t("popular_courses")}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {currentCourses.popularCourses.map((course, index) => (
-              <Card key={index} className="bg-primary/5 border-primary/20 overflow-hidden">
-                <div className="relative h-32">
-                  <Image
-                    src={`/images/language-learning-${(index % 2) + 1}.png`}
-                    alt={course}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                    <div className="p-4">
-                      <p className="font-medium text-white">{course}</p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Special offers for the current language audience */}
-        {currentCourses.specialOffers.length > 0 && (
-          <div className="mb-12">
-            <h3 className="text-xl font-semibold mb-4">{t("special_offers")}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {currentCourses.specialOffers.map((offer, index) => (
-                <Card key={index} className="overflow-hidden">
-                  {offer.image && (
-                    <div className="aspect-video w-full overflow-hidden">
-                      <img
-                        src={offer.image || "/placeholder.svg"}
-                        alt={offer.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  <CardHeader>
-                    <CardTitle>{offer.title}</CardTitle>
-                    <CardDescription>{offer.description}</CardDescription>
-                  </CardHeader>
-                  <CardFooter className="flex justify-between items-center">
-                    <div>
-                      <span className="text-2xl font-bold text-primary">{offer.price}</span>
-                      {offer.discount && (
-                        <span className="ml-2 text-sm line-through text-muted-foreground">{offer.discount}</span>
-                      )}
-                    </div>
-                    <Button size="sm">{t("register_now")}</Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Regular course listings */}
         <Tabs defaultValue="deutsch" value={courseLanguage} onValueChange={setCourseLanguage} className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">

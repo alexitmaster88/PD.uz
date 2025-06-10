@@ -172,9 +172,9 @@ const MapSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left side: List of regions */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 h-full">
             <h3 className="text-xl font-semibold mb-4">{t("our_locations")}</h3>
-            <div className="space-y-2">
+            <div className="space-y-2 h-full">
               {regionsList.map((region) => (
                 <div
                   key={region.id}
@@ -196,9 +196,9 @@ const MapSection = () => {
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 {activeRegion && (
-                  <div className="grid grid-cols-1 md:grid-cols-2">
-                    {/* Map */}
-                    <div className="h-[400px] relative">
+                  <div className="grid grid-cols-1">
+                    {/* Map - now full width */}
+                    <div className="h-[500px] relative">
                       <iframe
                         src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10000!2d${locations[activeRegion].coordinates.lng}!3d${locations[activeRegion].coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1619955076921!5m2!1sen!2s`}
                         width="100%"
@@ -210,35 +210,34 @@ const MapSection = () => {
                       ></iframe>
                     </div>
 
-                    {/* Location details */}
-                    <div className="p-6">
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-bold">{locations[activeRegion].name}</h3>
-                      </div>
-
-                      <div className="space-y-4">
-                        <div>
-                          <p className="font-medium">{t("address")}</p>
-                          <p className="text-muted-foreground">{locations[activeRegion].address}</p>
+                    {/* Location details - now below the map */}
+                    <div className="p-6 bg-secondary/20">
+                      <div className="flex flex-wrap items-center justify-between">
+                        <div className="mb-4">
+                          <h3 className="text-2xl font-bold">{locations[activeRegion].name}</h3>
                         </div>
 
-                        <div>
-                          <p className="font-medium">{t("phone")}</p>
-                          <p className="text-muted-foreground">{locations[activeRegion].phone}</p>
-                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                          <div>
+                            <p className="font-medium">{t("address")}</p>
+                            <p className="text-muted-foreground">{locations[activeRegion].address}</p>
+                          </div>
 
-                        <div>
-                          <p className="font-medium">{t("email")}</p>
-                          <p className="text-muted-foreground">{locations[activeRegion].email}</p>
-                        </div>
+                          <div>
+                            <p className="font-medium">{t("phone")}</p>
+                            <p className="text-muted-foreground">{locations[activeRegion].phone}</p>
+                            <p className="font-medium mt-2">{t("email")}</p>
+                            <p className="text-muted-foreground">{locations[activeRegion].email}</p>
+                          </div>
 
-                        <div>
-                          <p className="font-medium">{t("available_courses")}</p>
-                          <ul className="list-disc list-inside text-muted-foreground">
-                            {locations[activeRegion].courses.map((course, index) => (
-                              <li key={index}>{course}</li>
-                            ))}
-                          </ul>
+                          <div>
+                            <p className="font-medium">{t("available_courses")}</p>
+                            <ul className="list-disc list-inside text-muted-foreground">
+                              {locations[activeRegion].courses.map((course, index) => (
+                                <li key={index}>{course}</li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>

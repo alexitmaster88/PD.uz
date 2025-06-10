@@ -9,9 +9,8 @@ import ContactSection from "@/components/contact-section"
 import YouTubePlayer from "@/components/youtube-player"
 import PhotoGallery from "@/components/photo-gallery"
 import LanguageSpecificTestimonials from "@/components/language-specific-testimonials"
-import LanguageSpecificCulturalContent from "@/components/language-specific-cultural-content"
 import SocialMediaFeed from "@/components/social-media-feed"
-import LanguageSpecificReviews from "@/components/language-specific-reviews"
+import PartnersSection from "@/components/partners-section"
 import Image from "next/image"
 
 export default function Home() {
@@ -78,23 +77,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials section with German city view */}
-      <section className="py-16 md:py-24 relative">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/images/backgrounds/german-city-view.jpg"
-            alt="German city view"
-            fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
-        </div>
-        <div className="container relative z-10">
-          <LanguageSpecificTestimonials />
-        </div>
-      </section>
-
       {/* Photo Gallery section with tall building */}
       <section className="py-16 md:py-24 relative">
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -146,22 +128,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Cultural Content section with green trees near water */}
-      <section className="py-16 md:py-24 relative">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/images/backgrounds/trees-water.jpg"
-            alt="Green trees near body of water"
-            fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
-        </div>
-        <div className="container relative z-10">
-          <LanguageSpecificCulturalContent />
-        </div>
-      </section>
+      {/* Partners section */}
+      <PartnersSection />
 
       {/* Map section with flag */}
       <section className="py-16 md:py-24 relative">
@@ -180,6 +148,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials section with German city view */}
+      <section className="py-16 md:py-24 relative">
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/images/backgrounds/german-city-view.jpg"
+            alt="German city view"
+            fill
+            className="object-cover opacity-85 filter blur-[1.5px]"
+            priority
+          />
+          <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+        </div>
+        <div className="container relative z-10">
+          <LanguageSpecificTestimonials />
+        </div>
+      </section>
+
       {/* Benefits section with green mountain beside water */}
       <section className="py-16 md:py-24 relative">
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -194,23 +179,6 @@ export default function Home() {
         </div>
         <div className="container relative z-10">
           <BenefitsSection />
-        </div>
-      </section>
-
-      {/* Reviews section with city buildings */}
-      <section className="py-16 md:py-24 relative">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/images/backgrounds/city-buildings.jpg"
-            alt="Photo of city buildings during daytime"
-            fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
-        </div>
-        <div className="container relative z-10">
-          <LanguageSpecificReviews />
         </div>
       </section>
 
