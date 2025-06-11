@@ -2,7 +2,7 @@ const de = {
   // Hero Section
   welcome: "Willkommen im 'PROFI DEUTSCH' Sprachzentrum in Usbekistan",
   discover:
-    "Entdecken Sie die Welt der Sprachen mit uns. Wir bieten qualitativ hochwertige Kurse in Deutsch, Usbekisch, Englisch und Russisch.",
+    "Entdecken Sie die Welt der Sprachen mit uns. Wir bieten qualitativ hochwertige Kurse in Deutsch",
   explore_courses: "Kurse Entdecken",
   contact_us: "Kontakt Aufnehmen",
   language_switcher_hint: "Sie können die Sprache jederzeit über das Symbol unten rechts ändern.",

@@ -6,7 +6,7 @@ import type { LanguageContent } from "@/utils/language-content"
 // Types for social media content
 export interface SocialMediaPost {
   id: string
-  platform: "facebook" | "instagram" | "twitter" | "linkedin"
+  platform: "facebook" | "instagram" | "telegram" | "linkedin"
   author: {
     name: string
     handle: string
@@ -78,8 +78,8 @@ export function getPlatformIcon(platform: string): string {
       return "facebook"
     case "instagram":
       return "instagram"
-    case "twitter":
-      return "twitter"
+    case "telegram":
+      return "telegram"
     case "linkedin":
       return "linkedin"
     case "google":

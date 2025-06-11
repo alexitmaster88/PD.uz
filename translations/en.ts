@@ -1,8 +1,8 @@
 const en = {
   // Hero Section
-  welcome: "Welcome to the German Language Center in Uzbekistan",
+  welcome: "Welcome to the German Language Center \"PROFI DEUTSCH\" in Uzbekistan",
   discover:
-    "Discover the world of languages with us. We offer high-quality courses in German, Uzbek, English, and Russian.",
+    "Discover the world of languages with us. We offer high-quality courses in German",
   explore_courses: "Explore Courses",
   contact_us: "Contact Us",
   language_switcher_hint: "You can change the language at any time using the icon in the bottom right.",
