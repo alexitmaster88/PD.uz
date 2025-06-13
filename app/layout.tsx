@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] })
 
 export const metadata = {
   title: "Profi Deutsch in Usbekistan",
-  description: "Lernen Sie Deutsch in unserem Sprachzentrum \"PROFI DEUTSCH\" in Usbekistan",
+  description: "Lernen Sie Deutsch, Usbekisch, Englisch und Russisch in unserem Sprachzentrum in Usbekistan",
   icons: {
     icon: "/PDico.png",
     apple: "/PDico.png",

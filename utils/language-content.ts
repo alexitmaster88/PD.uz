@@ -25,6 +25,5 @@ export function LanguageSpecificContent({
   content: LanguageContent<ReactNode>
 }): JSX.Element | null {
   const { language } = useLanguage()
-  const node = content[language] ?? null
-  return <>{node}</>
+  return <>{content[language]}</>
 }

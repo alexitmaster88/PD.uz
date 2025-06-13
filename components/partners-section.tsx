@@ -20,68 +20,68 @@ const PartnersSection = () => {
   const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useLanguage()
 
-  // Partner data with placeholder logos and websites
+  // Partner data with actual logo files
   const partners: Partner[] = [
     {
       id: "goethe-institut",
       name: "Goethe Institut",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/goethelogo.svg",
       website: "https://www.goethe.de",
       description: "German Cultural Institute",
     },
     {
       id: "daad",
       name: "DAAD",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/daadlogo.svg",
       website: "https://www.daad.de",
       description: "German Academic Exchange Service",
     },
     {
       id: "bmz",
       name: "BMZ",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/bmzlogo.svg",
       website: "https://www.bmz.de",
       description: "Federal Ministry for Economic Cooperation",
     },
     {
       id: "giz",
       name: "GIZ",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/gizlogo.svg",
       website: "https://www.giz.de",
       description: "Deutsche Gesellschaft für Internationale Zusammenarbeit",
     },
     {
       id: "siemens",
       name: "Siemens",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/siemenslogo.svg",
       website: "https://www.siemens.com",
       description: "Technology Company",
     },
     {
       id: "volkswagen",
       name: "Volkswagen",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/volkswagenlogo.svg",
       website: "https://www.volkswagen.com",
       description: "Automotive Manufacturer",
     },
     {
       id: "bosch",
       name: "Bosch",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/boschlogo.svg",
       website: "https://www.bosch.com",
       description: "Engineering and Technology Company",
     },
     {
       id: "sap",
       name: "SAP",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/saplogo.svg",
       website: "https://www.sap.com",
       description: "Software Company",
     },
     {
       id: "lufthansa",
       name: "Lufthansa",
-      logo: "/placeholder.svg?height=80&width=120",
+      logo: "/images/logos/lufthansalogo.svg",
       website: "https://www.lufthansa.com",
       description: "German Airline",
     },
@@ -156,13 +156,18 @@ const PartnersSection = () => {
               >
                 <CardContent className="p-6 text-center flex flex-col justify-between h-full">
                   <div>
-                    <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center">
+                    <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
                       <Image
                         src={partner.logo || "/placeholder.svg"}
                         alt={`${partner.name} logo`}
-                        width={100}
-                        height={60}
-                        className="object-contain w-[100px] h-[60px]"
+                        width={120}
+                        height={80}
+                        className="object-contain max-h-full max-w-full w-auto h-auto"
+                        onError={(e) => {
+                          // Fallback to placeholder if image fails to load
+                          const target = e.target as HTMLImageElement
+                          target.src = "/placeholder.svg?height=80&width=120"
+                        }}
                       />
                     </div>
                     <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">

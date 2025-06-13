@@ -1,8 +1,8 @@
 const uz = {
   // Hero Section
-  welcome: "O'zbekistondagi Nemis til markazi \"PROFI DEUTSCH\"ga xush kelibsiz",
+  welcome: "O'zbekistondagi Nemis til markaziga xush kelibsiz",
   discover:
-    "Biz bilan tillar dunyosini kashf eting. Nemis tilini o'rganish uchun yuqori sifatli kurslarni taklif etamiz.",
+    "Biz bilan tillar dunyosini kashf eting. Nemis, o'zbek, ingliz va rus tillarida yuqori sifatli kurslarni taklif etamiz.",
   explore_courses: "Kurslarni ko'rish",
   contact_us: "Bog'lanish",
   language_switcher_hint:
@@ -101,22 +101,22 @@ const uz = {
   next: "Keyingi rasm",
 
   // Home Page
-  welcome_center: "PROFI DEUTSCH Til markazimizga xush kelibsiz",
+  welcome_center: "Til markazimizga xush kelibsiz",
   intro_video_description:
     "Kirish videomizni tomosha qiling va til kurslarimiz va takliflarimiz haqida ko'proq ma'lumot oling.",
-  intro_video_title: "Profi Deutsch - O'zbekistondagi Nemis tili markazi haqida",
+  intro_video_title: "Nemis tilini o'rganish: Boshlang'ichlar uchun eng muhim iboralar",
 
   // Photo Gallery Items
-  photo_alt_1: "Germaniyada kasbiy ta’lim",
+  photo_alt_1: "Toshkentdagi nemis tili kursi",
   photo_caption_1: "Toshkentdagi nemis tili kursi",
-  photo_alt_2: "Worldskills Samarkand-2025",
+  photo_alt_2: "Samarqanddagi til markazi",
   photo_caption_2: "Samarqanddagi yangi til markazimiz",
   photo_alt_3: "O'quvchilar o'rganmoqda",
   photo_caption_3: "Bizning o'quvchilarimiz o'rganmoqda",
   photo_alt_4: "Madaniy tadbir",
   photo_caption_4: "Nemis madaniy tadbiri",
-  photo_alt_5: "Til kurslari bilan tanishtirish marosimi",
-  photo_caption_5: "A2 kursi bitirish marosimi",
+  photo_alt_5: "Bitirish marosimi",
+  photo_caption_5: "B2 kursi bitirish marosimi",
   photo_alt_6: "Nemis tili o'qituvchilari",
   photo_caption_6: "Malakali nemis tili o'qituvchilarimiz jamoasi",
 
