@@ -8,8 +8,9 @@ frontend:
     build:
       commands:
         - pnpm run build
+        - pnpm run export
   artifacts:
-    baseDirectory: dist
+    baseDirectory: out
     files:
       - '**/*'
   cache:
