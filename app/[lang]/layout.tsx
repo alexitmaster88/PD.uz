@@ -11,19 +11,27 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] })
 // Define supported languages
 const languages = ["de", "en", "ru", "uz"]
 
+// Define the props type for layout
+type LayoutProps = {
+  children: React.ReactNode
+  params: {
+    lang: string
+  }
+}
+
 // Generate metadata
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
   // Validate language
-  const lang = languages.includes(params.lang) ? params.lang : "de"
+  const lang = languages.includes(params.lang) ? params.lang as "de" | "en" | "ru" | "uz" : "de"
 
-  const titles = {
+  const titles: Record<"de" | "en" | "ru" | "uz", string> = {
     de: "Deutsches Sprachzentrum in Usbekistan",
     en: "German Language Center in Uzbekistan",
     ru: "Немецкий языковой центр в Узбекистане",
     uz: "O'zbekistondagi Nemis til markazi",
   }
 
-  const descriptions = {
+  const descriptions: Record<"de" | "en" | "ru" | "uz", string> = {
     de: "Lernen Sie Deutsch, Usbekisch, Englisch und Russisch in unserem Sprachzentrum in Usbekistan",
     en: "Learn German, Uzbek, English, and Russian at our language center in Uzbekistan",
     ru: "Изучайте немецкий, узбекский, английский и русский языки в нашем языковом центре в Узбекистане",
@@ -31,8 +39,8 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   }
 
   return {
-    title: titles[lang as keyof typeof titles],
-    description: descriptions[lang as keyof typeof descriptions],
+    title: titles[lang],
+    description: descriptions[lang],
     alternates: {
       languages: {
         de: `/de`,
@@ -49,14 +57,7 @@ export function generateStaticParams() {
   return languages.map((lang) => ({ lang }))
 }
 
-export default function LangLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
-  params: { lang: string }
-}) {
-  // Validate language
+export default function LangLayout({ children, params }: LayoutProps) {
   const lang = languages.includes(params.lang) ? params.lang : "de"
 
   return (
