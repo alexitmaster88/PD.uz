@@ -28,7 +28,7 @@ export default function RootLayout({
         <link rel="preload" href="/_next/static/chunks/framer-motion.js" as="script" />
         <link rel="icon" href="/PDico.png" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-cover bg-no-repeat bg-center`} style={{ backgroundImage: "url('/your-background-image.jpg')" }}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
