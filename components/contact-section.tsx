@@ -1,195 +1,125 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import type { ChangeEvent, FormEvent } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent } from "@/components/ui/card"
-import { Phone, Mail, Clock, CheckCircle } from "lucide-react"
-import { useLanguage } from "@/contexts/language-context"
-import Image from "next/image"
+import React, { useState, ChangeEvent, FormEvent } from 'react'
 
-const ContactSection = () => {
-  const { t } = useLanguage()
+type FormState = {
+  name: string
+  email: string
+  message: string
+  course?: string
+}
 
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-    course: "",
+export default function ContactSection() {
+  const [formState, setFormState] = useState<FormState>({
+    name: '',
+    email: '',
+    message: '',
+    course: ''
   })
-
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
-    setFormState((prev) => ({ ...prev, [name]: value }))
+    setFormState(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSelectChange = (value: string) => {
-    setFormState((prev) => ({ ...prev, course: value }))
-  }
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // TODO: wire up to your backend/email service here
     setIsSubmitted(true)
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormState({ name: "", email: "", phone: "", subject: "", message: "", course: "" })
-    }, 3000)
+  }
+
+  if (isSubmitted) {
+    return (
+      <section id="kontakt" className="py-16">
+        <div className="mx-auto max-w-2xl px-4 text-center">
+          <h2 className="text-2xl font-semibold">Vielen Dank!</h2>
+          <p className="mt-2 text-muted-foreground">
+            Ihre Nachricht wurde gesendet. Wir melden uns bald bei Ihnen.
+          </p>
+        </div>
+      </section>
+    )
   }
 
   return (
-    <section id="kontakt" className="py-16 md:py-24 bg-background/82 relative overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Image src="/images/german-culture-2.png" alt="Contact background" fill className="object-cover opacity-10" />
-        <div className="absolute inset-0 bg-secondary/70"></div>
-      </div>
+    <section id="kontakt" className="py-16">
+      <div className="mx-auto max-w-3xl px-4">
+        <h2 className="text-3xl font-bold tracking-tight">Kontakt</h2>
+        <p className="mt-2 text-muted-foreground">
+          Haben Sie Fragen? Schreiben Sie uns – wir helfen gerne weiter.
+        </p>
 
-      <div className="container relative z-10">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("contact_us_title")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("contact_questions")}</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <div className="h-full flex flex-col">
-            <h3 className="text-2xl font-bold mb-6">{t("send_message")}</h3>
-
-            {isSubmitted ? (
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex flex-col items-center text-center p-6">
-                    <div className="mb-4 text-green-500">
-                      <CheckCircle className="h-16 w-16" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Nachricht gesendet!</h3>
-                    <p className="text-muted-foreground">Vielen Dank für Ihre Nachricht. Wir werden uns in Kürze bei Ihnen melden.</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">{t("name")}</label>
-                    <Input id="name" name="name" value={formState.name} onChange={handleChange} placeholder={t("name")} required />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">{t("email")}</label>
-                    <Input id="email" name="email" type="email" value={formState.email} onChange={handleChange} placeholder="ihre-email@beispiel.com" required />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="phone" className="text-sm font-medium">{t("phone_number")}</label>
-                    <Input id="phone" name="phone" value={formState.phone} onChange={handleChange} placeholder="+998 XX XXX XX XX" />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="course" className="text-sm font-medium">{t("courses")}</label>
-                    <Select value={formState.course} onValueChange={handleSelectChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("courses")} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="deutsch-a1">Deutsch A1</SelectItem>
-                        <SelectItem value="deutsch-a2">Deutsch A2</SelectItem>
-                        <SelectItem value="deutsch-b1">Deutsch B1</SelectItem>
-                        <SelectItem value="deutsch-b2">Deutsch B2</SelectItem>
-                        <SelectItem value="englisch">Englisch</SelectItem>
-                        <SelectItem value="russisch">Russisch</SelectItem>
-                        <SelectItem value="usbekisch">Usbekisch</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium">{t("subject")}</label>
-                  <Input id="subject" name="subject" value={formState.subject} onChange={handleChange} placeholder={t("subject")} required />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">{t("message")}</label>
-                  <Textarea id="message" name="message" value={formState.message} onChange={handleChange} placeholder={t("message")} rows={5} required />
-                </div>
-
-                <Button type="submit" className="w-full">{t("send")}</Button>
-              </form>
-            )}
+        <form onSubmit={handleSubmit} className="mt-8 grid gap-6">
+          <div className="grid gap-2">
+            <label htmlFor="name" className="text-sm font-medium">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              value={formState.name}
+              onChange={handleChange}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
           </div>
 
-          <div className="h-full flex flex-col">
-            <h3 className="text-2xl font-bold mb-6">{t("contact_info")}</h3>
-
-            <div className="grid gap-6">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Phone className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold mb-1">{t("phone")}</h4>
-                      <p className="text-muted-foreground">+998 71 123 4567</p>
-                      <p className="text-muted-foreground">+998 71 987 6543</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Mail className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold mb-1">{t("email")}</h4>
-                      <p className="text-muted-foreground">info@profideutsch.uz</p>
-                      <p className="text-muted-foreground">kurse@profideutsch.uz</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Clock className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold mb-1">{t("opening_hours")}</h4>
-                      <p className="text-muted-foreground">{t("monday_friday")}</p>
-                      <p className="text-muted-foreground">{t("saturday")}</p>
-                      <p className="text-muted-foreground">{t("sunday")}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="mt-6 p-4 bg-background rounded-lg border">
-              <h4 className="font-bold mb-2">{t("headquarters")}</h4>
-              <address className="not-italic text-muted-foreground">
-                Amir Temur Straße 107A
-                <br />
-                Taschkent, 100084
-                <br />
-                Usbekistan
-              </address>
-            </div>
+          <div className="grid gap-2">
+            <label htmlFor="email" className="text-sm font-medium">E-Mail</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={formState.email}
+              onChange={handleChange}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
           </div>
-        </div>
+
+          <div className="grid gap-2">
+            <label htmlFor="course" className="text-sm font-medium">Kurs</label>
+            <select
+              id="course"
+              name="course"
+              value={formState.course}
+              onChange={handleChange}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <option value="">Bitte wählen…</option>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="B1">B1</option>
+              <option value="B2">B2</option>
+              <option value="C1">C1</option>
+            </select>
+          </div>
+
+          <div className="grid gap-2">
+            <label htmlFor="message" className="text-sm font-medium">Nachricht</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows={5}
+              value={formState.message}
+              onChange={handleChange}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="inline-flex h-10 items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow transition-colors hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Senden
+            </button>
+          </div>
+        </form>
       </div>
     </section>
   )
 }
-
-export default ContactSection

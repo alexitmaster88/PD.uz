@@ -1,24 +1,20 @@
-import React, { useState } from "react";
-import LangLink from "./LangLink";
-import { t } from "../i18n";
 
-function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+> my-v0-project@0.1.0 build /Users/admino/Documents/PROJECTS/Project_profi-deutsch-website/v0/Testing/german-language-center (1)
+> next build
 
-  return (
-    <header>
-      {/* ... other header content ... */}
-      <nav>
-        <LangLink
-          href="#kurse"
-          className="text-sm font-medium transition-colors hover:text-primary"
-        >
-          {t("courses")}
-        </LangLink>
-        {/* ... other nav links ... */}
-      </nav>
-    </header>
-  );
-}
+   ▲ Next.js 15.2.4
 
-export default Header;
+   Creating an optimized production build ...
+Failed to compile.
+
+./components/contact-section.tsx
+Module not found: Can't resolve '@/components/lang-link'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./app/[lang]/page.tsx
+
+
+> Build failed because of webpack errors
+ ELIFECYCLE  Command failed with exit code 1.
