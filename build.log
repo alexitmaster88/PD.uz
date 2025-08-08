@@ -1,0 +1,24 @@
+import React, { useState } from "react";
+import LangLink from "./LangLink";
+import { t } from "../i18n";
+
+function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <header>
+      {/* ... other header content ... */}
+      <nav>
+        <LangLink
+          href="#kurse"
+          className="text-sm font-medium transition-colors hover:text-primary"
+        >
+          {t("courses")}
+        </LangLink>
+        {/* ... other nav links ... */}
+      </nav>
+    </header>
+  );
+}
+
+export default Header;
