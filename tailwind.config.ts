@@ -1,4 +1,7 @@
 import type { Config } from "tailwindcss"
+import { defineBackend } from '@aws-amplify/backend';
+import { auth } from './auth/resource';
+import { data } from './data/resource';
 
 const config = {
   darkMode: ["class"],
@@ -83,3 +86,37 @@ const config = {
 } satisfies Config
 
 export default config
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'cdn.pixabay.com' }
+    ],
+    unoptimized: true  // This is good for Amplify
+  }
+};
+
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      
+// Check amplify/backend.ts configuration
+defineBackend({
+  auth,
+  data,
+});
