@@ -25,60 +25,35 @@ const ContactSection = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  // Type the event parameter explicitly to avoid implicit any
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
 
-  // Type the select value parameter as string to avoid implicit any
   const handleSelectChange = (value: string) => {
     setFormState((prev) => ({ ...prev, course: value }))
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Here you would normally send the form data to your backend
-    console.log("Form submitted:", formState)
-
-    // Show success message
     setIsSubmitted(true)
-
-    // Reset form after 5 seconds
     setTimeout(() => {
       setIsSubmitted(false)
-      setFormState({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-        course: "",
-      })
-    }, 5000)
+      setFormState({ name: "", email: "", phone: "", subject: "", message: "", course: "" })
+    }, 3000)
   }
 
   return (
     <section id="kontakt" className="py-16 md:py-24 bg-background/82 relative overflow-hidden">
-      {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/german-culture-2.png"
-          alt="Contact background"
-          fill
-          className="object-cover opacity-10"
-        />
+        <Image src="/images/german-culture-2.png" alt="Contact background" fill className="object-cover opacity-10" />
         <div className="absolute inset-0 bg-secondary/70"></div>
       </div>
 
       <div className="container relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
-            {t("contact_us_title")}
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {t("contact_questions")}
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("contact_us_title")}</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("contact_questions")}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -93,9 +68,7 @@ const ContactSection = () => {
                       <CheckCircle className="h-16 w-16" />
                     </div>
                     <h3 className="text-xl font-bold mb-2">Nachricht gesendet!</h3>
-                    <p className="text-muted-foreground">
-                      Vielen Dank für Ihre Nachricht. Wir werden uns in Kürze bei Ihnen melden.
-                    </p>
+                    <p className="text-muted-foreground">Vielen Dank für Ihre Nachricht. Wir werden uns in Kürze bei Ihnen melden.</p>
                   </div>
                 </CardContent>
               </Card>
@@ -103,51 +76,22 @@ const ContactSection = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">
-                      {t("name")}
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formState.name}
-                      onChange={handleChange}
-                      placeholder={t("name")}
-                      required
-                    />
+                    <label htmlFor="name" className="text-sm font-medium">{t("name")}</label>
+                    <Input id="name" name="name" value={formState.name} onChange={handleChange} placeholder={t("name")} required />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">
-                      {t("email")}
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formState.email}
-                      onChange={handleChange}
-                      placeholder="ihre-email@beispiel.com"
-                      required
-                    />
+                    <label htmlFor="email" className="text-sm font-medium">{t("email")}</label>
+                    <Input id="email" name="email" type="email" value={formState.email} onChange={handleChange} placeholder="ihre-email@beispiel.com" required />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="text-sm font-medium">
-                      {t("phone_number")}
-                    </label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      value={formState.phone}
-                      onChange={handleChange}
-                      placeholder="+998 XX XXX XX XX"
-                    />
+                    <label htmlFor="phone" className="text-sm font-medium">{t("phone_number")}</label>
+                    <Input id="phone" name="phone" value={formState.phone} onChange={handleChange} placeholder="+998 XX XXX XX XX" />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="course" className="text-sm font-medium">
-                      {t("courses")}
-                    </label>
+                    <label htmlFor="course" className="text-sm font-medium">{t("courses")}</label>
                     <Select value={formState.course} onValueChange={handleSelectChange}>
                       <SelectTrigger>
                         <SelectValue placeholder={t("courses")} />
@@ -166,37 +110,16 @@ const ContactSection = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium">
-                    {t("subject")}
-                  </label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    value={formState.subject}
-                    onChange={handleChange}
-                    placeholder={t("subject")}
-                    required
-                  />
+                  <label htmlFor="subject" className="text-sm font-medium">{t("subject")}</label>
+                  <Input id="subject" name="subject" value={formState.subject} onChange={handleChange} placeholder={t("subject")} required />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
-                    {t("message")}
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formState.message}
-                    onChange={handleChange}
-                    placeholder={t("message")}
-                    rows={5}
-                    required
-                  />
+                  <label htmlFor="message" className="text-sm font-medium">{t("message")}</label>
+                  <Textarea id="message" name="message" value={formState.message} onChange={handleChange} placeholder={t("message")} rows={5} required />
                 </div>
 
-                <Button type="submit" className="w-full">
-                  {t("send")}
-                </Button>
+                <Button type="submit" className="w-full">{t("send")}</Button>
               </form>
             )}
           </div>
