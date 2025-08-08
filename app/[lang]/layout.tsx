@@ -14,9 +14,7 @@ const languages = ["de", "en", "ru", "uz"]
 // Define the props type for layout
 type LayoutProps = {
   children: React.ReactNode
-  params: {
-    lang: string
-  }
+  params: Promise<{ lang: string }>
 }
 
 // Generate metadata
@@ -57,11 +55,12 @@ export function generateStaticParams() {
   return languages.map((lang) => ({ lang }))
 }
 
-export default function LangLayout({ children, params }: LayoutProps) {
-  const lang = languages.includes(params.lang) ? params.lang : "de"
+export default async function LangLayout({ children, params }: LayoutProps) {
+  const { lang } = await params
+  const safeLang = languages.includes(lang) ? lang : "de"
 
   return (
-    <LanguageProvider initialLanguage={lang as "de" | "en" | "ru" | "uz"}>
+    <LanguageProvider initialLanguage={safeLang as "de" | "en" | "ru" | "uz"}>
       <Header />
       <main className="min-h-screen">{children}</main>
       <Footer />
