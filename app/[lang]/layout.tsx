@@ -60,3 +60,10 @@ export default async function LangLayout({
     </html>
   )
 }
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  const langs = ["de", "uz", "en", "ru"];
+  return langs.map((lang) => ({ lang }));
+}
