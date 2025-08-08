@@ -20,3 +20,11 @@ frontend:
       - node_modules/**/*
       - .next/cache/**/*
       - ~/.pnpm-store/**/*
+pnpm:
+  node-linker: hoisted
+  shamefully-hoist: true
+  strict-peer-dependencies: false
+scripts:
+  build: next build
+  dev: next dev
+  start: next start
