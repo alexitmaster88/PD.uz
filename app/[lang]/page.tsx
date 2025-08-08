@@ -61,7 +61,8 @@ export default function Home() {
             src="/images/backgrounds/german-town-view.jpg"
             alt="German town view"
             fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.5px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -84,7 +85,8 @@ export default function Home() {
             src="/images/backgrounds/brandenburg-gate.png"
             alt="The Brandenburg Gate in Berlin, Germany"
             fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.5px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -101,7 +103,8 @@ export default function Home() {
             src="/images/backgrounds/white-brown-building.jpg"
             alt="White and brown concrete building near green trees during daytime"
             fill
-            className="object-cover opacity-85 filter blur-[1.2px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.2px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -118,7 +121,8 @@ export default function Home() {
             src="/images/backgrounds/canal-buildings.jpg"
             alt="Canal between buildings during nighttime"
             fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.5px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -138,7 +142,8 @@ export default function Home() {
             src="/images/backgrounds/flag-pole.jpg"
             alt="A flag on a pole"
             fill
-            className="object-cover opacity-85 filter blur-[1.2px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.2px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -155,7 +160,8 @@ export default function Home() {
             src="/images/backgrounds/german-city-view.jpg"
             alt="German city view"
             fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.5px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -172,7 +178,8 @@ export default function Home() {
             src="/images/backgrounds/mountain-water.jpg"
             alt="Green mountain beside body of water"
             fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.5px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
@@ -189,7 +196,8 @@ export default function Home() {
             src="/images/backgrounds/dome-building.jpg"
             alt="A large building with a dome on top"
             fill
-            className="object-cover opacity-85 filter blur-[1.5px]"
+            sizes="100vw"
+            className="object-cover opacity-80 filter blur-[1.5px]"
             priority
           />
           <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
