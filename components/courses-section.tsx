@@ -91,6 +91,7 @@ const CoursesSection = () => {
       },
     ],
   }
+  type CourseKey = keyof typeof courseData;
 
   return (
     <section id="kurse" className="py-16 md:py-24 bg-background">
@@ -108,7 +109,7 @@ const CoursesSection = () => {
             <TabsTrigger value="russisch">Русский</TabsTrigger>
           </TabsList>
 
-          {Object.keys(courseData).map((lang) => (
+          {(Object.keys(courseData) as CourseKey[]).map((lang) => (
             <TabsContent key={lang} value={lang} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {courseData[lang].map((course, index) => (
