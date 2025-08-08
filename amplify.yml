@@ -1,50 +1,22 @@
-import React from 'react'
-import type { ChangeEvent, FormEvent } from 'react'
-
-const ContactSection = () => {
-  const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    message: '',
-  })
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // submission logic here
-  }
-
-  return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </section>
-  )
-}
-
-export default ContactSection
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - corepack enable
+        - pnpm config set store-dir ~/.pnpm-store
+        - pnpm config set ignore-scripts false
+        - pnpm install --frozen-lockfile=false
+        - pnpm rebuild sharp || true
+    build:
+      commands:
+        - pnpm build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*
+      - ~/.pnpm-store/**/*
