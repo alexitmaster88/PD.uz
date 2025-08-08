@@ -1,14 +1,30 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
-      { protocol: 'https', hostname: 'cdn.pixabay.com' },
-      { protocol: 'https', hostname: 'images.pexels.com' },
-    ],
-  },
-  // DO NOT use output: 'export' since the app relies on dynamic routes/SSR on Amplify
-};
+"use client" line removed.
 
-export default nextConfig;
+<html ...> replaced with:
+<html lang={params.lang} suppressHydrationWarning>
+
+<body ...> style prop removed, suppressHydrationWarning added after className or alone if no className.
+
+Removed useEffect blocks that set lang or toggle className/theme on html/body and removed unused imports accordingly.
+
+---
+
+app/[lang]/layout.tsx:
+
+import React from "react";
+
+export default function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { lang: string };
+}) {
+  return (
+    <html lang={params.lang} suppressHydrationWarning>
+      <body className="bg-white text-black" suppressHydrationWarning>
+        {children}
+      </body>
+    </html>
+  );
+}
