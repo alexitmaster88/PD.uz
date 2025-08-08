@@ -4,7 +4,10 @@ frontend:
     preBuild:
       commands:
         - corepack enable
-        - pnpm install --frozen-lockfile=false --enable-pre-post-scripts
+        - pnpm config set store-dir ~/.pnpm-store
+        - pnpm config set ignore-scripts false
+        - pnpm install --frozen-lockfile=false
+        - pnpm rebuild sharp || true
     build:
       commands:
         - pnpm build
