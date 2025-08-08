@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import type { ChangeEvent, FormEvent } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -9,7 +10,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Phone, Mail, Clock, CheckCircle } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 import Image from "next/image"
-import type { ChangeEvent, FormEvent } from "react";
 
 const ContactSection = () => {
   const { t } = useLanguage()
@@ -25,12 +25,14 @@ const ContactSection = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false)
 
+  // Type the event parameter explicitly to avoid implicit any
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSelectChange = (value) => {
+  // Type the select value parameter as string to avoid implicit any
+  const handleSelectChange = (value: string) => {
     setFormState((prev) => ({ ...prev, course: value }))
   }
 
@@ -60,14 +62,23 @@ const ContactSection = () => {
     <section id="kontakt" className="py-16 md:py-24 bg-background/82 relative overflow-hidden">
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
-        <Image src="/images/german-culture-2.png" alt="Contact background" fill className="object-cover opacity-10" />
+        <Image
+          src="/images/german-culture-2.png"
+          alt="Contact background"
+          fill
+          className="object-cover opacity-10"
+        />
         <div className="absolute inset-0 bg-secondary/70"></div>
       </div>
 
       <div className="container relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("contact_us_title")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("contact_questions")}</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
+            {t("contact_us_title")}
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("contact_questions")}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
