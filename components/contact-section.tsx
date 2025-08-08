@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Phone, Mail, Clock, CheckCircle } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 import Image from "next/image"
+import type { ChangeEvent, FormEvent } from "react";
 
 const ContactSection = () => {
   const { t } = useLanguage()
@@ -24,7 +25,7 @@ const ContactSection = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
@@ -33,7 +34,7 @@ const ContactSection = () => {
     setFormState((prev) => ({ ...prev, course: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Here you would normally send the form data to your backend
     console.log("Form submitted:", formState)
