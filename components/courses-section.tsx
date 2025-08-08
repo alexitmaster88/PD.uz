@@ -112,7 +112,7 @@ const CoursesSection = () => {
           {(Object.keys(courseData) as CourseKey[]).map((lang) => (
             <TabsContent key={lang} value={lang} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {courseData[lang].map((course, index) => (
+                {courseData[lang as keyof typeof courseData].map((course, index) => (
                   <Card key={index} className="flex flex-col">
                     <CardHeader>
                       <div className="flex justify-between items-start">
