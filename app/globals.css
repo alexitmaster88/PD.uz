@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS variables and base theme */
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
@@ -24,11 +23,6 @@
   --card: 0 0% 100%;
   --card-foreground: 222.2 84% 4.9%;
   --radius: 0.5rem;
-
-  /* German flag colors (used by Tailwind extend) */
-  --german-black: 0 0% 0%;
-  --german-red: 0 84% 50%;
-  --german-gold: 48 100% 50%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -55,10 +49,5 @@
   }
 }
 
-html, body {
-  height: 100%;
-}
-
-body {
-  @apply bg-background text-foreground;
-}
+html, body { height: 100%; }
+body { @apply bg-background text-foreground; }
