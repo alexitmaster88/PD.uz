@@ -1,9 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Keep globals.css strictly CSS only. Do not place JS/TS/Next config here. */
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -12,7 +6,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.pixabay.com' }
     ],
     unoptimized: true
-  }
+  },
+  // Add this if you're deploying to Amplify
+  output: 'standalone'
 };
 
-export default nextConfig;
+module.exports = nextConfig;
