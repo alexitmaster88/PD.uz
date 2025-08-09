@@ -1,10 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
-    ],
-  },
-};
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-export default nextConfig;
+/* Keep globals.css strictly CSS only. Do not place JS/TS/Next config here. */
