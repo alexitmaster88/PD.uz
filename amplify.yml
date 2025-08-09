@@ -1,26 +1,19 @@
 version: 1
-applications:
-  - frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm install -g pnpm
-            - pnpm config set store-dir .pnpm-store
-            - pnpm install
-        build:
-          commands:
-            - pnpm run build
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
-          - .next/cache/**/*
-          - .pnpm-store/**/*
-    appRoot: .
-pnpm:
-  legacy-peer-deps: true
-  auto-install-peers: true
-  strict-peer-dependencies: false
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - corepack enable
+        - pnpm config set store-dir ~/.pnpm-store
+        - pnpm install --frozen-lockfile=false
+    build:
+      commands:
+        - pnpm build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - ~/.pnpm-store/**/*
