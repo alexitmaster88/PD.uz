@@ -196,32 +196,32 @@ const Header = () => {
             <LangLink
               href="#kurse"
               className="text-sm font-medium transition-colors hover:text-primary"
-              onClick={() => setIsMenuOpen(false)}
+             
             >
               {t("courses")}
             </LangLink>
             <LangLink
               href="#standorte"
               className="text-sm font-medium transition-colors hover:text-primary"
-              onClick={() => setIsMenuOpen(false)}
+             
             >
               {t("locations")}
             </LangLink>
             <LangLink
               href="#vorteile"
               className="text-sm font-medium transition-colors hover:text-primary"
-              onClick={() => setIsMenuOpen(false)}
+             
             >
               {t("benefits")}
             </LangLink>
             <LangLink
               href="#kontakt"
               className="text-sm font-medium transition-colors hover:text-primary"
-              onClick={() => setIsMenuOpen(false)}
+             
             >
               {t("contact")}
             </LangLink>
-            <Button onClick={() => setIsMenuOpen(false)}>{t("register_now")}</Button>
+            <Button>{t("register_now")}</Button>
           </nav>
         </div>
       )}
