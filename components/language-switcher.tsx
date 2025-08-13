@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, startTransition } from "react"
 import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
 import { ChevronUp, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
+import { useRouter, usePathname } from "next/navigation"
 
 type Lang = "de" | "uz" | "en" | "ru"
 
@@ -19,6 +20,8 @@ const FLAG_SRC: Record<Lang, string> = {
 
 export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage()
+  const router = useRouter()
+  const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
@@ -43,13 +46,23 @@ export default function LanguageSwitcher() {
 
   const handleLanguageChange = (lang: "de" | "uz" | "en" | "ru") => {
     setSelectedLang(lang)
-
-    // Animate selection before changing language
+    // compute the next path by swapping the first segment
+    const nextPath = (() => {
+      const parts = (pathname || "/").split("/")
+      parts[1] = lang // ['', lang, ...]
+      const joined = parts.join("/") || `/${lang}`
+      return joined.replace(/\/+$/, "") || `/${lang}`
+    })()
+  
+    // Short selection animation, then soft replace without scrolling
     setTimeout(() => {
       setLanguage(lang)
+      startTransition(() => {
+        router.replace(nextPath, { scroll: false })
+      })
       setIsExpanded(false)
       setSelectedLang(null)
-    }, 400)
+    }, 200)
   }
 
   const getLanguageName = (lang: string) => {
