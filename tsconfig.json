@@ -1,121 +1,25 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-
-declare global {
-  interface Window {
-    YT?: {
-      Player: new (elt: HTMLElement | string, opts: any) => any;
-    };
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
-// Singleton loader to avoid re-adding the script and to survive route/locale changes
-let ytReadyPromise: Promise<void> | null = null;
-function loadYouTubeAPI(): Promise<void> {
-  if (typeof window === "undefined") return Promise.resolve();
-  // Already loaded
-  if (window.YT && window.YT.Player) return Promise.resolve();
-  if (ytReadyPromise) return ytReadyPromise;
-
-  ytReadyPromise = new Promise<void>((resolve) => {
-    // Add the script once, non-interactively
-    const existing = document.querySelector<HTMLScriptElement>(
-      'script[src="https://www.youtube.com/iframe_api"]'
-    );
-    if (!existing) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      tag.async = true;
-      document.head.appendChild(tag);
-    }
-
-    const prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      prev?.();
-      resolve();
-    };
-
-    // If the API initialized before we attached the handler
-    if (window.YT && window.YT.Player) {
-      resolve();
-    }
-  });
-
-  return ytReadyPromise;
-}
-
-type Props = {
-  videoId: string;
-  width?: number | string;
-  height?: number | string;
-  playerVars?: Record<string, unknown>;
-  // If you want to keep playback across locale changes, set keepMountedInLayout
-};
-
-/**
- * Robust YouTube IFrame player that:
- * - Loads the API once (no reliance on firstScriptTag)
- * - Survives app/[lang] route transitions without getting "disabled"
- * - Doesn't re-create the player during locale changes
- */
-export default function YouTubePlayer({
-  videoId,
-  width = "100%",
-  height = 315,
-  playerVars,
-}: Props) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const playerRef = useRef<any>(null);
-
-  // Create the player once
-  useEffect(() => {
-    let cancelled = false;
-
-    loadYouTubeAPI().then(() => {
-      if (cancelled || !containerRef.current || playerRef.current) return;
-
-      playerRef.current = new window.YT!.Player(containerRef.current, {
-        width,
-        height,
-        videoId,
-        playerVars: {
-          modestbranding: 1,
-          rel: 0,
-          // You can add additional vars like 'origin' if needed
-          ...playerVars,
-        },
-      });
-    });
-
-    return () => {
-      cancelled = true;
-      // Clean up safely; guard in case destroy is unavailable
-      try {
-        playerRef.current?.destroy?.();
-      } catch {
-        // ignore
-      } finally {
-        playerRef.current = null;
-      }
-    };
-    // Intentionally mount once so locale changes (app/[lang]) don't tear down/recreate immediately
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // If the videoId changes, cue the new video without recreating the player
-  useEffect(() => {
-    if (playerRef.current && videoId) {
-      try {
-        if (typeof playerRef.current.cueVideoById === "function") {
-          playerRef.current.cueVideoById(videoId);
-        }
-      } catch {
-        // ignore
-      }
-    }
-  }, [videoId]);
-
-  return <div ref={containerRef} />;
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
