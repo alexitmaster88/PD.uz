@@ -6,6 +6,16 @@ import { Button } from "@/components/ui/button"
 import { ChevronUp, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+
+type Lang = "de" | "uz" | "en" | "ru"
+
+const FLAG_SRC: Record<Lang, string> = {
+  de: "/images/flag-de.png",
+  uz: "/images/flag-uz.png",
+  en: "/images/flag-en.png",
+  ru: "/images/flag-ru.png",
+}
 
 export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage()
@@ -40,22 +50,6 @@ export default function LanguageSwitcher() {
       setIsExpanded(false)
       setSelectedLang(null)
     }, 400)
-  }
-
-  // Helper function to get flag class based on language
-  const getFlagClass = (lang: string) => {
-    switch (lang) {
-      case "de":
-        return "bg-gradient-to-b from-black via-[#DD0000] to-[#FFCE00]"
-      case "uz":
-        return "bg-gradient-to-b from-[#0099B5] via-white to-[#1EB53A]"
-      case "en":
-        return "bg-[#012169]"
-      case "ru":
-        return "bg-gradient-to-b from-white via-[#0039A6] to-[#D52B1E]"
-      default:
-        return "bg-gradient-to-b from-black via-[#DD0000] to-[#FFCE00]"
-    }
   }
 
   const getLanguageName = (lang: string) => {
@@ -126,7 +120,16 @@ export default function LanguageSwitcher() {
                     className="language-flag border-0 m-0"
                     whileHover={{ rotate: [0, -10, 10, -10, 0], transition: { duration: 0.5 } }}
                   >
-                    <div className={cn("w-full h-full", getFlagClass(lang))}></div>
+                    <div className="language-flag w-6 h-4">
+                      <Image
+                        src={FLAG_SRC[lang as Lang]}
+                        alt={`${getLanguageName(lang)} flag`}
+                        width={24}
+                        height={16}
+                        className="rounded-sm object-cover"
+                        priority={false}
+                      />
+                    </div>
                   </motion.div>
                   <span className="text-sm">{getLanguageName(lang)}</span>
                 </Button>
@@ -167,8 +170,15 @@ export default function LanguageSwitcher() {
                 transition={{ duration: 0.2 }}
                 className="relative"
               >
-                <div className="language-flag border-0 m-0">
-                  <div className={cn("w-full h-full", getFlagClass(language))}></div>
+                <div className="language-flag w-6 h-4">
+                  <Image
+                    src={FLAG_SRC[(language as Lang)]}
+                    alt={`${getLanguageName(language)} flag`}
+                    width={24}
+                    height={16}
+                    className="rounded-sm object-cover"
+                    priority={false}
+                  />
                 </div>
                 <motion.div
                   className="absolute -top-1 -right-1 bg-white rounded-full p-0.5 shadow-sm"
