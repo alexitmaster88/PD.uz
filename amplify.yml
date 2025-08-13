@@ -3,10 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
+        - . ~/.nvm/nvm.sh && nvm use 20 || nvm install 20
         - corepack enable
         - pnpm config set store-dir ~/.pnpm-store
         - pnpm install --frozen-lockfile=false
-        - pnpm approve-builds
     build:
       commands:
         - pnpm build
