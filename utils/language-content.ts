@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react"
 import { useLanguage } from "@/contexts/language-context"
-import type { JSX } from "react/jsx-runtime"
 
 // Type for language-specific content
 export type LanguageContent<T> = {
@@ -23,7 +22,7 @@ export function LanguageSpecificContent({
   content,
 }: {
   content: LanguageContent<ReactNode>
-}): JSX.Element | null {
+}): ReactNode | null {
   const { language } = useLanguage()
-  return <>{content[language]}</>
+  return content[language] ?? null
 }
