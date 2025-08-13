@@ -3,18 +3,31 @@ frontend:
   phases:
     preBuild:
       commands:
-        - . ~/.nvm/nvm.sh && nvm use 20 || nvm install 20
+        - set -euo pipefail
+        - echo "=== ENV ==="
+        - node -v
+        - echo "Activating Corepack & pnpm"
         - corepack enable
+        - corepack prepare pnpm@10.14.0 --activate
+        - pnpm -v
         - pnpm config set store-dir ~/.pnpm-store
-        - pnpm install --frozen-lockfile=false
+        - pnpm config set fetch-retries 5
+        - pnpm config set fetch-retry-factor 2
+        - pnpm config set fetch-timeout 600000
+        - export NEXT_TELEMETRY_DISABLED=1
+        - export CI=true
+        - echo "=== INSTALL ==="
+        - pnpm install --frozen-lockfile
     build:
       commands:
-        - pnpm build
-  cache:
-    paths:
-      - ~/.pnpm-store
-      - .next/cache
+        - echo "=== BUILD START $(date -u) ==="
+        - NODE_OPTIONS="--max-old-space-size=4096" pnpm build
+        - echo "=== BUILD END $(date -u) ==="
   artifacts:
     baseDirectory: .next
     files:
       - '**/*'
+  cache:
+    paths:
+      - ~/.pnpm-store
+      - .next/cache
