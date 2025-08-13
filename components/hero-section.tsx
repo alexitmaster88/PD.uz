@@ -10,6 +10,16 @@ import { AlertCircle, X } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { motion, AnimatePresence } from "framer-motion"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
+
+type Lang = "de" | "uz" | "en" | "ru"
+
+const FLAG_SRC: Record<Lang, string> = {
+  de: "/images/flag-de.png",
+  uz: "/images/flag-uz.png",
+  en: "/images/flag-en.png",
+  ru: "/images/flag-ru.png",
+}
 
 const HeroSection = () => {
   const { language, setLanguage, t, detectedLanguage, getLanguagePath } = useLanguage()
@@ -113,14 +123,15 @@ const HeroSection = () => {
               <motion.button
                 key={lang}
                 onClick={() => setLanguage(lang as "de" | "uz" | "en" | "ru")}
-                className={`flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 ${
-                  language === lang ? "scale-110 ring-2 ring-primary rounded-full" : ""
+                className={`flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 select-none ${
+                  language === lang ? "scale-110" : ""
                 }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
+                style={{ WebkitTapHighlightColor: "transparent" }}
                 aria-label={`Switch to ${
                   lang === "de" ? "German" : lang === "uz" ? "Uzbek" : lang === "en" ? "English" : "Russian"
                 }`}
@@ -129,17 +140,24 @@ const HeroSection = () => {
                   className="language-flag"
                   whileHover={{ rotate: [0, -5, 5, -5, 0], transition: { duration: 0.5 } }}
                 >
-                  <div
-                    className={
-                      lang === "de"
-                        ? "w-full h-full bg-gradient-to-b from-black via-[#DD0000] to-[#FFCE00]"
-                        : lang === "uz"
-                          ? "w-full h-full bg-gradient-to-b from-[#0099B5] via-white to-[#1EB53A]"
-                          : lang === "en"
-                            ? "w-full h-full bg-[#012169]"
-                            : "w-full h-full bg-gradient-to-b from-white via-[#0039A6] to-[#D52B1E]"
-                    }
-                  ></div>
+                  <div className="w-10 h-7">
+                    <Image
+                      src={FLAG_SRC[lang as Lang]}
+                      alt={
+                        lang === "de"
+                          ? "German flag"
+                          : lang === "uz"
+                            ? "Uzbek flag"
+                            : lang === "en"
+                              ? "English flag"
+                              : "Russian flag"
+                      }
+                      width={40}
+                      height={28}
+                      className="rounded-sm object-cover"
+                      priority={false}
+                    />
+                  </div>
                 </motion.div>
                 <span className="text-sm mt-1">
                   {lang === "de" ? "Deutsch" : lang === "uz" ? "O'zbekcha" : lang === "en" ? "English" : "Русский"}
