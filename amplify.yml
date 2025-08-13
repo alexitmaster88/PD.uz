@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - corepack enable
+        - pnpm config set store-dir ~/.pnpm-store
+        - pnpm install --frozen-lockfile=false
+        - pnpm approve-builds
+    build:
+      commands:
+        - pnpm build
+  cache:
+    paths:
+      - ~/.pnpm-store
+      - .next/cache
