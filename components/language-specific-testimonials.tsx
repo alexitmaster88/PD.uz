@@ -286,7 +286,7 @@ const LanguageSpecificTestimonials = () => {
       {/* Background image with blur effect */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80"
+          src="/language-specific-testimonials.tsx/photo-1517457373958-b7bdd4587205.png"
           alt="People sitting on bench near lake"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"

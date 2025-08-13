@@ -49,7 +49,7 @@ const BenefitsSection = () => {
     <section id="vorteile" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80"
+          src="/benefits-section.tsx/photo-1523240795612-9a054b0db644.png"
           alt="Success and achievement background"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"

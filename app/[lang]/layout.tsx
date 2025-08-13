@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   }
 
   const descriptions = {
-    de: "Lernen Sie Deutsch, Usbekisch, Englisch und Russisch in unserem Sprachzentrum in Usbekistan",
-    en: "Learn German, Uzbek, English, and Russian at our language center in Uzbekistan",
-    ru: "Изучайте немецкий, узбекский, английский и русский языки в нашем языковом центре в Узбекистане",
-    uz: "O'zbekistondagi til markazimizda nemis, o'zbek, ingliz va rus tillarini o'rganing",
+    de: "Lernen Sie Deutsch in unserem Sprachzentrum in Usbekistan",
+    en: "Learn German language at our language center in Uzbekistan",
+    ru: "Изучайте немецкий язык в нашем языковом центре в Узбекистане",
+    uz: "O'zbekistondagi til markazimizda nemis tilini o'rganing",
   }
 
   return {

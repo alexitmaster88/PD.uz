@@ -100,7 +100,7 @@ const LanguageSpecificHero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&q=80"
+          src="/language-specific-hero.tsx/photo-1599946347371-68eb71b16afc.png"
           alt="Berlin cityscape aerial view"
           fill
           className="object-cover opacity-20 filter blur-[1.3px]"

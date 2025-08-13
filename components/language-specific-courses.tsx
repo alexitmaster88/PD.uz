@@ -178,7 +178,7 @@ const LanguageSpecificCourses = () => {
     <section id="kurse" className="py-16 md:py-24 relative overflow-hidden bg-background/82">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80"
+          src="/language-specific-courses.tsx/photo-1434030216411-0b793f4b4173.png"
           alt="Education and learning background"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"

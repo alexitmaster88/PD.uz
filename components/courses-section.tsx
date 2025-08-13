@@ -98,7 +98,7 @@ const CoursesSection = () => {
       {/* Background image with blur effect */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
+          src="/courses-section.tsx/photo-1522202176988-66273c2fd55f.png"
           alt="Students learning in classroom"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"

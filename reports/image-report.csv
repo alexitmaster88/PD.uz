@@ -1,0 +1,11 @@
+file,line,section,kind,url,isLocal
+components/benefits-section.tsx,51,benefits-section.tsx,react-image,/benefits-section.tsx/photo-1523240795612-9a054b0db644.png,yes
+components/contact-section.tsx,62,contact-section.tsx,react-image,/images/german-culture-2.png,yes
+components/courses-section.tsx,100,courses-section.tsx,react-image,/courses-section.tsx/photo-1522202176988-66273c2fd55f.png,yes
+components/footer.tsx,29,footer.tsx,react-image,/ICOProfideutsch2.png,yes
+components/header.tsx,66,header.tsx,react-image,/ICOProfideutsch2.png,yes
+components/language-specific-courses.tsx,180,language-specific-courses.tsx,react-image,/language-specific-courses.tsx/photo-1434030216411-0b793f4b4173.png,yes
+components/language-specific-hero.tsx,102,language-specific-hero.tsx,react-image,/language-specific-hero.tsx/photo-1599946347371-68eb71b16afc.png,yes
+components/language-specific-testimonials.tsx,288,language-specific-testimonials.tsx,react-image,/language-specific-testimonials.tsx/photo-1517457373958-b7bdd4587205.png,yes
+components/map-section.tsx,168,map-section.tsx,react-image,/map-section.tsx/photo-1488646953014-85cb44e25828.png,yes
+components/partners-section.tsx,135,partners-section.tsx,react-image,/partners-section.tsx/photo-1654442137037-fe784a7189af.png,yes
