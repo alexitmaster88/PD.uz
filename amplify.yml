@@ -16,3 +16,7 @@ frontend:
     paths:
       - ~/.pnpm-store
       - .next/cache
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
