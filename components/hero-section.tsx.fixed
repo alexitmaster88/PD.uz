@@ -85,14 +85,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-[#0c02a3] drop-shadow-[0_0_0.3rem_#ffffff70] filter"
-            style={{
-              textShadow: `
-                0 0 1em rgba(255,255,255,0.4),
-                0 0 0.2em rgba(255,255,255,0.6),
-                0 0 0.1em rgba(12,2,163,0.5)
-              `
-            }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter"
           >
             {t("welcome")}
           </motion.h1>
@@ -100,7 +93,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-xl font-medium text-[#0c02a3]"
+            className="text-xl text-muted-foreground"
           >
             {t("discover")}
           </motion.p>
@@ -123,7 +116,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="flex justify-center gap-8 pt-8"
+            className="flex justify-center gap-10 pt-8"
           >
             {["de", "uz", "en", "ru"].map((lang, index) => (
               <motion.button
@@ -143,27 +136,29 @@ const HeroSection = () => {
                 }`}
               >
                 <motion.div
-                  className="language-flag relative w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200/20 shadow-lg"
+                  className="language-flag"
                   whileHover={{ rotate: [0, -5, 5, -5, 0], transition: { duration: 0.5 } }}
                 >
-                  <Image
-                    src={FLAG_SRC[lang as Lang]}
-                    alt={
-                      lang === "de"
-                        ? "German flag"
-                        : lang === "uz"
-                        ? "Uzbek flag"
-                        : lang === "en"
-                        ? "English flag"
-                        : "Russian flag"
-                    }
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                    priority={false}
-                  />
+                  <div className="w-[75px] h-[52px]">
+                    <Image
+                      src={FLAG_SRC[lang as Lang]}
+                      alt={
+                        lang === "de"
+                          ? "German flag"
+                          : lang === "uz"
+                          ? "Uzbek flag"
+                          : lang === "en"
+                          ? "English flag"
+                          : "Russian flag"
+                      }
+                      width={75}
+                      height={52}
+                      className="object-cover w-full h-full"
+                      priority={false}
+                    />
+                  </div>
                 </motion.div>
-                <span className="text-sm mt-2 font-medium text-[#0c02a3]">
+                <span className="text-sm mt-2">
                   {lang === "de" ? "Deutsch" : lang === "uz" ? "O'zbekcha" : lang === "en" ? "English" : "Русский"}
                 </span>
               </motion.button>
@@ -173,7 +168,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.5 }}
-            className="text-sm text-[#0c02a3]/70 mt-2"
+            className="text-sm text-muted-foreground mt-2"
           >
             {t("language_switcher_hint")}
           </motion.p>

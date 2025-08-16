@@ -3,6 +3,7 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/contexts/language-context"
+import { ParallaxProvider } from "@/components/parallax-provider"
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] })
 
@@ -28,9 +29,13 @@ export default function RootLayout({
         <link rel="preload" href="/_next/static/chunks/framer-motion.js" as="script" />
         <link rel="icon" href="/PDico.png" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} relative min-h-screen text-style-override`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <LanguageProvider>{children}</LanguageProvider>
+          <ParallaxProvider>
+            <div className="relative z-10">
+              <LanguageProvider>{children}</LanguageProvider>
+            </div>
+          </ParallaxProvider>
         </ThemeProvider>
       </body>
     </html>

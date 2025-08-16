@@ -21,24 +21,24 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-secondary">
+    <footer className="bg-secondary/15 backdrop-blur-2xl border-t shadow-lg">
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="mb-4">
               <Image src="/ICOProfideutsch2.png" alt="Profi Deutsch Logo" width={150} height={40} className="h-auto" />
             </div>
-            <p className="text-sm text-muted-foreground mb-4">{t("about_us")}</p>
+            <p className="text-sm font-medium text-foreground/90 mb-4">{t("about_us")}</p>
             <div className="flex space-x-4">
-              <LangLink href="#" className="text-muted-foreground hover:text-foreground">
+              <LangLink href="#" className="text-foreground/80 hover:text-foreground transition-colors">
                 <Facebook size={20} />
                 <span className="sr-only">Facebook</span>
               </LangLink>
-              <LangLink href="#" className="text-muted-foreground hover:text-foreground">
+              <LangLink href="#" className="text-foreground/80 hover:text-foreground transition-colors">
                 <Instagram size={20} />
                 <span className="sr-only">Instagram</span>
               </LangLink>
-              <LangLink href="#" className="text-muted-foreground hover:text-foreground">
+              <LangLink href="#" className="text-foreground/80 hover:text-foreground transition-colors">
                 <MessageSquare size={20} />
                 <span className="sr-only">Telegram</span>
               </LangLink>

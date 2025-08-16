@@ -59,7 +59,7 @@ const Header = () => {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/15 backdrop-blur-2xl shadow-lg">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <LangLink href="/" className="flex items-center space-x-2">
@@ -76,16 +76,16 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <LangLink href="#kurse" className="text-sm font-medium transition-colors hover:text-primary">
+          <LangLink href="#kurse" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("courses")}
           </LangLink>
-          <LangLink href="#standorte" className="text-sm font-medium transition-colors hover:text-primary">
+          <LangLink href="#standorte" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("locations")}
           </LangLink>
-          <LangLink href="#vorteile" className="text-sm font-medium transition-colors hover:text-primary">
+          <LangLink href="#vorteile" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("benefits")}
           </LangLink>
-          <LangLink href="#kontakt" className="text-sm font-medium transition-colors hover:text-primary">
+          <LangLink href="#kontakt" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("contact")}
           </LangLink>
           <Button>{t("register_now")}</Button>
@@ -195,28 +195,28 @@ const Header = () => {
           <nav className="flex flex-col space-y-4">
             <LangLink
               href="#kurse"
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
               onClick={() => setIsMenuOpen(false)}
             >
               {t("courses")}
             </LangLink>
             <LangLink
               href="#standorte"
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
               onClick={() => setIsMenuOpen(false)}
             >
               {t("locations")}
             </LangLink>
             <LangLink
               href="#vorteile"
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
               onClick={() => setIsMenuOpen(false)}
             >
               {t("benefits")}
             </LangLink>
             <LangLink
               href="#kontakt"
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
               onClick={() => setIsMenuOpen(false)}
             >
               {t("contact")}

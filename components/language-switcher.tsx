@@ -25,6 +25,7 @@ export default function LanguageSwitcher() {
   const [isVisible, setIsVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
+  const [pendingScroll, setPendingScroll] = useState<number | null>(null)
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -40,12 +41,33 @@ export default function LanguageSwitcher() {
     return () => window.removeEventListener("scroll", toggleVisibility)
   }, [])
 
+  // Effect to handle scroll restoration
+  useEffect(() => {
+    if (pendingScroll !== null) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, pendingScroll)
+        setPendingScroll(null)
+      })
+    }
+  }, [pendingScroll])
+
+  // Effect to handle scroll restoration
+  useEffect(() => {
+    if (pendingScroll !== null) {
+      window.scrollTo(0, pendingScroll)
+      setPendingScroll(null)
+    }
+  }, [pendingScroll])
+
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded)
   }
 
   const handleLanguageChange = (lang: "de" | "uz" | "en" | "ru") => {
     setSelectedLang(lang)
+    // Store current scroll position
+    setPendingScroll(window.scrollY)
+    
     // compute the next path by swapping the first segment
     const nextPath = (() => {
       const parts = (pathname || "/").split("/")
@@ -54,11 +76,20 @@ export default function LanguageSwitcher() {
       return joined.replace(/\/+$/, "") || `/${lang}`
     })()
   
-    // Short selection animation, then soft replace without scrolling
-    setTimeout(() => {
+    // Store current scroll position
+    const scrollPosition = window.scrollY
+    sessionStorage.setItem('scrollPosition', scrollPosition.toString())
+    
+    setTimeout(async () => {
       setLanguage(lang)
-      startTransition(() => {
-        router.replace(nextPath, { scroll: false })
+      startTransition(async () => {
+        await router.replace(nextPath, { scroll: false })
+        // Restore scroll position after route change
+        const savedPosition = sessionStorage.getItem('scrollPosition')
+        if (savedPosition) {
+          window.scrollTo(0, parseInt(savedPosition))
+          sessionStorage.removeItem('scrollPosition')
+        }
       })
       setIsExpanded(false)
       setSelectedLang(null)

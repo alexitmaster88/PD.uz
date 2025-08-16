@@ -150,11 +150,11 @@ const YouTubePlayer = ({ videoId, title, autoplay = false }: YouTubePlayerProps)
   };
 
   return (
-    <Card className="overflow-hidden shadow-xl rounded-xl border-0 transition-all hover:shadow-2xl w-full max-w-[1500px] mx-auto bg-background/82">
+    <Card className="overflow-hidden shadow-xl rounded-xl border-0 transition-all hover:shadow-2xl w-full max-w-4xl mx-auto bg-background/60 backdrop-blur-md">
       {/* Click-to-play/pause only on bare area */}
       <div className="relative" onClick={handleVideoAreaClick} style={{ cursor: "pointer" }}>
         {/* The actual container div that YT will replace with an iframe */}
-        <div ref={containerRef} className="aspect-video w-full" />
+        <div ref={containerRef} className="aspect-video w-full flex items-center justify-center" />
 
         {/* Controls overlay — must be interactive, so DO NOT use pointer-events-none */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-auto">

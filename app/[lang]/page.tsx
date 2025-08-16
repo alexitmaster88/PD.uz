@@ -17,11 +17,13 @@ export default function HomePage() {
       <HeroSection />
 
       {/* Video Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">{t("welcome_center")}</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("intro_video_description")}</p>
+          <div className="backdrop-blur-md bg-white/30 rounded-2xl p-8 mb-12 shadow-lg">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-4">{t("welcome_center")}</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("intro_video_description")}</p>
+            </div>
           </div>
           <YouTubePlayer
             videoId="HCRdpfCYxFM"
