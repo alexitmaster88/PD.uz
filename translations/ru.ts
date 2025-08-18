@@ -14,13 +14,20 @@ const ru = {
   contact: "Контакт",
   register_now: "Зарегистрироваться",
 
+  // Course Types
+  course_type_german: "Немецкий А1-А2",
+  course_type_uzbek: "Немецкий Б1-Б2",
+  course_type_english: "TELC Сертификат",
+  course_type_russian: "Обучение-Тренинг",
+
   // Courses Section
-  our_courses: "Наши языковые курсы",
+  our_courses: "Наши Курсы Немецкого Языка",
   choose_courses:
-    "Выберите из нашего разнообразного предложения языковых курсов и начните свое языковое путешествие сегодня.",
-  beginner: "Начальный",
-  intermediate: "Средний",
-  advanced: "Продвинутый",
+    "Выберите из наших специализированных курсов немецкого языка и программ сертификации.",
+  german_a1_a2: "Немецкий А1-А2",
+  german_b1_b2: "Немецкий Б1-Б2",
+  telc_certificate: "TELC Сертификат",
+  ausbildung_training: "Обучение-Тренинг",
   hours: "учебных часов",
   small_groups: "Маленькие группы",
   certificate: "Сертификат после успешного завершения",
@@ -30,6 +37,10 @@ const ru = {
   our_locations: "Наши местоположения",
   discover_centers:
     "Откройте для себя наши языковые центры по всему Узбекистану. Нажмите на карту, чтобы узнать больше.",
+  tashkent_city: "Немецкий А1-А2",
+  tashkent_region: "Немецкий Б1-Б2",
+  telc_center: "TELC Сертификат",
+  ausbildung_center: "Обучение-Тренинг",
   address: "Адрес:",
   phone: "Телефон:",
   email: "Эл. почта:",

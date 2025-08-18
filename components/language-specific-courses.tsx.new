@@ -1,0 +1,129 @@
+"use client"
+
+import { useState } from "react"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Check } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
+import { useLanguageContent } from "@/utils/language-content"
+import Image from "next/image"
+
+interface CourseType {
+  level: string
+  title: string
+  description: string
+  features: string[]
+  price: string
+}
+
+const LanguageSpecificCourses = () => {
+  const { t } = useLanguage()
+
+  const courseData: Record<string, CourseType[]> = {
+    courses: [
+      {
+        level: "A1-A2",
+        title: t("german_a1_a2"),
+        description: "Foundation German language course for beginners",
+        features: [
+          "160 teaching hours",
+          "Small groups (max. 12 students)",
+          "Course materials included",
+          "Regular tests and assessments",
+        ],
+        price: "2,125,000 UZS",
+      },
+      {
+        level: "B1-B2",
+        title: t("german_b1_b2"),
+        description: "Intermediate to upper-intermediate German course",
+        features: [
+          "200 teaching hours",
+          "Intensive speaking practice",
+          "Advanced grammar and vocabulary",
+          "Preparation for higher levels",
+        ],
+        price: "2,500,000 UZS",
+      },
+      {
+        level: "TELC",
+        title: t("telc_certificate"),
+        description: "Official TELC certification preparation",
+        features: [
+          "Exam preparation modules",
+          "Practice tests",
+          "Certificate upon completion",
+          "Expert guidance",
+        ],
+        price: "3,000,000 UZS",
+      },
+      {
+        level: "Ausbildung",
+        title: t("ausbildung_training"),
+        description: "Specialized training for work and education in Germany",
+        features: [
+          "Professional vocabulary",
+          "Job application training",
+          "Interview preparation",
+          "Cultural integration",
+        ],
+        price: "3,500,000 UZS",
+      },
+    ],
+  }
+
+  const courseImages = {
+    "A1-A2": "/images/german-classroom-1.png",
+    "B1-B2": "/images/german-classroom-2.png",
+    "TELC": "/images/certification-prep.png",
+    "Ausbildung": "/images/professional-training.png",
+  }
+
+  return (
+    <section id="kurse" className="py-16">
+      <div className="container">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">{t("our_courses")}</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            {t("choose_courses")}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {courseData.courses.map((course, index) => (
+            <Card key={index} className="flex flex-col">
+              <CardHeader>
+                <div className="relative h-48 mb-4">
+                  <Image
+                    src={courseImages[course.level] || "/images/language-learning-1.png"}
+                    alt={course.title}
+                    fill
+                    className="object-cover rounded-t-lg"
+                  />
+                </div>
+                <CardTitle>{course.title}</CardTitle>
+                <CardDescription>{course.description}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ul className="space-y-2">
+                  {course.features.map((feature, i) => (
+                    <li key={i} className="flex items-start">
+                      <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4">
+                <div className="text-2xl font-bold text-primary">{course.price}</div>
+                <Button className="w-full">{t("register_now")}</Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default LanguageSpecificCourses

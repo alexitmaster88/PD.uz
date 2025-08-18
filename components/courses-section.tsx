@@ -12,7 +12,19 @@ const CoursesSection = () => {
   const [language, setLanguage] = useState("deutsch")
   const { t } = useLanguage()
 
-  const courseData = {
+  interface CourseType {
+  level: string;
+  title: string;
+  description: string;
+  features: string[];
+  price: string;
+}
+
+interface CourseDataType {
+  [key: string]: CourseType[];
+}
+
+const courseData: CourseDataType = {
     deutsch: [
       {
         level: "A1",
@@ -95,16 +107,9 @@ const CoursesSection = () => {
 
   return (
     <section id="kurse" className="py-16 md:py-24 relative overflow-hidden">
-      {/* Background image with blur effect */}
+      {/* Background with gradient */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/courses-section.tsx/photo-1522202176988-66273c2fd55f.png"
-          alt="Students learning in classroom"
-          fill
-          className="object-cover opacity-85 filter blur-[1.5px]"
-          priority
-        />
-        <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/90"></div>
       </div>
 
       <div className="container relative z-10">
@@ -114,17 +119,37 @@ const CoursesSection = () => {
         </div>
 
         <Tabs defaultValue="deutsch" value={language} onValueChange={setLanguage} className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
-            <TabsTrigger value="deutsch">{t("language_german")}</TabsTrigger>
-            <TabsTrigger value="usbekisch">{t("language_uzbek")}</TabsTrigger>
-            <TabsTrigger value="englisch">{t("language_english")}</TabsTrigger>
-            <TabsTrigger value="russisch">{t("language_russian")}</TabsTrigger>
+          <TabsList className="w-full grid grid-cols-2 md:grid-cols-4 gap-1 mb-8 p-1 h-auto bg-background/50 backdrop-blur-sm">
+            <TabsTrigger 
+              value="deutsch" 
+              className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
+            >
+              {t("language_german")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="usbekisch"
+              className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
+            >
+              {t("language_uzbek")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="englisch"
+              className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
+            >
+              {t("language_english")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="russisch"
+              className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
+            >
+              {t("language_russian")}
+            </TabsTrigger>
           </TabsList>
 
           {Object.keys(courseData).map((lang) => (
             <TabsContent key={lang} value={lang} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {courseData[lang].map((course, index) => (
+                {courseData[lang]?.map((course, index) => (
                   <Card key={index} className="flex flex-col">
                     <CardHeader>
                       <div className="flex justify-between items-start">

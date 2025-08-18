@@ -14,13 +14,26 @@ const de = {
   contact: "Kontakt",
   register_now: "Jetzt Anmelden",
 
+  // Course Types
+  course_type_german: "Deutsch A1-A2",
+  course_type_uzbek: "Deutsch B1-B2",
+  course_type_english: "TELC Zertifikat",
+  course_type_russian: "Ausbildung-Training",
+
+  // Language Selection
+  language_german: "Deutsch A1-A2",
+  language_uzbek: "Deutsch B1-B2",
+  language_english: "TELC Zertifikat",
+  language_russian: "Ausbildung-Training",
+
   // Courses Section
-  our_courses: "Unsere Sprachkurse",
+  our_courses: "Unsere Deutschkurse",
   choose_courses:
-    "Wählen Sie aus unserem vielfältigen Angebot an Sprachkursen und beginnen Sie Ihre Sprachreise noch heute.",
-  beginner: "Anfänger",
-  intermediate: "Mittelstufe",
-  advanced: "Fortgeschritten",
+    "Wählen Sie aus unseren spezialisierten Deutschkursen und Zertifizierungsprogrammen.",
+  german_a1_a2: "Deutsch A1-A2",
+  german_b1_b2: "Deutsch B1-B2",
+  telc_certificate: "TELC Zertifikat",
+  ausbildung_training: "Ausbildung-Training",
   hours: "Unterrichtsstunden",
   small_groups: "Kleine Gruppen",
   certificate: "Zertifikat nach erfolgreichem Abschluss",
@@ -30,6 +43,10 @@ const de = {
   our_locations: "Unsere Standorte",
   discover_centers:
     "Entdecken Sie unsere Sprachzentren in ganz Usbekistan. Klicken Sie auf die Karte, um mehr zu erfahren.",
+  tashkent_city: "Deutsch A1-A2",
+  tashkent_region: "Deutsch B1-B2",
+  telc_center: "TELC Zertifikat",
+  ausbildung_center: "Ausbildung-Training",
   address: "Adresse:",
   phone: "Telefon:",
   email: "E-Mail:",

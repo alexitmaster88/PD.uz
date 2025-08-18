@@ -1,19 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState, MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 
-declare global {
-  interface Window {
-    YT?: {
-      Player: new (elt: HTMLElement | string, opts: any) => any;
-      PlayerState: { PLAYING: number; PAUSED: number };
-    };
-    onYouTubeIframeAPIReady?: () => void;
-  }
+interface YT {
+  Player: new (elt: HTMLElement | string, opts: any) => any;
+  PlayerState: { PLAYING: number; PAUSED: number };
+}
+
+interface YT {
+  Player: new (elt: HTMLElement | string, opts: any) => any;
+  PlayerState: { PLAYING: number; PAUSED: number };
 }
 
 // --- Singleton loader so the API is added once and survives locale/route changes ---

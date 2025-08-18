@@ -2,7 +2,7 @@ const en = {
   // Hero Section
   welcome: "Welcome to the German Language Center in Uzbekistan",
   discover:
-    "Discover the world of languages with us. We offer high-quality courses in German, Uzbek, English, and Russian.",
+    "Discover the world of German language with us. We offer comprehensive German language courses and certification programs.",
   explore_courses: "Explore Courses",
   contact_us: "Contact Us",
   language_switcher_hint: "You can change the language at any time using the icon in the bottom right.",
@@ -14,12 +14,25 @@ const en = {
   contact: "Contact",
   register_now: "Register Now",
 
+  // Course Types
+  course_type_german: "German A1-A2",
+  course_type_uzbek: "German B1-B2",
+  course_type_english: "TELC Certificate",
+  course_type_russian: "Ausbildung-Training",
+
+  // Language Selection
+  language_german: "German A1-A2",
+  language_uzbek: "German B1-B2",
+  language_english: "TELC Certificate",
+  language_russian: "Ausbildung-Training",
+
   // Courses Section
-  our_courses: "Our Language Courses",
-  choose_courses: "Choose from our diverse range of language courses and start your language journey today.",
-  beginner: "Beginner",
-  intermediate: "Intermediate",
-  advanced: "Advanced",
+  our_courses: "Our German Language Programs",
+  choose_courses: "Choose from our specialized German language programs and certification courses.",
+  german_a1_a2: "German A1-A2",
+  german_b1_b2: "German B1-B2",
+  telc_certificate: "TELC Certificate",
+  ausbildung_training: "Ausbildung-Training",
   hours: "teaching hours",
   small_groups: "Small groups",
   certificate: "Certificate upon successful completion",
@@ -28,6 +41,10 @@ const en = {
   // Map Section
   our_locations: "Our Locations",
   discover_centers: "Discover our language centers throughout Uzbekistan. Click on the map to learn more.",
+  tashkent_city: "German A1-A2",
+  tashkent_region: "German B1-B2",
+  telc_center: "TELC Certificate",
+  ausbildung_center: "Ausbildung-Training",
   address: "Address:",
   phone: "Phone:",
   email: "Email:",

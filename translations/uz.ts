@@ -15,12 +15,19 @@ const uz = {
   contact: "Aloqa",
   register_now: "Hozir ro'yxatdan o'tish",
 
+  // Course Types
+  course_type_german: "Nemischa A1-A2",
+  course_type_uzbek: "Nemischa B1-B2",
+  course_type_english: "TELC Sertifikat",
+  course_type_russian: "Ausbildung-Training",
+
   // Courses Section
-  our_courses: "Bizning til kurslarimiz",
-  choose_courses: "Turli xil til kurslarimizdan tanlang va bugundan til sayohatingizni boshlang.",
-  beginner: "Boshlang'ich",
-  intermediate: "O'rta",
-  advanced: "Yuqori",
+  our_courses: "Bizning Nemis Tili Kurslari",
+  choose_courses: "Maxsus nemis tili kurslari va sertifikatlash dasturlarimizdan tanlang.",
+  german_a1_a2: "Nemis A1-A2",
+  german_b1_b2: "Nemis B1-B2",
+  telc_certificate: "TELC Sertifikat",
+  ausbildung_training: "Ausbildung-Training",
   hours: "o'quv soatlari",
   small_groups: "Kichik guruhlar",
   certificate: "Muvaffaqiyatli yakunlangandan so'ng sertifikat",
@@ -30,6 +37,10 @@ const uz = {
   our_locations: "Bizning manzillarimiz",
   discover_centers:
     "O'zbekiston bo'ylab til markazlarimizni kashf eting. Ko'proq ma'lumot olish uchun xaritani bosing.",
+  tashkent_city: "Nemis A1-A2",
+  tashkent_region: "Nemis B1-B2",
+  telc_center: "TELC Sertifikat",
+  ausbildung_center: "Ausbildung-Training",
   address: "Manzil:",
   phone: "Telefon:",
   email: "Elektron pochta:",

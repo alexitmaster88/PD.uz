@@ -96,8 +96,8 @@ const LanguageSpecificCourses = () => {
   const courseData = {
     deutsch: [
       {
-        level: "A1",
-        title: t("beginner"),
+        level: "A1-A2",
+        title: t("german_a1_a2"),
         description: t("course_desc_a1_beginner"),
         features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"), t("certificate"), t("materials")],
         price: "2.500.000 UZS",
@@ -196,10 +196,10 @@ const LanguageSpecificCourses = () => {
         {/* Regular course listings */}
         <Tabs defaultValue="deutsch" value={courseLanguage} onValueChange={setCourseLanguage} className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
-            <TabsTrigger value="deutsch">{t("language_german")}</TabsTrigger>
-            <TabsTrigger value="usbekisch">{t("language_uzbek")}</TabsTrigger>
-            <TabsTrigger value="englisch">{t("language_english")}</TabsTrigger>
-            <TabsTrigger value="russisch">{t("language_russian")}</TabsTrigger>
+            <TabsTrigger value="deutsch">{t("course_type_german")}</TabsTrigger>
+            <TabsTrigger value="usbekisch">{t("course_type_uzbek")}</TabsTrigger>
+            <TabsTrigger value="englisch">{t("course_type_english")}</TabsTrigger>
+            <TabsTrigger value="russisch">{t("course_type_russian")}</TabsTrigger>
           </TabsList>
 
           {Object.keys(courseData).map((lang) => (

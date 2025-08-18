@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/language-context"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 
-interface LocationInfo {
+interface L
   name: string
   address: string
   phone: string
@@ -184,8 +184,7 @@ const MapSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left side: List of regions */}
           <div className="lg:col-span-1 h-full">
-            <Card>
-              <CardContent className="p-4">
+            <div className="p-4">
                 <h3 className="text-lg font-semibold mb-4 text-foreground">{t("our_locations")}</h3>
                 <div className="space-y-2">
                   {regionsList.map((region) => (
@@ -212,6 +211,18 @@ const MapSection = () => {
               <CardContent className="p-0">
                 {activeRegion && locations[activeRegion] && (
                   <div className="grid grid-cols-1">
+                    {/* Image for the location */}
+                    {locations[activeRegion].image && (
+                      <div className="relative h-[300px]">
+                        <Image
+                          src={locations[activeRegion].image}
+                          alt={locations[activeRegion].name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    
                     {/* Map section */}
                     <div className="h-[500px] relative">
                       <iframe
@@ -262,11 +273,11 @@ const MapSection = () => {
             </Card>
 
             {/* Location image */}
-            {activeRegion && locations[activeRegion]?.image && (
+            {activeRegion && locations[activeRegion].image && (
               <div className="mt-6 aspect-video relative overflow-hidden rounded-lg">
                 <Image
-                  src={locations[activeRegion]?.image || "/placeholder.svg"}
-                  alt={locations[activeRegion]?.name || "Location image"}
+                  src={locations[activeRegion].image || "/placeholder.svg"}
+                  alt={locations[activeRegion].name}
                   fill
                   className="object-cover"
                 />

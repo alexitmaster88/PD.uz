@@ -51,11 +51,11 @@ const Header = () => {
   }
 
   // Function to toggle between languages
-  const toggleLanguage = () => {
+    const toggleLanguage = () => {
     const languages: ("de" | "uz" | "en" | "ru")[] = ["de", "uz", "en", "ru"]
     const currentIndex = languages.indexOf(language as "de" | "uz" | "en" | "ru")
     const nextIndex = (currentIndex + 1) % languages.length
-    setLanguage(languages[nextIndex])
+    setLanguage(languages[nextIndex] as "de" | "en" | "ru" | "uz")
   }
 
   return (

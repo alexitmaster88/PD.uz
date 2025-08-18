@@ -1,13 +1,31 @@
 "use client"
 
-import { useState, useEffect, startTransition } from "react"
+import React, { useState, useEffect, startTransition } from "react"
 import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
-import { ChevronUp, Globe } from "lucide-react"
+import { ChevronUp, Facebook, Instagram, MessageCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
+
+const SOCIAL_ICONS = [
+  { 
+    type: 'lucide',
+    icon: Facebook, 
+    link: "https://facebook.com/profideutsch"
+  },
+  { 
+    type: 'lucide',
+    icon: Instagram, 
+    link: "https://instagram.com/profideutsch"
+  },
+  { 
+    type: 'custom',
+    imageSrc: "/images/telegram-icon.svg",
+    link: "https://t.me/profideutsch"
+  }
+]
 
 type Lang = "de" | "uz" | "en" | "ru"
 
@@ -26,6 +44,15 @@ export default function LanguageSwitcher() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
   const [pendingScroll, setPendingScroll] = useState<number | null>(null)
+  const [currentIconIndex, setCurrentIconIndex] = useState(0)
+
+  // Rotate social media icons
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIconIndex((prev) => (prev + 1) % SOCIAL_ICONS.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -207,31 +234,43 @@ export default function LanguageSwitcher() {
               </motion.div>
             ) : (
               <motion.div
-                key="flag"
+                key="social"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.2 }}
                 className="relative"
               >
-                <div className="language-flag w-6 h-4">
-                  <Image
-                    src={FLAG_SRC[(language as Lang)]}
-                    alt={`${getLanguageName(language)} flag`}
-                    width={24}
-                    height={16}
-                    className="rounded-sm object-cover"
-                    priority={false}
-                  />
-                </div>
-                <motion.div
-                  className="absolute -top-1 -right-1 bg-white rounded-full p-0.5 shadow-sm"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2 }}
+                <a
+                  href={SOCIAL_ICONS[currentIconIndex]?.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
                 >
-                  <Globe className="h-3 w-3 text-primary" />
-                </motion.div>
+                  <motion.div
+                    key={currentIconIndex}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {SOCIAL_ICONS[currentIconIndex]?.type === 'lucide' ? (
+                      React.createElement(SOCIAL_ICONS[currentIconIndex].icon!, {
+                        className: "h-6 w-6 text-white",
+                      })
+                    ) : (
+                      <Image
+                        src={SOCIAL_ICONS[currentIconIndex]?.imageSrc || ''}
+                        alt="Social Media Icon"
+                        width={24}
+                        height={24}
+                        className="h-6 w-6 brightness-0 invert"
+                      />
+                    )}
+                  </motion.div>
+                </a>
               </motion.div>
             )}
           </AnimatePresence>
