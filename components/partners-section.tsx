@@ -1,24 +1,25 @@
-"use client"
+"use client";
 
-import { useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
-import { useLanguage } from "@/contexts/language-context"
-import Image from "next/image"
+import { useRef, useEffect, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
+import Image from "next/image";
 
 interface Partner {
-  id: string
-  name: string
-  logo: string
-  website: string
-  descriptionKey: string
+  id: string;
+  name: string;
+  logo: string;
+  website: string;
+  descriptionKey: string;
 }
 
-const PartnersSection = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null)
-  const { t } = useLanguage()
+export default function PartnersSection() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollingRef = useRef<boolean>(false);
+  const { t } = useLanguage();
 
   const partners: Partner[] = [
     {
@@ -84,50 +85,63 @@ const PartnersSection = () => {
       website: "https://www.lufthansa.com",
       descriptionKey: "partner_lufthansa_desc",
     },
-  ]
+  ];
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.clientWidth * 0.5
-      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" })
+  const handleScroll = useCallback((direction: 'left' | 'right'): void => {
+    if (scrollContainerRef.current && !scrollingRef.current) {
+      const container = scrollContainerRef.current;
+      const cardWidth = 280;
+      const gapWidth = 24;
+      const scrollAmount = cardWidth + gapWidth;
+      container.scrollBy({ 
+        left: direction === 'left' ? -scrollAmount : scrollAmount, 
+        behavior: "smooth" 
+      });
     }
-  }
+  }, []);
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.clientWidth * 0.5
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" })
-    }
-  }
+  const handlePartnerClick = (website: string): void => {
+    window.open(website, "_blank", "noopener,noreferrer");
+  };
 
   useEffect(() => {
-    // Auto-scroll functionality
-    autoScrollIntervalRef.current = setInterval(() => {
-      if (scrollContainerRef.current) {
-        const container = scrollContainerRef.current
-        const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 10
+    const container = scrollContainerRef.current;
+    if (!container) return;
 
-        if (isAtEnd) {
-          // Reset to beginning when reaching the end
-          container.scrollTo({ left: 0, behavior: "smooth" })
+    const intervalId = setInterval(() => {
+      if (!scrollingRef.current) {
+        scrollingRef.current = true;
+        const cardWidth = 280;
+        const gapWidth = 24;
+        const scrollAmount = cardWidth + gapWidth;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const currentScroll = container.scrollLeft;
+
+        // If we're at the end of the original set, smoothly continue with the duplicated set
+        if (currentScroll >= maxScroll / 2) {
+          container.scrollTo({
+            left: 0,
+            behavior: 'smooth'
+          });
         } else {
-          // Scroll one item width
-          const itemWidth = 280 // Approximate width of each partner card
-          container.scrollBy({ left: itemWidth, behavior: "smooth" })
+          container.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+          });
         }
+
+        setTimeout(() => {
+          scrollingRef.current = false;
+        }, 500);
       }
-    }, 3000) // Auto-scroll every 3 seconds
+    }, 4000);
+
+    autoScrollIntervalRef.current = intervalId;
 
     return () => {
-      if (autoScrollIntervalRef.current) {
-        clearInterval(autoScrollIntervalRef.current)
-      }
-    }
-  }, [])
-
-  const handlePartnerClick = (website: string) => {
-    window.open(website, "_blank", "noopener,noreferrer")
-  }
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
@@ -139,24 +153,36 @@ const PartnersSection = () => {
           className="object-cover opacity-85 filter blur-[1.5px]"
           priority
         />
-        <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+        <div className="absolute inset-0 bg-[#aef2ea]/50" />
       </div>
       <div className="container relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("our_partners")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("partners_description")}</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
+            {t("our_partners")}
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("partners_description")}
+          </p>
         </div>
 
         <div className="relative group">
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-6 pb-6 scrollbar-hide snap-x snap-mandatory"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="flex overflow-x-auto gap-6 pb-6 scrollbar-hide snap-x snap-mandatory scroll-pl-6 scroll-pr-6"
+            style={{ 
+              scrollbarWidth: "none", 
+              msOverflowStyle: "none",
+              scrollSnapType: "x mandatory",
+              scrollBehavior: "smooth",
+              WebkitOverflowScrolling: "touch",
+              scrollPaddingLeft: "calc((100% - 280px) / 2)",
+              scrollPaddingRight: "calc((100% - 280px) / 2)"
+            }}
           >
-            {partners.map((partner) => (
+            {[...partners, ...partners].map((partner, index) => (
               <Card
-                key={partner.id}
-                className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden snap-start shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
+                key={`${partner.id}-${index}`}
+                className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden snap-center shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
               >
                 <CardContent className="p-6 text-center flex flex-col justify-between h-full">
                   <div>
@@ -168,9 +194,8 @@ const PartnersSection = () => {
                         height={80}
                         className="object-contain max-h-full max-w-full w-auto h-auto"
                         onError={(e) => {
-                          // Fallback to placeholder if image fails to load
-                          const target = e.target as HTMLImageElement
-                          target.src = "/placeholder.svg?height=80&width=120"
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.svg?height=80&width=120";
                         }}
                       />
                     </div>
@@ -199,7 +224,7 @@ const PartnersSection = () => {
             size="icon"
             variant="secondary"
             className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-            onClick={scrollLeft}
+            onClick={() => handleScroll('left')}
             aria-label={t("previous_partners")}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -209,7 +234,7 @@ const PartnersSection = () => {
             size="icon"
             variant="secondary"
             className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-            onClick={scrollRight}
+            onClick={() => handleScroll('right')}
             aria-label={t("next_partners")}
           >
             <ChevronRight className="h-4 w-4" />
@@ -221,7 +246,5 @@ const PartnersSection = () => {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
-export default PartnersSection
