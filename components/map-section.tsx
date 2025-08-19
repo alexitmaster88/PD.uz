@@ -157,9 +157,9 @@ const MapSection = () => {
   }
 
   // Create a list of regions for the sidebar
-  const regionsList = Object.keys(locations).map((key) => ({
+  const regionsList = Object.entries(locations).map(([key, location]) => ({
     id: key,
-    name: locations[key].name,
+    name: location.name,
   }))
 
   return (

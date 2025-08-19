@@ -21,10 +21,10 @@ const de = {
   course_type_russian: "Ausbildung-Training",
 
   // Language Selection
-  language_german: "Deutsch A1-A2",
-  language_uzbek: "Deutsch B1-B2",
-  language_english: "TELC Zertifikat",
-  language_russian: "Ausbildung-Training",
+  language_german_course: "Deutsch A1-A2",
+  language_uzbek_course: "Deutsch B1-B2",
+  language_english_course: "TELC Zertifikat",
+  language_russian_course: "Ausbildung-Training",
 
   // Courses Section
   our_courses: "Unsere Deutschkurse",

@@ -41,14 +41,18 @@ const Header = () => {
   }, [isLanguageMenuOpen])
 
   // Create a language-aware link component
-  const LangLink = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
-    const languagePath = getLanguagePath(href)
-    return (
-      <Link href={languagePath} className={className}>
-        {children}
-      </Link>
-    )
-  }
+  const LangLink = ({ href, children, className, onClick }: { href: string; children: React.ReactNode; className?: string; onClick?: React.MouseEventHandler<HTMLAnchorElement> }) => {
+      const languagePath = getLanguagePath(href)
+      return (
+        <Link 
+          href={languagePath} 
+          className={className}
+          {...(onClick ? { onClick } : {})}
+        >
+          {children}
+        </Link>
+      )
+    }
 
   // Function to toggle between languages
     const toggleLanguage = () => {

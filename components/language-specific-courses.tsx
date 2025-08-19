@@ -10,7 +10,7 @@ import { type LanguageContent, useLanguageContent } from "@/utils/language-conte
 import Image from "next/image"
 
 const LanguageSpecificCourses = () => {
-  const [courseLanguage, setCourseLanguage] = useState("deutsch")
+  const [courseLanguage, setCourseLanguage] = useState<keyof CourseDataType>("deutsch")
   const { t, language } = useLanguage()
 
   const languageSpecificCourses: LanguageContent<{
@@ -86,14 +86,26 @@ const LanguageSpecificCourses = () => {
   const currentCourses = useLanguageContent(languageSpecificCourses)
 
   // Course images by language
-  const courseImages = {
+  const courseImages: Record<keyof CourseDataType, string> = {
     deutsch: "/images/course-german.png",
     usbekisch: "/images/course-uzbek.png",
     englisch: "/images/course-english.png",
     russisch: "/images/course-russian.png",
   }
 
-  const courseData = {
+  type CourseType = {
+    level: string;
+    title: string;
+    description: string;
+    features: string[];
+    price: string;
+  }
+
+  type CourseDataType = {
+    [key in 'deutsch' | 'usbekisch' | 'englisch' | 'russisch']: CourseType[];
+  }
+
+  const courseData: CourseDataType = {
     deutsch: [
       {
         level: "A1-A2",
@@ -194,7 +206,7 @@ const LanguageSpecificCourses = () => {
         </div>
 
         {/* Regular course listings */}
-        <Tabs defaultValue="deutsch" value={courseLanguage} onValueChange={setCourseLanguage} className="w-full">
+        <Tabs defaultValue="deutsch" value={courseLanguage} onValueChange={val => setCourseLanguage(val as keyof CourseDataType)} className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
             <TabsTrigger value="deutsch">{t("course_type_german")}</TabsTrigger>
             <TabsTrigger value="usbekisch">{t("course_type_uzbek")}</TabsTrigger>
@@ -202,7 +214,7 @@ const LanguageSpecificCourses = () => {
             <TabsTrigger value="russisch">{t("course_type_russian")}</TabsTrigger>
           </TabsList>
 
-          {Object.keys(courseData).map((lang) => (
+          {(Object.keys(courseData) as Array<keyof CourseDataType>).map((lang) => (
             <TabsContent key={lang} value={lang} className="mt-0">
               <div
                 className={`grid gap-6 ${
@@ -215,7 +227,7 @@ const LanguageSpecificCourses = () => {
                         : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
                 }`}
               >
-                {courseData[lang].map((course, index) => (
+                {courseData[lang].map((course: CourseType, index: number) => (
                   <Card key={index} className="flex flex-col">
                     <div className="relative h-40 w-full">
                       <Image
@@ -245,7 +257,7 @@ const LanguageSpecificCourses = () => {
                     <CardContent className="flex-grow">
                       <p className="text-sm text-muted-foreground mb-4">{course.description}</p>
                       <ul className="space-y-2">
-                        {course.features.map((feature, i) => (
+                        {course.features.map((feature: string, i: number) => (
                           <li key={i} className="flex items-start">
                             <Check className="h-4 w-4 mr-2 text-primary mt-1" />
                             <span className="text-sm">{feature}</span>

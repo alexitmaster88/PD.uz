@@ -14,17 +14,17 @@ const en = {
   contact: "Contact",
   register_now: "Register Now",
 
+  // Language Names
+  language_german: "German",
+  language_uzbek: "Uzbek",
+  language_english: "English",
+  language_russian: "Russian",
+
   // Course Types
   course_type_german: "German A1-A2",
   course_type_uzbek: "German B1-B2",
   course_type_english: "TELC Certificate",
   course_type_russian: "Ausbildung-Training",
-
-  // Language Selection
-  language_german: "German A1-A2",
-  language_uzbek: "German B1-B2",
-  language_english: "TELC Certificate",
-  language_russian: "Ausbildung-Training",
 
   // Courses Section
   our_courses: "Our German Language Programs",
@@ -166,11 +166,13 @@ const en = {
   max_10_participants: " (max. 10 participants)",
   max_8_participants: " (max. 8 participants)",
 
-  // Language names
-  language_german: "German",
-  language_uzbek: "Uzbek",
-  language_english: "English",
-  language_russian: "Russian",
+  // Language names (used in different contexts)
+  language_name_alt: {
+    german: "German",
+    uzbek: "Uzbek",
+    english: "English",
+    russian: "Russian"
+  },
 
   // Alt texts and accessibility
   logo_alt: "Profi Deutsch Logo",
