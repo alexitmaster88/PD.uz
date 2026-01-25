@@ -114,7 +114,7 @@ const uz = {
   // Home Page
   welcome_center: "Markazimiz to'g'risida batafsil ma'lumot olish uchun quyidagi videoni tomosha qiling",
   // intro_video_description:
-    // "Kirish videomizni tomosha qiling va til kurslarimiz va takliflarimiz haqida ko'proq ma'lumot oling.",
+  // "Kirish videomizni tomosha qiling va til kurslarimiz va takliflarimiz haqida ko'proq ma'lumot oling.",
   // intro_video_title: "Nemis tilini o'rganish: Boshlang'ichlar uchun eng muhim iboralar",
 
   // Photo Gallery Items
