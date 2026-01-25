@@ -121,9 +121,9 @@ const de = {
 
   // Home Page
   welcome_center: "Willkommen in unserem Sprachzentrum",
-  intro_video_description:
-    "Sehen Sie sich unser Einführungsvideo an und erfahren Sie mehr über unsere Sprachkurse und Angebote.",
-  intro_video_title: "Deutsch lernen: Die wichtigsten Sätze für Anfänger",
+  // intro_video_description:
+    // "Sehen Sie sich unser Einführungsvideo an und erfahren Sie mehr über unsere Sprachkurse und Angebote.",
+  // intro_video_title: "Deutsch lernen: Die wichtigsten Sätze für Anfänger",
 
   // Photo Gallery Items
   photo_alt_1: "Deutschkurs in Taschkent",

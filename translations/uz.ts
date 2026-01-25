@@ -22,7 +22,7 @@ const uz = {
   course_type_russian: "Ausbildung-Training",
 
   // Courses Section
-  our_courses: "Bizning Nemis Tili Kurslari",
+  our_courses: "Bizning nemis tili kurslarimiz",
   choose_courses: "Maxsus nemis tili kurslari va sertifikatlash dasturlarimizdan tanlang.",
   german_a1_a2: "Nemis A1-A2",
   german_b1_b2: "Nemis B1-B2",

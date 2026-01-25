@@ -115,8 +115,8 @@ const en = {
 
   // Home Page
   welcome_center: "Welcome to our Language Center",
-  intro_video_description: "Watch our introductory video and learn more about our language courses and offerings.",
-  intro_video_title: "Learning German: The Most Important Phrases for Beginners",
+  // intro_video_description: "Watch our introductory video and learn more about our language courses and offerings.",
+  // intro_video_title: "Learning German: The Most Important Phrases for Beginners",
 
   // Photo Gallery Items
   photo_alt_1: "German course in Tashkent",
