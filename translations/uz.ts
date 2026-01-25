@@ -2,7 +2,7 @@ const uz = {
   // Hero Section
   welcome: "O'zbekistondagi \"PROFI DEUTSCH\" nemis til markaziga xush kelibsiz",
   discover:
-    "Biz bilan chet-tillar dunyosini kashf eting. Zamonaviy \"Telc\" metodikasi asosida Nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lsh imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
+    "Zamonaviy \"Telc\" metodikasi asosida nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lish imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
   explore_courses: "Kurslarni ko'rish",
   contact_us: "Bog'lanish",
   language_switcher_hint:
@@ -47,7 +47,7 @@ const uz = {
   available_courses: "Mavjud kurslar:",
 
   // Benefits Section
-  why_learn_german: "Nima uchun nemis tilini o'rganish kerak?",
+  why_learn_german: "Nima uchun nemis tilini o'rganish muhim?",
   discover_benefits:
     "Nemis tilini o'rganishning afzalliklarini va bizning kurslarimiz maqsadlaringizga erishishda qanday yordam berishini bilib oling.",
   international_recognition: "Xalqaro tan olinish",
@@ -67,11 +67,11 @@ const uz = {
   study_opportunities_desc: "Bizning til kurslarimiz sizni Germaniyada o'qishga optimal tayyorlaydi.",
 
   // Benefits Section - Stats
-  german_most_spoken: "Nemis tili Yevropada eng ko'p so'zlashadigan ona tili",
+  german_most_spoken: "Nemis tili Yevropada eng ko'p so'zlashadigan til",
   german_importance:
     "100 milliondan ortiq ona tilida so'zlashuvchilar bilan, nemis tili Yevropa va butun dunyoda eng muhim tillardan biridir. Germaniya shuningdek Yevropadagi eng katta iqtisodiyot bo'lib, o'qish va karyera uchun ko'plab imkoniyatlarni taqdim etadi.",
   million: "million",
-  native_speakers: "Ona tilida so'zlashuvchilar",
+  native_speakers: "Nemis tilida so'zlashuvchilar",
   economy_europe: "Yevropadagi iqtisodiyot",
   universities: "Universitetlar",
   german_companies: "Butun dunyodagi nemis kompaniyalari",

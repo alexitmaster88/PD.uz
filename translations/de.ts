@@ -53,7 +53,7 @@ const de = {
   available_courses: "Verfügbare Kurse:",
 
   // Benefits Section
-  why_learn_german: "Warum Deutsch lernen?",
+  why_learn_german: "Warum ist es wichtig, Deutsch zu lernen?",
   discover_benefits:
     "Entdecken Sie die Vorteile des Deutschlernens und wie unsere Kurse Ihnen dabei helfen können, Ihre Ziele zu erreichen.",
   international_recognition: "Internationale Anerkennung",

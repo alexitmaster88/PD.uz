@@ -2,7 +2,7 @@ const en = {
   // Hero Section
   welcome: "Welcome to \"PROFI DEUTSCH\" the German Language Center in Uzbekistan",
   discover:
-    "Discover the world of foreign languages with us. Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
+    "Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
   explore_courses: "Explore Courses",
   contact_us: "Contact Us",
   language_switcher_hint: "You can change the language at any time using the icon in the bottom right.",
@@ -51,7 +51,7 @@ const en = {
   available_courses: "Available Courses:",
 
   // Benefits Section
-  why_learn_german: "Why Learn German?",
+  why_learn_german: "Why is it important to learn German?",
   discover_benefits: "Discover the benefits of learning German and how our courses can help you achieve your goals.",
   international_recognition: "International Recognition",
   modern_methods: "Modern Teaching Methods",
@@ -74,7 +74,7 @@ const en = {
   german_importance:
     "With over 100 million native speakers, German is one of the most important languages in Europe and worldwide. Germany is also the largest economy in Europe and offers numerous opportunities for study and career.",
   million: "million",
-  native_speakers: "Native speakers",
+  native_speakers: "Native German speakers",
   economy_europe: "Economy in Europe",
   universities: "Universities",
   german_companies: "German companies worldwide",
