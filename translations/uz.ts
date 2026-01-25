@@ -16,15 +16,15 @@ const uz = {
   register_now: "Hozir ro'yxatdan o'tish",
 
   // Course Types
-  course_type_german: "Nemischa A1-A2",
-  course_type_uzbek: "Nemischa B1-B2",
-  course_type_english: "TELC Sertifikat",
-  course_type_russian: "Ausbildung-Training",
+  course_type_german: "Til darajasi",
+  course_type_uzbek: "Telc imtihoniga tayyorgarlik",
+  course_type_english: "Ausbildung - Training",
+  course_type_russian: "Konsultatsiya xizmati",
 
   // Courses Section
-  our_courses: "Bizning nemis tili kurslarimiz",
-  choose_courses: "Maxsus nemis tili kurslari va sertifikatlash dasturlarimizdan tanlang.",
-  german_a1_a2: "Nemis A1-A2",
+  our_courses: "Bizning xizmatlarimiz",
+  choose_courses: " Nemis tili kurstlari ro'yhati. ",
+  german_a1_a2: "Nemis A1.1-A1.2",
   german_b1_b2: "Nemis B1-B2",
   telc_certificate: "TELC Sertifikat",
   ausbildung_training: "Ausbildung-Training",

@@ -15,10 +15,10 @@ const ru = {
   register_now: "Зарегистрироваться",
 
   // Course Types
-  course_type_german: "Немецкий А1-А2",
-  course_type_uzbek: "Немецкий Б1-Б2",
-  course_type_english: "TELC Сертификат",
-  course_type_russian: "Обучение-Тренинг",
+  course_type_german: "Уровень владения языком",
+  course_type_uzbek: "Подготовка к экзамену Telc",
+  course_type_english: "Ausbildung-Тренинг",
+  course_type_russian: "Консультационные услуги",
 
   // Courses Section
   our_courses: "Наши Курсы Немецкого Языка",

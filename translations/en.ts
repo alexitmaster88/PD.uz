@@ -21,10 +21,10 @@ const en = {
   language_russian: "Russian",
 
   // Course Types
-  course_type_german: "German A1-A2",
-  course_type_uzbek: "German B1-B2",
-  course_type_english: "TELC Certificate",
-  course_type_russian: "Ausbildung-Training",
+  course_type_german: "Language level",
+  course_type_uzbek: "Telc exam preparation",
+  course_type_english: "Ausbildung-Training",
+  course_type_russian: "Consultancy service",
 
   // Courses Section
   our_courses: "Our German Language Programs",

@@ -15,10 +15,10 @@ const de = {
   register_now: "Jetzt Anmelden",
 
   // Course Types
-  course_type_german: "Deutsch A1-A2",
-  course_type_uzbek: "Deutsch B1-B2",
-  course_type_english: "TELC Zertifikat",
-  course_type_russian: "Ausbildung-Training",
+  course_type_german: "Niveaustufe",
+  course_type_uzbek: "Telc-Prüfungsvorbereitung",
+  course_type_english: "Ausbildung-Training",
+  course_type_russian: "Beratungsservice",
 
   // Language Selection
   language_german_course: "Deutsch A1-A2",
