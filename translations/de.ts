@@ -2,7 +2,7 @@ const de = {
   // Hero Section
   welcome: "Willkommen im \"PROFI DEUTSCH\" Sprachzentrum in Usbekistan",
   discover:
-    "Entdecken Sie die Welt der Sprachen mit uns. Wir bieten qualitativ hochwertige Kurse in Deutsch.",
+    "Lernen Sie Deutsch strukturiert und effizient nach der modernen TELC-Methode und sichern Sie sich die Chance auf ein anerkanntes internationales TELC-Zertifikat. Darüber hinaus bieten wir Ihnen gemeinsam mit unseren deutschen Partnern praxisnahe Unterstützung rund um Ausbildung und Beruf.",
   explore_courses: "Kurse Entdecken",
   contact_us: "Kontakt Aufnehmen",
   language_switcher_hint: "Sie können die Sprache jederzeit über das Symbol unten rechts ändern.",

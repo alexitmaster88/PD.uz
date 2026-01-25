@@ -1,8 +1,8 @@
 const en = {
   // Hero Section
-  welcome: "Welcome to the German Language Center in Uzbekistan",
+  welcome: "Welcome to \"PROFI DEUTSCH\" the German Language Center in Uzbekistan",
   discover:
-    "Discover the world of German language with us. We offer comprehensive German language courses and certification programs.",
+    "Discover the world of foreign languages with us. Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
   explore_courses: "Explore Courses",
   contact_us: "Contact Us",
   language_switcher_hint: "You can change the language at any time using the icon in the bottom right.",

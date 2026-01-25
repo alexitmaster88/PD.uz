@@ -1,8 +1,8 @@
 const uz = {
   // Hero Section
-  welcome: "O'zbekistondagi Nemis til markaziga xush kelibsiz",
+  welcome: "O'zbekistondagi \"PROFI DEUTSCH\" nemis til markaziga xush kelibsiz",
   discover:
-    "Biz bilan tillar dunyosini kashf eting. Nemis, o'zbek, ingliz va rus tillarida yuqori sifatli kurslarni taklif etamiz.",
+    "Biz bilan chet-tillar dunyosini kashf eting. Zamonaviy \"Telc\" metodikasi asosida Nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lsh imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
   explore_courses: "Kurslarni ko'rish",
   contact_us: "Bog'lanish",
   language_switcher_hint:
