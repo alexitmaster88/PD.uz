@@ -24,8 +24,8 @@ const uz = {
   // Courses Section
   our_courses: "Bizning xizmatlarimiz",
   choose_courses: " Nemis tili kurstlari ro'yhati. ",
-  german_a1_a2: "Nemis A1.1-A1.2",
-  german_b1_b2: "Nemis B1-B2",
+  german_a1_a2: "A1.1-A1.2",
+  german_b1_b2: "B1.1-B1.2",
   telc_certificate: "TELC Sertifikat",
   ausbildung_training: "Ausbildung-Training",
   hours: "o'quv soatlari",
