@@ -60,7 +60,7 @@ const Footer = () => {
               </li>
               <li>
                 <LangLink href="#vorteile" className="text-muted-foreground hover:text-foreground">
-                  {t("benefits")}
+                  {t("")}
                 </LangLink>
               </li>
               <li>

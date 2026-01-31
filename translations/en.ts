@@ -9,7 +9,7 @@ const en = {
   // Header
   courses: "Courses",
   locations: "Locations",
-  benefits: "Benefits",
+  // benefits: "Benefits",
   contact: "Contact",
   register_now: "Register Now",
 
