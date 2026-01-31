@@ -45,50 +45,50 @@ const BenefitsSection = () => {
     },
   ]
 
-  return (
-    <section id="vorteile" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/benefits-section.tsx/photo-1523240795612-9a054b0db644.png"
-          alt="Success and achievement background"
-          fill
-          className="object-cover opacity-85 filter blur-[1.5px]"
-          priority
-        />
-        <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
-      </div>
+  // return (
+  //   <section id="vorteile" className="py-16 md:py-24 relative overflow-hidden">
+  //     <div className="absolute inset-0 z-0">
+  //       <Image
+  //         src="/benefits-section.tsx/photo-1523240795612-9a054b0db644.png"
+  //         alt="Success and achievement background"
+  //         fill
+  //         className="object-cover opacity-85 filter blur-[1.5px]"
+  //         priority
+  //       />
+  //       <div className="absolute inset-0 bg-[#aef2ea]/50"></div>
+  //     </div>
 
-      <div className="container relative z-10">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("why_learn_german")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("discover_benefits")}</p>
-        </div>
+  //     <div className="container relative z-10">
+  //       <div className="text-center mb-12">
+  //         <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("why_learn_german")}</h2>
+  //         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("discover_benefits")}</p>
+  //       </div>
 
-        <div className="mt-16 bg-secondary/50 rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold mb-4">{t("german_most_spoken")}</h3>
-          <p className="text-lg mb-6">{t("german_importance")}</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-background p-4 rounded-lg">
-              <div className="text-3xl font-bold text-primary">100+ {t("million")}</div>
-              <div className="text-sm text-muted-foreground">{t("native_speakers")}</div>
-            </div>
-            <div className="bg-background p-4 rounded-lg">
-              <div className="text-3xl font-bold text-primary">#1</div>
-              <div className="text-sm text-muted-foreground">{t("economy_europe")}</div>
-            </div>
-            <div className="bg-background p-4 rounded-lg">
-              <div className="text-3xl font-bold text-primary">400+</div>
-              <div className="text-sm text-muted-foreground">{t("universities")}</div>
-            </div>
-            <div className="bg-background p-4 rounded-lg">
-              <div className="text-3xl font-bold text-primary">2000+</div>
-              <div className="text-sm text-muted-foreground">{t("german_companies")}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+  //       <div className="mt-16 bg-secondary/50 rounded-lg p-8 text-center">
+  //         <h3 className="text-2xl font-bold mb-4">{t("german_most_spoken")}</h3>
+  //         <p className="text-lg mb-6">{t("german_importance")}</p>
+  //         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+  //           <div className="bg-background p-4 rounded-lg">
+  //             <div className="text-3xl font-bold text-primary">100+ {t("million")}</div>
+  //             <div className="text-sm text-muted-foreground">{t("native_speakers")}</div>
+  //           </div>
+  //           <div className="bg-background p-4 rounded-lg">
+  //             <div className="text-3xl font-bold text-primary">#1</div>
+  //             <div className="text-sm text-muted-foreground">{t("economy_europe")}</div>
+  //           </div>
+  //           <div className="bg-background p-4 rounded-lg">
+  //             <div className="text-3xl font-bold text-primary">400+</div>
+  //             <div className="text-sm text-muted-foreground">{t("universities")}</div>
+  //           </div>
+  //           <div className="bg-background p-4 rounded-lg">
+  //             <div className="text-3xl font-bold text-primary">2000+</div>
+  //             <div className="text-sm text-muted-foreground">{t("german_companies")}</div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </section>
+  // )
 }
 
 export default BenefitsSection

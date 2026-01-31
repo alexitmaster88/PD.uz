@@ -1,0 +1,19 @@
+# Query: language_switcher
+# ContextLines: 1
+
+3 results - 3 files
+
+components/hero-section.new.tsx:
+  172            >
+  173:             {/* {t("language_switcher_hint")} */}
+  174            </motion.p>
+
+components/hero-section.tsx:
+  177            >
+  178:             {t("language_switcher_hint")}
+  179            </motion.p>
+
+components/hero-section.tsx.fixed:
+  172            >
+  173:           //  {t("language_switcher_hint")}
+  174            </motion.p>

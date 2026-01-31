@@ -175,7 +175,7 @@ const HeroSection = () => {
             transition={{ delay: 1.2, duration: 0.5 }}
             className="text-sm text-[#0c02a3]/70 mt-2"
           >
-            {t("language_switcher_hint")}
+            {/* {t("language_switcher_hint")} */}
           </motion.p>
         </motion.div>
       </div>

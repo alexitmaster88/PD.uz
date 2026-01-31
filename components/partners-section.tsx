@@ -161,7 +161,7 @@ export default function PartnersSection() {
             {t("our_partners")}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {t("partners_description")}
+          {/* {t("partners_description")} */}
           </p>
         </div>
 

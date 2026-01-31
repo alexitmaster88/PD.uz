@@ -5,7 +5,6 @@ const en = {
     "Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
   explore_courses: "Explore Courses",
   contact_us: "Contact Us",
-  language_switcher_hint: "You can change the language at any time using the icon in the bottom right.",
 
   // Header
   courses: "Courses",
@@ -28,14 +27,14 @@ const en = {
 
   // Courses Section
   our_courses: "Our German Language Programs",
-  choose_courses: "Choose from our specialized German language programs and certification courses.",
+  // choose_courses: "Choose from our specialized German language programs and certification courses.",
   german_a1_a2: "German A1-A2",
   german_b1_b2: "German B1-B2",
   telc_certificate: "TELC Certificate",
   ausbildung_training: "Ausbildung-Training",
   hours: "teaching hours",
   small_groups: "Small groups",
-  certificate: "Certificate upon successful completion",
+  // certificate: "Certificate upon successful completion",
   materials: "Teaching materials included",
 
   // Map Section
@@ -51,14 +50,14 @@ const en = {
   available_courses: "Available Courses:",
 
   // Benefits Section
-  why_learn_german: "Why is it important to learn German?",
-  discover_benefits: "Discover the benefits of learning German and how our courses can help you achieve your goals.",
-  international_recognition: "International Recognition",
-  modern_methods: "Modern Teaching Methods",
-  qualified_teachers: "Qualified Teachers",
-  small_learning_groups: "Small Learning Groups",
-  career_prospects: "Career Prospects",
-  study_opportunities: "Study Opportunities",
+  // why_learn_german: "Why is it important to learn German?",
+  // discover_benefits: "Discover the benefits of learning German and how our courses can help you achieve your goals.",
+  // international_recognition: "International Recognition",
+  // modern_methods: "Modern Teaching Methods",
+  // qualified_teachers: "Qualified Teachers",
+  // small_learning_groups: "Small Learning Groups",
+  // career_prospects: "Career Prospects",
+  // study_opportunities: "Study Opportunities",
 
   // Benefits Section - Descriptions
   international_recognition_desc:
@@ -155,10 +154,10 @@ const en = {
   write_review: "Write a Review",
 
   // Course descriptions
-  course_desc_a1_beginner: "For beginners with no prior knowledge",
-  course_desc_a2_basic: "For learners with basic knowledge",
-  course_desc_b1_intermediate: "For learners with solid basic knowledge",
-  course_desc_b2_advanced: "For advanced learners",
+  course_desc_a1_beginner: "A1 - Basic language skills: Basic knowledge, simple sentences, everyday phrases",
+  course_desc_a2_basic: "A2 - Threshold language skills: Expanded knowledge, direct communication in everyday situations",
+  course_desc_b1_intermediate: "B1 - Advanced language skills: Fluent communication, direct communication in key situations (training, leisure)",
+  course_desc_b2_advanced: "B2 - Independent language skills: Fluent speech, complex texts, technical discussions",
   course_desc_a1_a2_beginner_plus: "For beginners and slightly advanced learners",
 
   // Group size indicators
@@ -184,8 +183,8 @@ const en = {
 
   // Partners section
   our_partners: "Our Partners",
-  partners_description:
-    "We work with leading German companies and institutions to provide our students with the best opportunities.",
+  // partners_description:
+  //   "We work with leading German companies and institutions to provide our students with the best opportunities.",
   visit_website: "Visit Website",
   partnership_interest: "Interested in a partnership? Contact us for more information.",
 

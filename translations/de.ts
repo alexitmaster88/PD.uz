@@ -5,12 +5,11 @@ const de = {
     "Lernen Sie Deutsch strukturiert und effizient nach der modernen TELC-Methode und sichern Sie sich die Chance auf ein anerkanntes internationales TELC-Zertifikat. Darüber hinaus bieten wir Ihnen gemeinsam mit unseren deutschen Partnern praxisnahe Unterstützung rund um Ausbildung und Beruf.",
   explore_courses: "Kurse Entdecken",
   contact_us: "Kontakt Aufnehmen",
-  language_switcher_hint: "Sie können die Sprache jederzeit über das Symbol unten rechts ändern.",
 
   // Header
   courses: "Kurse",
   locations: "Standorte",
-  benefits: "Vorteile",
+// benefits: "Vorteile",
   contact: "Kontakt",
   register_now: "Jetzt Anmelden",
 
@@ -28,15 +27,15 @@ const de = {
 
   // Courses Section
   our_courses: "Unsere Deutschkurse",
-  choose_courses:
-    "Wählen Sie aus unseren spezialisierten Deutschkursen und Zertifizierungsprogrammen.",
+  // choose_courses:
+  //   "Wählen Sie aus unseren spezialisierten Deutschkursen und Zertifizierungsprogrammen.",
   german_a1_a2: "Deutsch A1-A2",
   german_b1_b2: "Deutsch B1-B2",
   telc_certificate: "TELC Zertifikat",
   ausbildung_training: "Ausbildung-Training",
   hours: "Unterrichtsstunden",
   small_groups: "Kleine Gruppen",
-  certificate: "Zertifikat nach erfolgreichem Abschluss",
+  // certificate: "Zertifikat nach erfolgreichem Abschluss",
   materials: "Lehrmaterial inklusive",
 
   // Map Section
@@ -53,15 +52,15 @@ const de = {
   available_courses: "Verfügbare Kurse:",
 
   // Benefits Section
-  why_learn_german: "Warum ist es wichtig, Deutsch zu lernen?",
-  discover_benefits:
-    "Entdecken Sie die Vorteile des Deutschlernens und wie unsere Kurse Ihnen dabei helfen können, Ihre Ziele zu erreichen.",
-  international_recognition: "Internationale Anerkennung",
-  modern_methods: "Moderne Lehrmethoden",
-  qualified_teachers: "Qualifizierte Lehrkräfte",
-  small_learning_groups: "Kleine Lerngruppen",
-  career_prospects: "Berufliche Perspektiven",
-  study_opportunities: "Studienmöglichkeiten",
+  // why_learn_german: "Warum ist es wichtig, Deutsch zu lernen?",
+  // discover_benefits:
+  //   "Entdecken Sie die Vorteile des Deutschlernens und wie unsere Kurse Ihnen dabei helfen können, Ihre Ziele zu erreichen.",
+  // international_recognition: "Internationale Anerkennung",
+  // modern_methods: "Moderne Lehrmethoden",
+  // qualified_teachers: "Qualifizierte Lehrkräfte",
+  // small_learning_groups: "Kleine Lerngruppen",
+  // career_prospects: "Berufliche Perspektiven",
+  // study_opportunities: "Studienmöglichkeiten",
 
   // Benefits Section - Descriptions
   international_recognition_desc:
@@ -74,15 +73,15 @@ const de = {
   career_prospects_desc: "Deutschkenntnisse eröffnen Ihnen neue berufliche Perspektiven in Deutschland und weltweit.",
   study_opportunities_desc: "Mit unseren Sprachkursen bereiten Sie sich optimal auf ein Studium in Deutschland vor.",
 
-  // Benefits Section - Stats
-  german_most_spoken: "Deutsch ist die meistgesprochene Muttersprache in Europa",
-  german_importance:
-    "Mit über 100 Millionen Muttersprachlern ist Deutsch eine der wichtigsten Sprachen in Europa und weltweit. Deutschland ist zudem die größte Volkswirtschaft in Europa und bietet zahlreiche Möglichkeiten für Studium und Karriere.",
-  million: "Mio.",
-  native_speakers: "Muttersprachler",
-  economy_europe: "Wirtschaft in Europa",
-  universities: "Universitäten",
-  german_companies: "Deutsche Unternehmen weltweit",
+  // // Benefits Section - Stats
+  // german_most_spoken: "Deutsch ist die meistgesprochene Muttersprache in Europa",
+  // german_importance:
+  //   "Mit über 100 Millionen Muttersprachlern ist Deutsch eine der wichtigsten Sprachen in Europa und weltweit. Deutschland ist zudem die größte Volkswirtschaft in Europa und bietet zahlreiche Möglichkeiten für Studium und Karriere.",
+  // million: "Mio.",
+  // native_speakers: "Muttersprachler",
+  // economy_europe: "Wirtschaft in Europa",
+  // universities: "Universitäten",
+  // german_companies: "Deutsche Unternehmen weltweit",
 
   // Contact Section
   contact_us_title: "Kontaktieren Sie uns",
@@ -162,10 +161,10 @@ const de = {
   write_review: "Bewertung schreiben",
 
   // Course descriptions
-  course_desc_a1_beginner: "Für Anfänger ohne Vorkenntnisse",
-  course_desc_a2_basic: "Für Lernende mit grundlegenden Kenntnissen",
-  course_desc_b1_intermediate: "Für Lernende mit soliden Grundkenntnissen",
-  course_desc_b2_advanced: "Für fortgeschrittene Lernende",
+  course_desc_a1_beginner: "A1 – Grundlegende Sprachkenntnisse: Grundkenntnisse, einfache Sätze, alltägliche Ausdrücke",
+  course_desc_a2_basic: "A2 – Schwellenwert der Sprachkenntnisse: Erweiterte Kenntnisse, direkte Kommunikation in alltäglichen Situationen",
+  course_desc_b1_intermediate: "B1 – Fortgeschrittene Sprachkenntnisse: Flüssige Kommunikation, direkte Kommunikation in wichtigen Situationen (Ausbildung, Freizeit)",
+  course_desc_b2_advanced: "B2 – Selbstständige Sprachkenntnisse: Flüssiges Sprechen, komplexe Texte, fachliche Diskussionen",
   course_desc_a1_a2_beginner_plus: "Für Anfänger und leicht Fortgeschrittene",
 
   // Group size indicators
@@ -189,8 +188,8 @@ const de = {
 
   // Partners section
   our_partners: "Unsere Partner",
-  partners_description:
-    "Wir arbeiten mit führenden deutschen Unternehmen und Institutionen zusammen, um unseren Studenten die besten Möglichkeiten zu bieten.",
+  // partners_description:
+  //   "Wir arbeiten mit führenden deutschen Unternehmen und Institutionen zusammen, um unseren Studenten die besten Möglichkeiten zu bieten.",
   visit_website: "Website besuchen",
   partnership_interest: "Interessiert an einer Partnerschaft? Kontaktieren Sie uns für weitere Informationen.",
 

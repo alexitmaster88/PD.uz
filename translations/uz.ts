@@ -5,13 +5,11 @@ const uz = {
     "Zamonaviy \"Telc\" metodikasi asosida nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lish imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
   explore_courses: "Kurslarni ko'rish",
   contact_us: "Bog'lanish",
-  language_switcher_hint:
-    "Pastki o'ng burchakdagi belgidan foydalanib, istalgan vaqtda tilni o'zgartirishingiz mumkin.",
 
   // Header
   courses: "Kurslar",
   locations: "Manzillar",
-  benefits: "Afzalliklar",
+  // benefits: "Afzalliklar",
   contact: "Aloqa",
   register_now: "Hozir ro'yxatdan o'tish",
 
@@ -23,14 +21,14 @@ const uz = {
 
   // Courses Section
   our_courses: "Bizning xizmatlarimiz",
-  choose_courses: " Nemis tili kurslari ro'yxati. ",
+  // choose_courses: " Nemis tili kurslari ro'yxati. ",
   german_a1_a2: "A1.1-A1.2",
   german_b1_b2: "B1.1-B1.2",
   telc_certificate: "TELC Sertifikat",
   ausbildung_training: "Ausbildung-Training",
-  hours: "o'quv soatlari",
+  hours: "akademik o'quv soatlari",
   small_groups: "Kichik guruhlar",
-  certificate: "Muvaffaqiyatli yakunlangandan so'ng sertifikat",
+  // certificate: "Muvaffaqiyatli yakunlangandan so'ng sertifikat",
   materials: "O'quv materiallari kiritilgan",
 
   // Map Section
@@ -46,16 +44,16 @@ const uz = {
   email: "Elektron pochta:",
   available_courses: "Mavjud kurslar:",
 
-  // Benefits Section
-  why_learn_german: "Nima uchun nemis tilini o'rganish muhim?",
-  discover_benefits:
-    "Nemis tilini o'rganishning afzalliklarini va bizning kurslarimiz maqsadlaringizga erishishda qanday yordam berishini bilib oling.",
-  international_recognition: "Xalqaro tan olinish",
-  modern_methods: "Zamonaviy o'qitish usullari",
-  qualified_teachers: "Malakali o'qituvchilar",
-  small_learning_groups: "Kichik o'quv guruhlari",
-  career_prospects: "Karyera istiqbollari",
-  study_opportunities: "O'qish imkoniyatlari",
+  // // Benefits Section
+  // why_learn_german: "Nima uchun nemis tilini o'rganish muhim?",
+  // discover_benefits:
+  //   "Nemis tilini o'rganishning afzalliklarini va bizning kurslarimiz maqsadlaringizga erishishda qanday yordam berishini bilib oling.",
+  // international_recognition: "Xalqaro tan olinish",
+  // modern_methods: "Zamonaviy o'qitish usullari",
+  // qualified_teachers: "Malakali o'qituvchilar",
+  // small_learning_groups: "Kichik o'quv guruhlari",
+  // career_prospects: "Karyera istiqbollari",
+  // study_opportunities: "O'qish imkoniyatlari",
 
   // Benefits Section - Descriptions
   international_recognition_desc:
@@ -67,14 +65,14 @@ const uz = {
   study_opportunities_desc: "Bizning til kurslarimiz sizni Germaniyada o'qishga optimal tayyorlaydi.",
 
   // Benefits Section - Stats
-  german_most_spoken: "Nemis tili Yevropada eng ko'p so'zlashadigan til",
-  german_importance:
-    "100 milliondan ortiq ona tilida so'zlashuvchilar bilan, nemis tili Yevropa va butun dunyoda eng muhim tillardan biridir. Germaniya shuningdek Yevropadagi eng katta iqtisodiyot bo'lib, o'qish va karyera uchun ko'plab imkoniyatlarni taqdim etadi.",
-  million: "million",
-  native_speakers: "Nemis tilida so'zlashuvchilar",
-  economy_europe: "Yevropadagi iqtisodiyot",
-  universities: "Universitetlar",
-  german_companies: "Butun dunyodagi nemis kompaniyalari",
+  // german_most_spoken: "Nemis tili Yevropada eng ko'p so'zlashadigan til",
+  // german_importance:
+  //   "100 milliondan ortiq ona tilida so'zlashuvchilar bilan, nemis tili Yevropa va butun dunyoda eng muhim tillardan biridir. Germaniya shuningdek Yevropadagi eng katta iqtisodiyot bo'lib, o'qish va karyera uchun ko'plab imkoniyatlarni taqdim etadi.",
+  // million: "million",
+  // native_speakers: "Nemis tilida so'zlashuvchilar",
+  // economy_europe: "Yevropadagi iqtisodiyot",
+  // universities: "Universitetlar",
+  // german_companies: "Butun dunyodagi nemis kompaniyalari",
 
   // Contact Section
   contact_us_title: "Biz bilan bog'laning",
@@ -154,16 +152,16 @@ const uz = {
   write_review: "Sharh yozing",
 
   // Course descriptions
-  course_desc_a1_beginner: "Oldindan bilimi bo'lmagan boshlovchilar uchun",
-  course_desc_a2_basic: "Asosiy bilimga ega o'rganuvchilar uchun",
-  course_desc_b1_intermediate: "Mustahkam asosiy bilimga ega o'rganuvchilar uchun",
-  course_desc_b2_advanced: "Ilg'or o'rganuvchilar uchun",
+  course_desc_a1_beginner: "Boshlang'ich til ko'nikmalari: Asosiy bilim, oddiy gaplar, kundalik iboralar",
+  course_desc_a2_basic: "Asosiy til ko'nikmalari: Chuqurlashtirilgan bilim, kundalik vaziyatlarda bevosita muloqot",
+  course_desc_b1_intermediate: " Rivojlangan til ko'nikmalari: Erkin muloqot, asosiy vaziyatlarda bevosita muloqot (Ausbildung, bo'sh vaqt)",
+  course_desc_b2_advanced: "Mustaqil til ko'nikmalari: Erkin nutq, murakkab matnlar, texnik muhokamalar",
   course_desc_a1_a2_beginner_plus: "Boshlovchilar va biroz ilg'or o'rganuvchilar uchun",
 
   // Group size indicators
-  max_12_participants: " (maks. 12 ishtirokchi)",
-  max_10_participants: " (maks. 10 ishtirokchi)",
-  max_8_participants: " (maks. 8 ishtirokchi)",
+  max_12_participants: " (maks. 12-16 ishtirokchi)",
+  max_10_participants: " (maks. 12-16 ishtirokchi)",
+  max_8_participants: " (maks. 12-16 ishtirokchi)",
 
   // Language names
   language_german: "Nemis",
@@ -181,8 +179,8 @@ const uz = {
 
   // Partners section
   our_partners: "Bizning hamkorlarimiz",
-  partners_description:
-    "Biz talabalarimizga eng yaxshi imkoniyatlarni taqdim etish uchun yetakchi nemis kompaniyalari va muassasalari bilan hamkorlik qilamiz.",
+  // partners_description:
+  //   "Biz talabalarimizga eng yaxshi imkoniyatlarni taqdim etish uchun yetakchi nemis kompaniyalari va muassasalari bilan hamkorlik qilamiz.",
   visit_website: "Veb-saytga tashrif",
   partnership_interest: "Hamkorlikka qiziqasizmi? Qo'shimcha ma'lumot uchun biz bilan bog'laning.",
 

@@ -30,28 +30,28 @@ const courseData: CourseDataType = {
         level: "A1",
         title: t("beginner"),
         description: t("course_desc_a1_beginner"),
-        features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"), t("certificate"), t("materials")],
+        features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
         price: "2.500.000 UZS",
       },
       {
         level: "A2",
         title: t("beginner"),
         description: t("course_desc_a2_basic"),
-        features: ["100 " + t("hours"), t("small_groups") + t("max_10_participants"), t("certificate"), t("materials")],
+        features: ["100 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
         price: "3.000.000 UZS",
       },
       {
         level: "B1",
         title: t("intermediate"),
         description: t("course_desc_b1_intermediate"),
-        features: ["120 " + t("hours"), t("small_groups") + t("max_10_participants"), t("certificate"), t("materials")],
+        features: ["120 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "3.500.000 UZS",
       },
       {
         level: "B2",
         title: t("intermediate"),
         description: t("course_desc_b2_advanced"),
-        features: ["140 " + t("hours"), t("small_groups") + t("max_8_participants"), t("certificate"), t("materials")],
+        features: ["140 " + t("hours"), t("small_groups") + t("max_8_participants"),  t("materials")],
         price: "4.000.000 UZS",
       },
     ],
@@ -60,30 +60,30 @@ const courseData: CourseDataType = {
         level: "A1",
         title: t("beginner"),
         description: t("course_desc_a1_beginner"),
-        features: ["60 " + t("hours"), t("small_groups") + t("max_12_participants"), t("certificate"), t("materials")],
+        features: ["60 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
         price: "2.000.000 UZS",
       },
       {
         level: "A2",
         title: t("beginner"),
         description: t("course_desc_a2_basic"),
-        features: ["80 " + t("hours"), t("small_groups") + t("max_10_participants"), t("certificate"), t("materials")],
+        features: ["80 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "2.500.000 UZS",
       },
     ],
     englisch: [
       {
-        level: "A1-A2",
+        level: "A1",
         title: t("beginner"),
         description: t("course_desc_a1_a2_beginner_plus"),
-        features: ["100 " + t("hours"), t("small_groups") + t("max_12_participants"), t("certificate"), t("materials")],
+        features: ["100 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
         price: "2.800.000 UZS",
       },
       {
         level: "B1-B2",
         title: t("intermediate"),
         description: t("course_desc_b1_intermediate"),
-        features: ["120 " + t("hours"), t("small_groups") + t("max_10_participants"), t("certificate"), t("materials")],
+        features: ["120 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "3.200.000 UZS",
       },
     ],
@@ -92,14 +92,14 @@ const courseData: CourseDataType = {
         level: "A1",
         title: t("beginner"),
         description: t("course_desc_a1_beginner"),
-        features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"), t("certificate"), t("materials")],
+        features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
         price: "2.400.000 UZS",
       },
       {
         level: "A2",
         title: t("beginner"),
         description: t("course_desc_a2_basic"),
-        features: ["100 " + t("hours"), t("small_groups") + t("max_10_participants"), t("certificate"), t("materials")],
+        features: ["100 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "2.900.000 UZS",
       },
     ],
@@ -115,7 +115,7 @@ const courseData: CourseDataType = {
       <div className="container relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">{t("our_courses")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("choose_courses")}</p>
+          {/* <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("choose_courses")}</p> */}
         </div>
 
         <Tabs defaultValue="deutsch" value={language} onValueChange={setLanguage} className="w-full">
