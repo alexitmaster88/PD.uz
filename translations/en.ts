@@ -202,6 +202,7 @@ const en = {
   // Special offers
   early_bird_discount: "Early Bird Discount",
   early_bird_desc: "Register 4 weeks in advance and get 15% off",
-}
+  // Teacher
+  teacher_trained_in_germany: "The pedagogue trained in Germany",}
 
 export default en

@@ -198,6 +198,9 @@ const ru = {
   // Special offers
   early_bird_discount: "Скидка за раннюю регистрацию",
   early_bird_desc: "Зарегистрируйтесь за 4 недели и получите скидку 15%",
+
+  // Teacher
+  teacher_trained_in_germany: "Педагог, прошедший подготовку в Германии",
 }
 
 export default ru

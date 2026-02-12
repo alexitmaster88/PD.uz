@@ -198,6 +198,9 @@ const uz = {
   // Special offers
   early_bird_discount: "Erta ro'yxatdan o'tish chegirmasi",
   early_bird_desc: "4 hafta oldin ro'yxatdan o'ting va 15% chegirma oling",
+
+  // Teacher
+  teacher_trained_in_germany: "Germaniyada malaka o'tagan pedagog",
 }
 
 export default uz

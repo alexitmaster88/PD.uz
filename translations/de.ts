@@ -207,6 +207,9 @@ const de = {
   // Special offers
   early_bird_discount: "Frühbucherrabatt",
   early_bird_desc: "Melden Sie sich 4 Wochen im Voraus an und erhalten Sie 15% Rabatt",
+
+  // Teacher
+  teacher_trained_in_germany: "In Deutschland ausgebildeter Pädagoge",
 }
 
 export default de
