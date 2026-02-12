@@ -27,35 +27,35 @@ const LanguageSpecificCourses = () => {
   }> = {
     de: {
       title: t("our_courses"),
-      // description: t("choose_courses"),
+      description: t(""),
       popularCourses: [t("popular_courses")],
       specialOffers: [
         {
           title: t("early_bird_discount"),
           description: t("early_bird_desc"),
-          price: "2.125.000 UZS",
-          discount: "2.500.000 UZS",
+          price: "",
+          discount: "",
           image: "/images/german-classroom-1.png",
         },
       ],
     },
     en: {
       title: t("our_courses"),
-      // description: t("choose_courses"),
+      description: t(""),
       popularCourses: [t("popular_courses")],
       specialOffers: [
         {
           title: t("early_bird_discount"),
           description: t("early_bird_desc"),
-          price: "2,125,000 UZS",
-          discount: "2,500,000 UZS",
+          price: "",
+          discount: "",
           image: "/images/german-classroom-2.png",
         },
       ],
     },
     ru: {
       title: t("our_courses"),
-      // description: t("choose_courses"),
+      description: t(""),
       popularCourses: [t("popular_courses")],
       specialOffers: [
         {
@@ -69,7 +69,7 @@ const LanguageSpecificCourses = () => {
     },
     uz: {
       title: t("our_courses"),
-      // description: t("choose_courses"),
+      description: t(""),
       popularCourses: [t("popular_courses")],
       specialOffers: [
         {
@@ -112,28 +112,28 @@ const LanguageSpecificCourses = () => {
         title: t("A1.1-A1.2"),
         description: t("course_desc_a1_beginner"),
         features: [t("Germaniyada malaka o'tagan pedagog"), "144 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
-        price: "2.500.000 UZS",
+        price: "",
       },
       {
         level: "A2",
         title: t("A2.1-A2.2"),
         description: t("course_desc_a2_basic"),
         features: [t("Germaniyada malaka o'tagan pedagog"), "144 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
-        price: "3.000.000 UZS",
+        price: "",
       },
       {
         level: "B1",
         title: t("B1.1-B1.2"),
         description: t("course_desc_b1_intermediate"),
         features: [t("Germaniyada malaka o'tagan pedagog"), "144 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
-        price: "3.500.000 UZS",
+        price: "",
       },
       {
         level: "B2",
         title: t("B2.1-B2.2"),
         description: t("course_desc_b2_advanced"),
         features: [t("Germaniyada malaka o'tagan pedagog"), "144 " + t("hours"), t("small_groups") + t("max_8_participants"), t("materials")],
-        price: "4.000.000 UZS",
+        price: "",
       },
     ],
     usbekisch: [
@@ -142,14 +142,14 @@ const LanguageSpecificCourses = () => {
         title: t("beginner"),
         description: t("course_desc_a1_beginner"),
         features: ["60 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
-        price: "2.000.000 UZS",
+        price: "",
       },
       {
         level: "A2",
         title: t("beginner"),
         description: t("course_desc_a2_basic"),
         features: ["80 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
-        price: "2.500.000 UZS",
+        price: "",
       },
     ],
     englisch: [
@@ -158,14 +158,14 @@ const LanguageSpecificCourses = () => {
         title: t("beginner"),
         description: t("course_desc_a1_a2_beginner_plus"),
         features: ["100 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
-        price: "2.800.000 UZS",
+        price: "",
       },
       {
         level: "B1-B2",
         title: t("intermediate"),
         description: t("course_desc_b1_intermediate"),
         features: ["120 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
-        price: "3.200.000 UZS",
+        price: "",
       },
     ],
     russisch: [
@@ -174,14 +174,14 @@ const LanguageSpecificCourses = () => {
         title: t("beginner"),
         description: t("course_desc_a1_beginner"),
         features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
-        price: "2.400.000 UZS",
+        price: "",
       },
       {
         level: "A2",
         title: t("beginner"),
         description: t("course_desc_a2_basic"),
         features: ["100 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
-        price: "2.900.000 UZS",
+        price: "",
       },
     ],
   }
@@ -267,7 +267,7 @@ const LanguageSpecificCourses = () => {
                     </CardContent>
                     <CardFooter className="flex flex-col items-start pt-4 border-t">
                       <div className="mb-4">
-                        <span className="text-2xl font-bold">{course.price}</span>
+                        <span className="text-2xl font-bold strikethrough">{course.price}</span>
                       </div>
                       <Button className="w-full">{t("register_now")}</Button>
                     </CardFooter>

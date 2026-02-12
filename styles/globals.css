@@ -6,6 +6,30 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .strikethrough {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  /* new: diagonal red strike similar to your screenshot */
+  .price-crossed {
+    position: relative;
+    display: inline-block;
+  }
+  .price-crossed::after {
+    content: "";
+    position: absolute;
+    left: -6%;
+    right: -6%;
+    top: 58%;
+    height: 3px;
+    background: #e11d48; /* red color */
+    transform: rotate(-12deg);
+    border-radius: 2px;
+    pointer-events: none;
+  }
 }
 
 @layer base {
