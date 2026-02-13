@@ -149,8 +149,9 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
   }, [])
 
   const t = (key: string): string => {
-    if (!translations[language]) return key
-    return translations[language][key] || translations["de"][key] || key
+    const langTrans = translations[language]
+    const deTrans = translations["de"]
+    return langTrans?.[key] ?? deTrans?.[key] ?? key
   }
 
   return (

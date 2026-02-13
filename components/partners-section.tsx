@@ -46,7 +46,7 @@ export default function PartnersSection() {
     },
     {
       id: "giz",
-      name: "GIZ",
+      name: "Toshkent viloyat hokimligi",
       logo: "/images/logos/tashvil.svg",
       website: "https://toshkentviloyati.uz/ru",
       descriptionKey: "partner_tavi_desc",
