@@ -27,8 +27,8 @@ const MapSection = () => {
     tashkent_city: {
       name: t("tashkent_city"),
       address: "Amir Temur Straße 107A, Taschkent",
-      phone: "+998 71 123 4567",
-      email: "tashkent@profideutsch.uz",
+      phone: "+998 77 178 06 66",
+      email: "info@profi-deutsch.uz",
       courses: ["Deutsch A1-A2"],
       coordinates: { lat: 41.311081, lng: 69.240562 },
       image: "/images/german-classroom-1.png",
@@ -36,7 +36,7 @@ const MapSection = () => {
     tashkent_region: {
       name: t("tashkent_region"),
       address: "Yunusabad 4, Taschkent",
-      phone: "+998 71 987 6543",
+      phone: "+998 77 178 06 66",
       email: "yunusabad@profideutsch.uz",
       courses: ["Deutsch B1-B2"],
       coordinates: { lat: 41.325902, lng: 69.287749 },
@@ -45,7 +45,7 @@ const MapSection = () => {
     telc_center: {
       name: t("telc_center"),
       address: "Mirabad District, Taschkent",
-      phone: "+998 71 234 5678",
+      phone: "+998 77 178 06 66",
       email: "telc@profideutsch.uz",
       courses: ["TELC Prüfungsvorbereitung A1-C1"],
       coordinates: { lat: 41.316081, lng: 69.268762 },
@@ -54,7 +54,7 @@ const MapSection = () => {
     ausbildung_center: {
       name: t("ausbildung_center"),
       address: "Chilanzar District, Taschkent",
-      phone: "+998 71 345 6789",
+      phone: "+998 77 178 06 66",
       email: "ausbildung@profideutsch.uz",
       courses: ["Ausbildung Vorbereitungskurs", "Berufliche Qualifikation"],
       coordinates: { lat: 41.286902, lng: 69.200649 },

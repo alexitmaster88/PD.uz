@@ -59,7 +59,7 @@ const ContactSection = () => {
     <section id="kontakt" className="py-16 md:py-24 bg-background/82 relative overflow-hidden">
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
-        <Image src="/images/german-culture-2.png" alt="Contact background" fill className="object-cover opacity-10" />
+        <Image src="/images/course-german.png" alt="Contact background" fill className="object-cover opacity-10" />
         <div className="absolute inset-0 bg-secondary/70"></div>
       </div>
 
@@ -201,8 +201,8 @@ const ContactSection = () => {
                     </div>
                     <div>
                       <h4 className="font-bold mb-1">{t("phone")}</h4>
-                      <p className="text-muted-foreground">+998 71 123 4567</p>
-                      <p className="text-muted-foreground">+998 71 987 6543</p>
+                      <p className="text-muted-foreground">+998 77 178 06 66</p>
+                      <p className="text-muted-foreground">+998 77 178 16 66</p>
                     </div>
                   </div>
                 </CardContent>
@@ -216,8 +216,8 @@ const ContactSection = () => {
                     </div>
                     <div>
                       <h4 className="font-bold mb-1">{t("email")}</h4>
-                      <p className="text-muted-foreground">info@profideutsch.uz</p>
-                      <p className="text-muted-foreground">kurse@profideutsch.uz</p>
+                      <p className="text-muted-foreground">info@profi-deutsch.uz</p>
+                      {/* <p className="text-muted-foreground">kurse@profideutsch.uz</p> */}
                     </div>
                   </div>
                 </CardContent>

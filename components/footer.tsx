@@ -26,7 +26,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="mb-4">
-              <Image src="/ICOProfideutsch2.png" alt="Profi Deutsch Logo" width={150} height={40} className="h-auto" />
+              <Image src="/ICOProfideutsch2.png" alt="Profi Deutsch Logo" width={150} height={40} className="w-auto h-auto" />
             </div>
             <p className="text-sm font-medium text-foreground/90 mb-4">{t("about_us")}</p>
             <div className="flex space-x-4">
@@ -76,8 +76,8 @@ const Footer = () => {
             <address className="not-italic text-sm text-muted-foreground space-y-2">
               <p>Amir Temur Straße 107A</p>
               <p>Taschkent, Usbekistan</p>
-              <p>Telefon: +998 71 123 4567</p>
-              <p>E-Mail: info@profideutsch.uz</p>
+              <p>Telefon: +998 77 178 06 66</p>
+              <p>E-Mail: info@profi-deutsch.uz</p>
             </address>
           </div>
         </div>

@@ -27,8 +27,8 @@ const MapSection = () => {
     tashkent_city: {
       name: "Taschkent Stadt",
       address: "Amir Temur Straße 107A, Taschkent",
-      phone: "+998 71 123 4567",
-      email: "tashkent@profideutsch.uz",
+      phone: "+998 77 178 06 66",
+      email: "info@profi-deutsch.uz",
       courses: ["Deutsch (A1-C1)", "Englisch (A1-B2)", "Russisch (A1-B2)", "Usbekisch (A1-B1)"],
       coordinates: { lat: 41.311081, lng: 69.240562 },
       image: "/images/german-classroom-1.png",
@@ -36,7 +36,7 @@ const MapSection = () => {
     tashkent_region: {
       name: "Taschkent Region",
       address: "Nurafshon Straße 15, Nurafshon",
-      phone: "+998 70 223 4567",
+      phone: "+998 77 178 06 66",
       email: "tashkent.region@profideutsch.uz",
       courses: ["Deutsch (A1-B1)", "Englisch (A1-A2)"],
       coordinates: { lat: 41.044498, lng: 69.332802 },
@@ -45,7 +45,7 @@ const MapSection = () => {
     samarkand: {
       name: "Samarkand",
       address: "Registan Platz 45, Samarkand",
-      phone: "+998 66 223 4567",
+      phone: "+998 77 178 06 66",
       email: "samarkand@profideutsch.uz",
       courses: ["Deutsch (A1-B2)", "Englisch (A1-B1)", "Usbekisch (A1-A2)"],
       coordinates: { lat: 39.654388, lng: 66.975628 },
@@ -54,7 +54,7 @@ const MapSection = () => {
     bukhara: {
       name: "Buchara",
       address: "Lyabi-Hauz Komplex 12, Buchara",
-      phone: "+998 65 223 4567",
+      phone: "+998 77 178 06 66",
       email: "bukhara@profideutsch.uz",
       courses: ["Deutsch (A1-B1)", "Englisch (A1-A2)"],
       coordinates: { lat: 39.767927, lng: 64.421998 },
@@ -63,7 +63,7 @@ const MapSection = () => {
     andijan: {
       name: "Andischan",
       address: "Babur Straße 78, Andischan",
-      phone: "+998 74 223 4567",
+      phone: "+998 77 178 06 66",
       email: "andijan@profideutsch.uz",
       courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
       coordinates: { lat: 40.783388, lng: 72.350891 },
@@ -72,7 +72,7 @@ const MapSection = () => {
     namangan: {
       name: "Namangan",
       address: "Alisher Navoi Straße 25, Namangan",
-      phone: "+998 69 234 5678",
+      phone: "+998 77 178 06 66",
       email: "namangan@profideutsch.uz",
       courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
       coordinates: { lat: 41.000085, lng: 71.672579 },
@@ -81,7 +81,7 @@ const MapSection = () => {
     fergana: {
       name: "Fergana",
       address: "Mustaqillik Straße 15, Fergana",
-      phone: "+998 73 244 5678",
+      phone: "+998 77 178 06 66",
       email: "fergana@profideutsch.uz",
       courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
       coordinates: { lat: 40.387054, lng: 71.783005 },
@@ -90,7 +90,7 @@ const MapSection = () => {
     karakalpakstan: {
       name: "Karakalpakstan",
       address: "Dosnazarov Straße 32, Nukus",
-      phone: "+998 61 222 3344",
+      phone: "+998 77 178 06 66",
       email: "nukus@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 42.460201, lng: 59.617599 },
@@ -99,7 +99,7 @@ const MapSection = () => {
     khorezm: {
       name: "Khorezm",
       address: "Al-Khwarizmi Straße 10, Urgench",
-      phone: "+998 62 224 5566",
+      phone: "+998 77 178 06 66",
       email: "khorezm@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 41.550942, lng: 60.631594 },
@@ -108,7 +108,7 @@ const MapSection = () => {
     navoiy: {
       name: "Navoiy",
       address: "Alisher Navoiy Straße 22, Navoiy",
-      phone: "+998 79 223 4455",
+      phone: "+998 77 178 06 66",
       email: "navoiy@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 40.103076, lng: 65.373921 },
@@ -117,7 +117,7 @@ const MapSection = () => {
     jizzakh: {
       name: "Jizzakh",
       address: "Sharof Rashidov Straße 63, Jizzakh",
-      phone: "+998 72 226 7788",
+      phone: "+998 77 178 06 66",
       email: "jizzakh@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 40.115005, lng: 67.842091 },
@@ -126,7 +126,7 @@ const MapSection = () => {
     sirdaryo: {
       name: "Sirdaryo",
       address: "Mustaqillik Straße 35, Gulistan",
-      phone: "+998 67 225 6677",
+      phone: "+998 77 178 06 66",
       email: "sirdaryo@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 40.489136, lng: 68.774901 },
@@ -135,7 +135,7 @@ const MapSection = () => {
     qashqadaryo: {
       name: "Qashqadaryo",
       address: "Amir Temur Straße 43, Karshi",
-      phone: "+998 75 223 5566",
+      phone: "+998 77 178 06 66",
       email: "qashqadaryo@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 38.857138, lng: 65.789058 },
@@ -144,7 +144,7 @@ const MapSection = () => {
     surkhandarya: {
       name: "Surkhandarya",
       address: "Mustaqillik Straße 17, Termez",
-      phone: "+998 76 227 8899",
+      phone: "+998 77 178 06 66",
       email: "surkhandarya@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 37.227852, lng: 67.277872 },
