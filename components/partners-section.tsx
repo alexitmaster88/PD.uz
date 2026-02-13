@@ -79,13 +79,34 @@ export default function PartnersSection() {
       website: "https://gov.uz/oz/uzedu",
       descriptionKey: "partner_uzedu_desc",
     },
-    {
-      id: "lufthansa",
-      name: "Lufthansa",
-      logo: "/images/logos/lufthansalogo.svg",
-      website: "https://www.lufthansa.com",
-      descriptionKey: "partner_lufthansa_desc",
-    },
+    // {
+    //   id: "lufthansa",
+    //   name: "Lufthansa",
+    //   logo: "/images/logos/lufthansalogo.svg",
+    //   website: "https://www.lufthansa.com",
+    //   descriptionKey: "partner_lufthansa_desc",
+    // },
+    // {
+    //   id: "lufthansa",
+    //   name: "Lufthansa",
+    //   logo: "/images/logos/lufthansalogo.svg",
+    //   website: "https://www.lufthansa.com",
+    //   descriptionKey: "partner_lufthansa_desc",
+    // },
+    // {
+    //   id: "lufthansa",
+    //   name: "Lufthansa",
+    //   logo: "/images/logos/lufthansalogo.svg",
+    //   website: "https://www.lufthansa.com",
+    //   descriptionKey: "partner_lufthansa_desc",
+    // },
+    // {
+    //   id: "lufthansa",
+    //   name: "Lufthansa",
+    //   logo: "/images/logos/lufthansalogo.svg",
+    //   website: "https://www.lufthansa.com",
+    //   descriptionKey: "partner_lufthansa_desc",
+    // },
   ];
 
   const handleScroll = useCallback((direction: 'left' | 'right'): void => {

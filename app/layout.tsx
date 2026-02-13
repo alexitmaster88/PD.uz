@@ -25,8 +25,7 @@ export default function RootLayout({
   return (
     <html lang="de" suppressHydrationWarning>
       <head>
-        {/* Add Framer Motion */}
-        <link rel="preload" href="/_next/static/chunks/framer-motion.js" as="script" />
+        {/* Removed hardcoded Framer Motion preload to avoid 404 when chunk name differs */}
         <link rel="icon" href="/PDico.png" />
       </head>
       <body className={`${inter.className} relative min-h-screen text-style-override`}>
