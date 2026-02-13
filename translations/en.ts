@@ -193,10 +193,10 @@ const en = {
   partner_duwk_desc: "German-Uzbek Economic Cooperation Office",
   partner_ssp_desc: "Chamber of Commerce and industry of the Republic of Uzbekistan",
   partner_tavi_desc: "Tashkent regional administration",
-  partner_siemens_desc: "Technology Company",
-  partner_volkswagen_desc: "Automotive Manufacturer",
-  partner_bosch_desc: "Engineering and Technology Company",
-  partner_sap_desc: "Software Company",
+  partner_xb_desc: "Joint-stock Commercial People's Bank",
+  partner_yosh_desc: "Youth Affairs Agency",
+  partner_edu_desc: "Ministry of Higher Education, Science and Innovations",
+  partner_uzedu_desc: "Ministry of Preschool and School Education",
   partner_lufthansa_desc: "German Airline",
 
   // Special offers

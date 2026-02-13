@@ -198,10 +198,10 @@ const de = {
   partner_duwk_desc: "Büro der Deutsch-Usbekischen Wirtschaftskooperation",
   partner_ssp_desc: "Industrie- und Handelskammer der Republik Usbekistan",
   partner_tavi_desc: "Regionalverwaltung Taschkent",
-  partner_siemens_desc: "Technologieunternehmen",
-  partner_volkswagen_desc: "Automobilhersteller",
-  partner_bosch_desc: "Ingenieur- und Technologieunternehmen",
-  partner_sap_desc: "Softwareunternehmen",
+  partner_xb_desc: "Aktiengesellschaft Volksbank",
+  partner_yosh_desc: "Jugendbehörde",
+  partner_edu_desc: "Ministerium für Hochschulbildung, Wissenschaft und Innovation",
+  partner_uzedu_desc: "Ministerium für Vorschul- und Schulbildung",
   partner_lufthansa_desc: "Deutsche Fluggesellschaft",
 
   // Special offers

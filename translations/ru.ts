@@ -189,10 +189,10 @@ const ru = {
   partner_duwk_desc: "Бюро Германо-Узбекского Делового Сотрудничества",
   partner_ssp_desc: "Торгово-промышленной палаты Республики Узбекистан",
   partner_tavi_desc: "Хокимият Ташкентской области",
-  partner_siemens_desc: "Технологическая компания",
-  partner_volkswagen_desc: "Автомобильный производитель",
-  partner_bosch_desc: "Инженерно-технологическая компания",
-  partner_sap_desc: "Программная компания",
+  partner_xb_desc: "Акционерный народный коммерческий банк",
+  partner_yosh_desc: "Агентство по делам молодежи",
+  partner_edu_desc: "Министерство высшего образования, науки и инноваций",
+  partner_uzedu_desc: "Министерство дошкольного и школьного образования",
   partner_lufthansa_desc: "Немецкая авиакомпания",
 
   // Special offers

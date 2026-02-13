@@ -189,10 +189,10 @@ const uz = {
   partner_duwk_desc: "Germaniya-O‘zbekiston Biznes Hamkorligi Byurosi",
   partner_ssp_desc: "O‘zbekiston Respublikasi Savdo-sanoat palatasi",
   partner_tavi_desc: "Toshkent viloyati hokimligi",
-  partner_siemens_desc: "Texnologiya kompaniyasi",
-  partner_volkswagen_desc: "Avtomobil ishlab chiqaruvchisi",
-  partner_bosch_desc: "Muhandislik va texnologiya kompaniyasi",
-  partner_sap_desc: "Dasturiy ta'minot kompaniyasi",
+  partner_xb_desc: "Аksiyadorlik tijorat Xalq banki",
+  partner_yosh_desc: "Yoshlar ishlari agentligi",
+  partner_edu_desc: "Oliy taʼlim, fan va innovatsiyalar vаzirligi",
+  partner_uzedu_desc: "Maktabgacha va maktab ta’limi vazirligi",
   partner_lufthansa_desc: "Nemis aviakompaniyasi",
 
   // Special offers
