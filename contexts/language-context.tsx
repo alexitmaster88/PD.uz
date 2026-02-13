@@ -91,7 +91,15 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
 
     // Load translations
     import("@/translations").then((module) => {
-      setTranslations(module.default)
+      const normalized = Object.fromEntries(
+        Object.entries(module.default).map(([lang, map]) => [
+          lang,
+          Object.fromEntries(
+            Object.entries(map).map(([k, v]) => [k, typeof v === "object" ? JSON.stringify(v) : v])
+          )
+        ])
+      ) as Record<string, Record<string, string>>
+      setTranslations(normalized)
     })
 
     // Update HTML lang attribute when language changes
