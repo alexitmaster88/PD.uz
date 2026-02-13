@@ -118,18 +118,18 @@ const en = {
   // intro_video_title: "Learning German: The Most Important Phrases for Beginners",
 
   // Photo Gallery Items
-  photo_alt_1: "German course in Tashkent",
-  photo_caption_1: "German course in Tashkent",
-  photo_alt_2: "Language center in Samarkand",
-  photo_caption_2: "Our new language center in Samarkand",
-  photo_alt_3: "Students learning",
-  photo_caption_3: "Our students learning",
-  photo_alt_4: "Cultural event",
-  photo_caption_4: "German cultural event",
-  photo_alt_5: "Graduation ceremony",
-  photo_caption_5: "B2 course graduation ceremony",
-  photo_alt_6: "German teachers",
-  photo_caption_6: "Our team of qualified German teachers",
+  // photo_alt_1: "German course in Tashkent",
+  // photo_caption_1: "German course in Tashkent",
+  // photo_alt_2: "Language center in Samarkand",
+  // photo_caption_2: "Our new language center in Samarkand",
+  // photo_alt_3: "Students learning",
+  // photo_caption_3: "Our students learning",
+  // photo_alt_4: "Cultural event",
+  // photo_caption_4: "German cultural event",
+  // photo_alt_5: "Graduation ceremony",
+  // photo_caption_5: "B2 course graduation ceremony",
+  // photo_alt_6: "German teachers",
+  // photo_caption_6: "Our team of qualified German teachers",
 
   // Language detection
   language_detected:
@@ -189,10 +189,10 @@ const en = {
   partnership_interest: "Interested in a partnership? Contact us for more information.",
 
   // Partner descriptions
-  partner_goethe_desc: "German Cultural Institute",
-  partner_daad_desc: "German Academic Exchange Service",
-  partner_bmz_desc: "Federal Ministry for Economic Cooperation",
-  partner_giz_desc: "German Society for International Cooperation",
+  partner_telc_desc: "Worldwide language examination centre",
+  partner_duwk_desc: "German-Uzbek Economic Cooperation Office",
+  partner_ssp_desc: "Chamber of Commerce and industry of the Republic of Uzbekistan",
+  partner_tavi_desc: "Tashkent regional administration",
   partner_siemens_desc: "Technology Company",
   partner_volkswagen_desc: "Automotive Manufacturer",
   partner_bosch_desc: "Engineering and Technology Company",

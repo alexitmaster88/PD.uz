@@ -17,6 +17,7 @@ interface Partner {
 
 export default function PartnersSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const scrollingRef = useRef<boolean>(false);
   const { t } = useLanguage();
@@ -24,38 +25,38 @@ export default function PartnersSection() {
   const partners: Partner[] = [
     {
       id: "goethe-institut",
-      name: "Goethe Institut",
-      logo: "/images/logos/goethelogo.svg",
-      website: "https://www.goethe.de",
-      descriptionKey: "partner_goethe_desc",
+      name: "TELC gGmbH",
+      logo: "/images/logos/telc.svg",
+      website: "https://www.telc.net/en/",
+      descriptionKey: "partner_telc_desc",
     },
     {
       id: "daad",
-      name: "DAAD",
-      logo: "/images/logos/daadlogo.svg",
-      website: "https://www.daad.de",
-      descriptionKey: "partner_daad_desc",
+      name: "DUWK Büro",
+      logo: "/images/logos/duwk.svg",
+      website: "https://duwk.de/en/main-page/",
+      descriptionKey: "partner_duwk_desc",
     },
     {
       id: "bmz",
-      name: "BMZ",
-      logo: "/images/logos/bmzlogo.svg",
-      website: "https://www.bmz.de",
-      descriptionKey: "partner_bmz_desc",
+      name: "SSP",
+      logo: "/images/logos/ssp.svg",
+      website: "https://chamber.uz/oz",
+      descriptionKey: "partner_ssp_desc",
     },
     {
       id: "giz",
       name: "GIZ",
-      logo: "/images/logos/gizlogo.svg",
-      website: "https://www.giz.de",
-      descriptionKey: "partner_giz_desc",
+      logo: "/images/logos/tashvil.svg",
+      website: "https://toshkentviloyati.uz/ru",
+      descriptionKey: "partner_tavi_desc",
     },
     {
       id: "siemens",
-      name: "Siemens",
-      logo: "/images/logos/siemenslogo.svg",
-      website: "https://www.siemens.com",
-      descriptionKey: "partner_siemens_desc",
+      name: "Xalq Banki",
+      logo: "/images/logos/xb.svg",
+      website: "https://xb.uz/",
+      descriptionKey: "partner_xb_desc",
     },
     {
       id: "volkswagen",
@@ -106,40 +107,92 @@ export default function PartnersSection() {
 
   useEffect(() => {
     const container = scrollContainerRef.current;
-    if (!container) return;
+    const inner = innerRef.current;
+    if (!container || !inner) return;
 
-    const intervalId = setInterval(() => {
-      if (!scrollingRef.current) {
-        scrollingRef.current = true;
-        const cardWidth = 280;
-        const gapWidth = 24;
-        const scrollAmount = cardWidth + gapWidth;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const currentScroll = container.scrollLeft;
+    let rafId: number | null = null;
+    let lastTime = 0;
+    const speed = 80; // px per second
+    let paused = false;
+    let offset = 0;
+    let groupWidth = 0; // width of one partners group
 
-        // If we're at the end of the original set, smoothly continue with the duplicated set
-        if (currentScroll >= maxScroll / 2) {
-          container.scrollTo({
-            left: 0,
-            behavior: 'smooth'
-          });
-        } else {
-          container.scrollBy({
-            left: scrollAmount,
-            behavior: 'smooth'
-          });
-        }
-
-        setTimeout(() => {
-          scrollingRef.current = false;
-        }, 500);
+    const updateWidths = () => {
+      const firstGroup = inner.querySelector('.partners-group') as HTMLElement | null;
+      if (!firstGroup) {
+        groupWidth = 0;
+        return;
       }
-    }, 4000);
 
-    autoScrollIntervalRef.current = intervalId;
+      const items = Array.from(firstGroup.children) as HTMLElement[];
+      const totalCardsWidth = items.reduce((sum, el) => sum + el.offsetWidth, 0);
+      const containerWidth = container.clientWidth || 0;
+
+      const minGap = 24; // fallback gap
+      let gap = minGap;
+
+      // If cards fit within container, distribute remaining space equally between them
+      if (totalCardsWidth + minGap * (items.length - 1) < containerWidth && items.length > 1) {
+        gap = (containerWidth - totalCardsWidth) / (items.length - 1);
+      }
+
+      // Apply computed gap to both groups (inline style overrides tailwind class)
+      const groups = inner.querySelectorAll('.partners-group');
+      groups.forEach((g) => {
+        (g as HTMLElement).style.gap = `${gap}px`;
+      });
+
+      // Recompute group width after applying gap
+      groupWidth = firstGroup.offsetWidth;
+      inner.style.transform = `translateX(0px)`;
+    };
+
+    const animate = (time: number) => {
+      if (!inner) return;
+      if (!lastTime) lastTime = time;
+      const dt = time - lastTime;
+      lastTime = time;
+
+      if (!paused && groupWidth > 0) {
+        offset += (speed * dt) / 1000;
+        if (offset >= groupWidth) {
+          // loop seamlessly
+          offset -= groupWidth;
+        }
+        inner.style.transform = `translateX(${-offset}px)`;
+      }
+
+      rafId = requestAnimationFrame(animate);
+    };
+
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; lastTime = 0; };
+
+    container.addEventListener('pointerenter', pause);
+    container.addEventListener('pointerleave', resume);
+    container.addEventListener('pointerdown', pause);
+    window.addEventListener('pointerup', resume);
+    container.addEventListener('touchstart', pause, { passive: true } as AddEventListenerOptions);
+    window.addEventListener('touchend', resume);
+
+    const ro = new ResizeObserver(() => {
+      updateWidths();
+    });
+    ro.observe(inner);
+    ro.observe(container);
+
+    updateWidths();
+    rafId = requestAnimationFrame(animate);
 
     return () => {
-      clearInterval(intervalId);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      ro.disconnect();
+      container.removeEventListener('pointerenter', pause);
+      container.removeEventListener('pointerleave', resume);
+      container.removeEventListener('pointerdown', pause);
+      window.removeEventListener('pointerup', resume);
+      container.removeEventListener('touchstart', pause as EventListenerOrEventListenerObject);
+      window.removeEventListener('touchend', resume);
     };
   }, []);
 
@@ -166,58 +219,74 @@ export default function PartnersSection() {
         </div>
 
         <div className="relative group">
-          <div
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-6 pb-6 scrollbar-hide snap-x snap-mandatory scroll-pl-6 scroll-pr-6"
-            style={{ 
-              scrollbarWidth: "none", 
-              msOverflowStyle: "none",
-              scrollSnapType: "x mandatory",
-              scrollBehavior: "smooth",
-              WebkitOverflowScrolling: "touch",
-              scrollPaddingLeft: "calc((100% - 280px) / 2)",
-              scrollPaddingRight: "calc((100% - 280px) / 2)"
-            }}
-          >
-            {[...partners, ...partners].map((partner, index) => (
-              <Card
-                key={`${partner.id}-${index}`}
-                className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden snap-center shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
-              >
-                <CardContent className="p-6 text-center flex flex-col justify-between h-full">
-                  <div>
-                    <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src={partner.logo || "/placeholder.svg"}
-                        alt={`${partner.name} logo`}
-                        width={120}
-                        height={80}
-                        className="object-contain max-h-full max-w-full w-auto h-auto"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "/placeholder.svg?height=80&width=120";
-                        }}
-                      />
-                    </div>
-                    <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">
-                      {partner.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4 h-[60px] overflow-hidden">
-                      {t(partner.descriptionKey)}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full mt-auto bg-transparent"
-                    onClick={() => handlePartnerClick(partner.website)}
+          <div ref={scrollContainerRef} className="overflow-hidden pb-6">
+            <div ref={innerRef} className="flex gap-6 will-change-transform">
+              <div className="partners-group flex">
+                {partners.map((partner, index) => (
+                  <Card
+                    key={`${partner.id}-a-${index}`}
+                    className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    {t("visit_website")}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+                    <CardContent className="p-6 text-center flex flex-col justify-between h-full">
+                      <div>
+                        <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
+                          <Image
+                            src={partner.logo || "/placeholder.svg"}
+                            alt={`${partner.name} logo`}
+                            width={120}
+                            height={80}
+                            className="object-contain max-h-full max-w-full w-auto h-auto"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "/placeholder.svg?height=80&width=120";
+                            }}
+                          />
+                        </div>
+                        <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">{partner.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-4 h-[60px] overflow-hidden">{t(partner.descriptionKey)}</p>
+                      </div>
+                      <Button variant="outline" size="sm" className="w-full mt-auto bg-transparent" onClick={() => handlePartnerClick(partner.website)}>
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        {t("visit_website")}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              <div className="partners-group flex" aria-hidden>
+                {partners.map((partner, index) => (
+                  <Card
+                    key={`${partner.id}-b-${index}`}
+                    className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
+                  >
+                    <CardContent className="p-6 text-center flex flex-col justify-between h-full">
+                      <div>
+                        <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
+                          <Image
+                            src={partner.logo || "/placeholder.svg"}
+                            alt={`${partner.name} logo`}
+                            width={120}
+                            height={80}
+                            className="object-contain max-h-full max-w-full w-auto h-auto"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "/placeholder.svg?height=80&width=120";
+                            }}
+                          />
+                        </div>
+                        <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">{partner.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-4 h-[60px] overflow-hidden">{t(partner.descriptionKey)}</p>
+                      </div>
+                      <Button variant="outline" size="sm" className="w-full mt-auto bg-transparent" onClick={() => handlePartnerClick(partner.website)}>
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        {t("visit_website")}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
 
           <Button

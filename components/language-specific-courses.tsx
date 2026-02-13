@@ -35,7 +35,7 @@ const LanguageSpecificCourses = () => {
           description: t("early_bird_desc"),
           price: "",
           discount: "",
-          image: "/images/german-classroom-1.png",
+          // image: "/images/german-classroom-1.png",
         },
       ],
     },

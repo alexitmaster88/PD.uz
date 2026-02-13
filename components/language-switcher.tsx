@@ -68,21 +68,25 @@ export default function LanguageSwitcher() {
     return () => window.removeEventListener("scroll", toggleVisibility)
   }, [])
 
-  // Effect to handle scroll restoration
+  // Effect to handle scroll restoration (single, reliable attempt)
   useEffect(() => {
     if (pendingScroll !== null) {
-      requestAnimationFrame(() => {
-        window.scrollTo(0, pendingScroll)
-        setPendingScroll(null)
-      })
-    }
-  }, [pendingScroll])
+      // Try multiple times to ensure scroll is applied after route updates
+      let attempts = 0
+      const maxAttempts = 8
 
-  // Effect to handle scroll restoration
-  useEffect(() => {
-    if (pendingScroll !== null) {
-      window.scrollTo(0, pendingScroll)
-      setPendingScroll(null)
+      const tryRestore = () => {
+        window.scrollTo(0, pendingScroll)
+        attempts += 1
+        if (attempts < maxAttempts) {
+          // schedule another try in case layout hasn't settled
+          setTimeout(tryRestore, attempts * 50)
+        } else {
+          setPendingScroll(null)
+        }
+      }
+
+      requestAnimationFrame(tryRestore)
     }
   }, [pendingScroll])
 
@@ -92,10 +96,9 @@ export default function LanguageSwitcher() {
 
   const handleLanguageChange = (lang: "de" | "uz" | "en" | "ru") => {
     setSelectedLang(lang)
-    // Store current scroll position
-    setPendingScroll(window.scrollY)
-    
-    // compute the next path by swapping the first segment
+    // Store current scroll position (will be restored after navigation)
+    const scrollPos = window.scrollY
+    setPendingScroll(scrollPos)
     const nextPath = (() => {
       const parts = (pathname || "/").split("/")
       parts[1] = lang // ['', lang, ...]
@@ -103,18 +106,20 @@ export default function LanguageSwitcher() {
       return joined.replace(/\/+$/, "") || `/${lang}`
     })()
   
-    // Store current scroll position
-    const scrollPosition = window.scrollY
-    sessionStorage.setItem('scrollPosition', scrollPosition.toString())
-    
+    // Store current scroll position in sessionStorage as a fallback
+    sessionStorage.setItem('scrollPosition', scrollPos.toString())
+
     setTimeout(async () => {
       setLanguage(lang)
       startTransition(async () => {
         await router.replace(nextPath, { scroll: false })
-        // Restore scroll position after route change
-        const savedPosition = sessionStorage.getItem('scrollPosition')
-        if (savedPosition) {
-          window.scrollTo(0, parseInt(savedPosition))
+
+        // After navigation, attempt to restore scroll from sessionStorage
+        const saved = sessionStorage.getItem('scrollPosition')
+        if (saved) {
+          const savedPos = parseInt(saved)
+          // Use pendingScroll state to trigger the restoration effect
+          setPendingScroll(savedPos)
           sessionStorage.removeItem('scrollPosition')
         }
       })

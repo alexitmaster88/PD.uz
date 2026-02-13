@@ -13,8 +13,10 @@ const languages = ["de", "en", "ru", "uz"]
 
 // Generate metadata
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
+  // `params` may be a promise in some Next.js runtimes — await it before use
+  const resolvedParams = await params as { lang: string }
   // Validate language
-  const lang = languages.includes(params.lang) ? params.lang : "de"
+  const lang = languages.includes(resolvedParams.lang) ? resolvedParams.lang : "de"
 
   const titles = {
     de: "Deutsches Sprachzentrum in Usbekistan",
@@ -49,15 +51,17 @@ export function generateStaticParams() {
   return languages.map((lang) => ({ lang }))
 }
 
-export default function LangLayout({
+export default async function LangLayout({
   children,
   params,
 }: {
   children: React.ReactNode
   params: { lang: string }
 }) {
+  // Await params to satisfy Next.js async dynamic param requirements
+  const resolvedParams = await params as { lang: string }
   // Validate language
-  const lang = languages.includes(params.lang) ? params.lang : "de"
+  const lang = languages.includes(resolvedParams.lang) ? resolvedParams.lang : "de"
 
   return (
     <LanguageProvider initialLanguage={lang as "de" | "en" | "ru" | "uz"}>

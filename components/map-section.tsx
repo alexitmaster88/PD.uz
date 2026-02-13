@@ -31,7 +31,7 @@ const MapSection = () => {
       email: "tashkent@profideutsch.uz",
       courses: ["Deutsch (A1-C1)", "Englisch (A1-B2)", "Russisch (A1-B2)", "Usbekisch (A1-B1)"],
       coordinates: { lat: 41.311081, lng: 69.240562 },
-      image: "/images/german-classroom-1.png",
+      // image: "/images/german-classroom-1.png",
     },
     tashkent_region: {
       name: "Taschkent Region",
@@ -40,7 +40,7 @@ const MapSection = () => {
       email: "tashkent.region@profideutsch.uz",
       courses: ["Deutsch (A1-B1)", "Englisch (A1-A2)"],
       coordinates: { lat: 41.044498, lng: 69.332802 },
-      image: "/images/german-classroom-2.png",
+      // image: "/images/german-classroom-2.png",
     },
     samarkand: {
       name: "Samarkand",
@@ -49,7 +49,7 @@ const MapSection = () => {
       email: "samarkand@profideutsch.uz",
       courses: ["Deutsch (A1-B2)", "Englisch (A1-B1)", "Usbekisch (A1-A2)"],
       coordinates: { lat: 39.654388, lng: 66.975628 },
-      image: "/images/uzbek-german-1.png",
+      // image: "/images/uzbek-german-1.png",
     },
     bukhara: {
       name: "Buchara",
@@ -58,7 +58,7 @@ const MapSection = () => {
       email: "bukhara@profideutsch.uz",
       courses: ["Deutsch (A1-B1)", "Englisch (A1-A2)"],
       coordinates: { lat: 39.767927, lng: 64.421998 },
-      image: "/images/uzbek-german-2.png",
+      // image: "/images/uzbek-german-2.png",
     },
     andijan: {
       name: "Andischan",
@@ -67,7 +67,7 @@ const MapSection = () => {
       email: "andijan@profideutsch.uz",
       courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
       coordinates: { lat: 40.783388, lng: 72.350891 },
-      image: "/images/language-learning-1.png",
+      // image: "/images/language-learning-1.png",
     },
     namangan: {
       name: "Namangan",
@@ -76,7 +76,7 @@ const MapSection = () => {
       email: "namangan@profideutsch.uz",
       courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
       coordinates: { lat: 41.000085, lng: 71.672579 },
-      image: "/images/language-learning-2.png",
+      // image: "/images/language-learning-2.png",
     },
     fergana: {
       name: "Fergana",
@@ -85,7 +85,7 @@ const MapSection = () => {
       email: "fergana@profideutsch.uz",
       courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
       coordinates: { lat: 40.387054, lng: 71.783005 },
-      image: "/images/students-1.png",
+      // image: "/images/students-1.png",
     },
     karakalpakstan: {
       name: "Karakalpakstan",
@@ -94,7 +94,7 @@ const MapSection = () => {
       email: "nukus@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 42.460201, lng: 59.617599 },
-      image: "/images/students-2.png",
+      // image: "/images/students-2.png",
     },
     khorezm: {
       name: "Khorezm",
@@ -103,7 +103,7 @@ const MapSection = () => {
       email: "khorezm@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 41.550942, lng: 60.631594 },
-      image: "/images/cultural-event-1.png",
+      // image: "/images/cultural-event-1.png",
     },
     navoiy: {
       name: "Navoiy",
@@ -112,7 +112,7 @@ const MapSection = () => {
       email: "navoiy@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 40.103076, lng: 65.373921 },
-      image: "/images/cultural-event-2.png",
+      // image: "/images/cultural-event-2.png",
     },
     jizzakh: {
       name: "Jizzakh",
@@ -121,7 +121,7 @@ const MapSection = () => {
       email: "jizzakh@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 40.115005, lng: 67.842091 },
-      image: "/images/german-culture-1.png",
+      // image: "/images/german-culture-1.png",
     },
     sirdaryo: {
       name: "Sirdaryo",
@@ -130,7 +130,7 @@ const MapSection = () => {
       email: "sirdaryo@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 40.489136, lng: 68.774901 },
-      image: "/images/german-culture-2.png",
+      // image: "/images/german-culture-2.png",
     },
     qashqadaryo: {
       name: "Qashqadaryo",
@@ -139,7 +139,7 @@ const MapSection = () => {
       email: "qashqadaryo@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 38.857138, lng: 65.789058 },
-      image: "/images/teacher-1.png",
+      // image: "/images/teacher-1.png",
     },
     surkhandarya: {
       name: "Surkhandarya",
@@ -148,7 +148,7 @@ const MapSection = () => {
       email: "surkhandarya@profideutsch.uz",
       courses: ["Deutsch (A1)", "Englisch (A1)"],
       coordinates: { lat: 37.227852, lng: 67.277872 },
-      image: "/images/teacher-2.png",
+      // image: "/images/teacher-2.png",
     },
   }
 

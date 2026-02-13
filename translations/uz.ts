@@ -116,18 +116,18 @@ const uz = {
   // intro_video_title: "Nemis tilini o'rganish: Boshlang'ichlar uchun eng muhim iboralar",
 
   // Photo Gallery Items
-  photo_alt_1: "Toshkentdagi nemis tili kursi",
-  photo_caption_1: "Toshkentdagi nemis tili kursi",
-  photo_alt_2: "Samarqanddagi til markazi",
-  photo_caption_2: "Samarqanddagi yangi til markazimiz",
-  photo_alt_3: "O'quvchilar o'rganmoqda",
-  photo_caption_3: "Bizning o'quvchilarimiz o'rganmoqda",
-  photo_alt_4: "Madaniy tadbir",
-  photo_caption_4: "Nemis madaniy tadbiri",
-  photo_alt_5: "Bitirish marosimi",
-  photo_caption_5: "B2 kursi bitirish marosimi",
-  photo_alt_6: "Nemis tili o'qituvchilari",
-  photo_caption_6: "Malakali nemis tili o'qituvchilarimiz jamoasi",
+  // photo_alt_1: "Toshkentdagi nemis tili kursi",
+  // photo_caption_1: "Toshkentdagi nemis tili kursi",
+  // photo_alt_2: "Samarqanddagi til markazi",
+  // photo_caption_2: "Samarqanddagi yangi til markazimiz",
+  // photo_alt_3: "O'quvchilar o'rganmoqda",
+  // photo_caption_3: "Bizning o'quvchilarimiz o'rganmoqda",
+  // photo_alt_4: "Madaniy tadbir",
+  // photo_caption_4: "Nemis madaniy tadbiri",
+  // photo_alt_5: "Bitirish marosimi",
+  // photo_caption_5: "B2 kursi bitirish marosimi",
+  // photo_alt_6: "Nemis tili o'qituvchilari",
+  // photo_caption_6: "Malakali nemis tili o'qituvchilarimiz jamoasi",
 
   // Language detection
   language_detected:
@@ -185,10 +185,10 @@ const uz = {
   partnership_interest: "Hamkorlikka qiziqasizmi? Qo'shimcha ma'lumot uchun biz bilan bog'laning.",
 
   // Partner descriptions
-  partner_goethe_desc: "Nemis madaniy instituti",
-  partner_daad_desc: "Nemis akademik almashinuv xizmati",
-  partner_bmz_desc: "Iqtisodiy hamkorlik federal vazirligi",
-  partner_giz_desc: "Xalqaro hamkorlik nemis jamiyati",
+  partner_telc_desc: "Xalqaro til sertifikatlash markazi",
+  partner_duwk_desc: "Germaniya-O‘zbekiston Biznes Hamkorligi Byurosi",
+  partner_ssp_desc: "O‘zbekiston Respublikasi Savdo-sanoat palatasi",
+  partner_tavi_desc: "Toshkent viloyati hokimligi",
   partner_siemens_desc: "Texnologiya kompaniyasi",
   partner_volkswagen_desc: "Avtomobil ishlab chiqaruvchisi",
   partner_bosch_desc: "Muhandislik va texnologiya kompaniyasi",

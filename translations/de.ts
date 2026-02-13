@@ -125,18 +125,18 @@ const de = {
   // intro_video_title: "Deutsch lernen: Die wichtigsten Sätze für Anfänger",
 
   // Photo Gallery Items
-  photo_alt_1: "Deutschkurs in Taschkent",
-  photo_caption_1: "Deutschkurs in Taschkent",
-  photo_alt_2: "Sprachzentrum in Samarkand",
-  photo_caption_2: "Unser neues Sprachzentrum in Samarkand",
-  photo_alt_3: "Studenten beim Lernen",
-  photo_caption_3: "Unsere Studenten beim Lernen",
-  photo_alt_4: "Kulturveranstaltung",
-  photo_caption_4: "Deutsche Kulturveranstaltung",
-  photo_alt_5: "Abschlussfeier",
-  photo_caption_5: "Abschlussfeier des B2-Kurses",
-  photo_alt_6: "Deutschlehrer",
-  photo_caption_6: "Unser Team von qualifizierten Deutschlehrern",
+  // photo_alt_1: "Deutschkurs in Taschkent",
+  // photo_caption_1: "Deutschkurs in Taschkent",
+  // photo_alt_2: "Sprachzentrum in Samarkand",
+  // photo_caption_2: "Unser neues Sprachzentrum in Samarkand",
+  // photo_alt_3: "Studenten beim Lernen",
+  // photo_caption_3: "Unsere Studenten beim Lernen",
+  // photo_alt_4: "Kulturveranstaltung",
+  // photo_caption_4: "Deutsche Kulturveranstaltung",
+  // photo_alt_5: "Abschlussfeier",
+  // photo_caption_5: "Abschlussfeier des B2-Kurses",
+  // photo_alt_6: "Deutschlehrer",
+  // photo_caption_6: "Unser Team von qualifizierten Deutschlehrern",
 
   // Language detection
   language_detected:
@@ -194,10 +194,10 @@ const de = {
   partnership_interest: "Interessiert an einer Partnerschaft? Kontaktieren Sie uns für weitere Informationen.",
 
   // Partner descriptions
-  partner_goethe_desc: "Deutsches Kulturinstitut",
-  partner_daad_desc: "Deutscher Akademischer Austauschdienst",
-  partner_bmz_desc: "Bundesministerium für wirtschaftliche Zusammenarbeit",
-  partner_giz_desc: "Deutsche Gesellschaft für Internationale Zusammenarbeit",
+  partner_telc_desc: "Weltweites Sprachprüfungszentrum",
+  partner_duwk_desc: "Büro der Deutsch-Usbekischen Wirtschaftskooperation",
+  partner_ssp_desc: "Industrie- und Handelskammer der Republik Usbekistan",
+  partner_tavi_desc: "Regionalverwaltung Taschkent",
   partner_siemens_desc: "Technologieunternehmen",
   partner_volkswagen_desc: "Automobilhersteller",
   partner_bosch_desc: "Ingenieur- und Technologieunternehmen",
