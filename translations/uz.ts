@@ -9,6 +9,7 @@ const uz = {
   // Header
   courses: "Kurslar",
   locations: "Manzillar",
+  partners: "Hamkorlar",
   // benefits: "Afzalliklar",
   contact: "Aloqa",
   register_now: "Hozir ro'yxatdan o'tish",

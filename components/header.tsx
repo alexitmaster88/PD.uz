@@ -83,6 +83,9 @@ const Header = () => {
           <LangLink href="#kurse" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("courses")}
           </LangLink>
+            <LangLink href="#partners" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
+              {t("partners")}
+            </LangLink>
           <LangLink href="#standorte" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("locations")}
           </LangLink>
@@ -200,6 +203,13 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               {t("courses")}
+            </LangLink>
+            <LangLink
+              href="#partners"
+              className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t("partners")}
             </LangLink>
             <LangLink
               href="#standorte"

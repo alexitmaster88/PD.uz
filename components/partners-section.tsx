@@ -218,7 +218,7 @@ export default function PartnersSection() {
   }, []);
 
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
+    <section id="partners" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src="/partners-section.tsx/photo-1654442137037-fe784a7189af.png"

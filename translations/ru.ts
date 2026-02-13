@@ -9,6 +9,7 @@ const ru = {
   // Header
   courses: "Курсы",
   locations: "Местоположения",
+  partners: "Партнёры",
   // benefits: "Преимущества",
   contact: "Контакт",
   register_now: "Зарегистрироваться",

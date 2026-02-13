@@ -9,6 +9,7 @@ const de = {
   // Header
   courses: "Kurse",
   locations: "Standorte",
+  partners: "Partner",
 // benefits: "Vorteile",
   contact: "Kontakt",
   register_now: "Jetzt Anmelden",
