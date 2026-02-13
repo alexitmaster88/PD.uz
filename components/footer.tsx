@@ -12,6 +12,16 @@ const Footer = () => {
 
   // Create a language-aware link component
   const LangLink = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
+    // detect external before calling getLanguagePath
+    const isExternal = /^https?:\/\//.test(href)
+    if (isExternal) {
+      return (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+          {children}
+        </a>
+      )
+    }
+
     const languagePath = getLanguagePath(href)
     return (
       <Link href={languagePath} className={className}>
@@ -30,15 +40,15 @@ const Footer = () => {
             </div>
             <p className="text-sm font-medium text-foreground/90 mb-4">{t("about_us")}</p>
             <div className="flex space-x-4">
-              <LangLink href="#" className="text-foreground/80 hover:text-foreground transition-colors">
+              <LangLink href="https://www.facebook.com/profideutschuz" className="text-foreground/80 hover:text-foreground transition-colors">
                 <Facebook size={20} />
                 <span className="sr-only">Facebook</span>
               </LangLink>
-              <LangLink href="#" className="text-foreground/80 hover:text-foreground transition-colors">
+              <LangLink href="https://www.instagram.com/profi_deutsch_uz?igsh=MW1zNzV0cWh4cXc1bQ==" className="text-foreground/80 hover:text-foreground transition-colors">
                 <Instagram size={20} />
                 <span className="sr-only">Instagram</span>
               </LangLink>
-              <LangLink href="#" className="text-foreground/80 hover:text-foreground transition-colors">
+              <LangLink href="https://t.me/profi_deutsch_uz" className="text-foreground/80 hover:text-foreground transition-colors">
                 <MessageSquare size={20} />
                 <span className="sr-only">Telegram</span>
               </LangLink>
