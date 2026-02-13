@@ -117,11 +117,36 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
     const currentPath = pathname || "/"
     const newPath = `/${lang}${getPathWithoutLanguage(currentPath) === "/" ? "" : getPathWithoutLanguage(currentPath)}`
 
+    // Preserve current scroll position so we can restore it after navigation
+    try {
+      const scrollState = { path: currentPath, y: window.scrollY || 0 }
+      sessionStorage.setItem("lang-switch-scroll", JSON.stringify(scrollState))
+    } catch (e) {
+      // ignore
+    }
+
     // Only navigate if the path would actually change
     if (currentPath !== newPath) {
+      // Use router.push to navigate; scroll restoration will be handled after mount
       router.push(newPath)
     }
   }
+
+  // Restore scroll position after a language navigation (if present)
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("lang-switch-scroll")
+      if (!raw) return
+      const { y } = JSON.parse(raw)
+      // Delay slightly to allow layout; then restore
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: y || 0 })
+      })
+      sessionStorage.removeItem("lang-switch-scroll")
+    } catch (e) {
+      // ignore
+    }
+  }, [])
 
   const t = (key: string): string => {
     if (!translations[language]) return key
