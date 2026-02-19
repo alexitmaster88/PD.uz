@@ -57,15 +57,15 @@ const courseData: CourseDataType = {
     ],
     usbekisch: [
       {
-        level: "A1",
-        title: t("beginner"),
+        level: "B1",
+        title: t("Intermediate"),
         description: t("course_desc_a1_beginner"),
         features: ["60 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
         price: "",
       },
       {
-        level: "A2",
-        title: t("beginner"),
+        level: "B2",
+        title: t("Advanced"),
         description: t("course_desc_a2_basic"),
         features: ["80 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "",
@@ -127,19 +127,19 @@ const courseData: CourseDataType = {
               {t("language_german")}
             </TabsTrigger>
             <TabsTrigger 
-              value="usbekisch"
+              value="deutsch"
               className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
             >
               {t("language_uzbek")}
             </TabsTrigger>
             <TabsTrigger 
-              value="englisch"
+              value="deutsch"
               className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
             >
               {t("language_english")}
             </TabsTrigger>
             <TabsTrigger 
-              value="russisch"
+              value="deutsch"
               className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
             >
               {t("language_russian")}

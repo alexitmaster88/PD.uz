@@ -237,10 +237,7 @@ const LanguageSpecificCourses = () => {
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                        <div className="p-4">
-                          <h3 className="text-xl font-bold text-white">{course.level}</h3>
-                          <p className="text-sm text-white/80">{course.title}</p>
-                        </div>
+                        {/* Overlay gradient only — level/title are shown below in the card header */}
                       </div>
                     </div>
                     <CardHeader>
@@ -250,7 +247,7 @@ const LanguageSpecificCourses = () => {
                           <CardDescription>{course.title}</CardDescription>
                         </div>
                         <div className="bg-primary/10 text-primary px-2 py-1 rounded text-sm font-medium">
-                          {lang.charAt(0).toUpperCase() + lang.slice(1)}
+                          Deutsch
                         </div>
                       </div>
                     </CardHeader>

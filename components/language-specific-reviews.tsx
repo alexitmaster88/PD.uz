@@ -69,7 +69,7 @@ const LanguageSpecificReviews = () => {
         },
         rating: 5,
         content:
-          "Hervorragende Erfahrung! Ich habe den B1-Kurs für Usbekisch belegt und konnte nach nur 3 Monaten fließend sprechen. Die Methodik ist sehr effektiv und die Atmosphäre im Zentrum ist sehr freundlich und einladend.",
+          "Hervorragende Erfahrung! Ich habe den B1-Kurs für Deutsch belegt und konnte nach nur 3 Monaten fließend sprechen. Die Methodik ist sehr effektiv und die Atmosphäre im Zentrum ist sehr freundlich und einladend.",
         date: "2023-09-22",
         language: "de",
         helpful: 8,
