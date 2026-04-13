@@ -66,7 +66,7 @@ export default async function LangLayout({
   return (
     <LanguageProvider initialLanguage={lang as "de" | "en" | "ru" | "uz"}>
       <Header />
-      <main className="min-h-screen">{children}</main>
+      <main className="relative min-h-screen bg-white/10 backdrop-blur-sm">{children}</main>
       <Footer />
       <LanguageSwitcher />
     </LanguageProvider>

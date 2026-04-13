@@ -9,8 +9,9 @@ import { useLanguage } from "@/contexts/language-context"
 import Image from "next/image"
 
 const CoursesSection = () => {
-  const [language, setLanguage] = useState("deutsch")
-  const { t } = useLanguage()
+  const [selectedCourseTab, setSelectedCourseTab] = useState("deutsch")
+  const { t, language } = useLanguage()
+  const telegramUrl = "https://t.me/profi_deutsch_uz"
 
   interface CourseType {
   level: string;
@@ -118,7 +119,7 @@ const courseData: CourseDataType = {
           {/* <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("choose_courses")}</p> */}
         </div>
 
-        <Tabs defaultValue="deutsch" value={language} onValueChange={setLanguage} className="w-full">
+        <Tabs defaultValue="deutsch" value={selectedCourseTab} onValueChange={setSelectedCourseTab} className="w-full">
           <TabsList className="w-full grid grid-cols-2 md:grid-cols-4 gap-1 mb-8 p-1 h-auto bg-background/50 backdrop-blur-sm">
             <TabsTrigger 
               value="deutsch" 
@@ -127,19 +128,19 @@ const courseData: CourseDataType = {
               {t("language_german")}
             </TabsTrigger>
             <TabsTrigger 
-              value="deutsch"
+              value="usbekisch"
               className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
             >
               {t("language_uzbek")}
             </TabsTrigger>
             <TabsTrigger 
-              value="deutsch"
+              value="englisch"
               className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
             >
               {t("language_english")}
             </TabsTrigger>
             <TabsTrigger 
-              value="deutsch"
+              value="russisch"
               className="h-12 md:h-10 data-[state=active]:bg-white data-[state=active]:shadow-md"
             >
               {t("language_russian")}
@@ -177,7 +178,15 @@ const courseData: CourseDataType = {
                       <div className="mb-4">
                         <span className="text-2xl font-bold">{course.price}</span>
                       </div>
-                      <Button className="w-full">{t("register_now")}</Button>
+                      <Button asChild className="w-full">
+                        <a
+                          href={lang === "usbekisch" ? `/telc/${language}` : telegramUrl}
+                          target={lang === "usbekisch" ? undefined : "_blank"}
+                          rel={lang === "usbekisch" ? undefined : "noreferrer"}
+                        >
+                          {t("register_now")}
+                        </a>
+                      </Button>
                     </CardFooter>
                   </Card>
                 ))}

@@ -11,7 +11,9 @@ import Image from "next/image"
 
 const LanguageSpecificCourses = () => {
   const [courseLanguage, setCourseLanguage] = useState<keyof CourseDataType>("deutsch")
-  const { t, language } = useLanguage()
+  const { t, language, getLanguagePath } = useLanguage()
+  const telegramUrl = "https://t.me/profi_deutsch_uz"
+  const telcBookingPath = getLanguagePath("/telc/booking")
 
   const languageSpecificCourses: LanguageContent<{
     title: string
@@ -266,7 +268,15 @@ const LanguageSpecificCourses = () => {
                       <div className="mb-4">
                         <span className="text-2xl font-bold strikethrough">{course.price}</span>
                       </div>
-                      <Button className="w-full">{t("register_now")}</Button>
+                      <Button asChild className="w-full">
+                        <a
+                          href={courseLanguage === "usbekisch" ? telcBookingPath : telegramUrl}
+                          target={courseLanguage === "usbekisch" ? undefined : "_blank"}
+                          rel={courseLanguage === "usbekisch" ? undefined : "noreferrer"}
+                        >
+                          {t("register_now")}
+                        </a>
+                      </Button>
                     </CardFooter>
                   </Card>
                 ))}

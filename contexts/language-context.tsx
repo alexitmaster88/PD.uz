@@ -65,14 +65,40 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
   const pathname = usePathname()
   const router = useRouter()
 
+  const getTelcLanguageFromPath = (path: string): Language | null => {
+    const supportedLanguages: Language[] = ["de", "uz", "en", "ru"]
+    const segments = path.split("/").filter(Boolean)
+
+    if (segments[0] === "telc" && supportedLanguages.includes(segments[1] as Language)) {
+      return segments[1] as Language
+    }
+
+    return null
+  }
+
+  const getLanguageFromPath = (path: string): Language | null => {
+    const supportedLanguages: Language[] = ["de", "uz", "en", "ru"]
+    const segments = path.split("/").filter(Boolean)
+
+    if (segments.length > 0 && supportedLanguages.includes(segments[0] as Language)) {
+      return segments[0] as Language
+    }
+
+    return null
+  }
+
   // Extract the current path without the language prefix
   const getPathWithoutLanguage = (path: string): string => {
     const supportedLanguages: Language[] = ["de", "uz", "en", "ru"]
-    const segments = path.split("/")
+    const segments = path.split("/").filter(Boolean)
 
-    // If the first segment is a language code, remove it
-    if (segments.length > 1 && supportedLanguages.includes(segments[1] as Language)) {
-      return "/" + segments.slice(2).join("/")
+    if (segments.length > 0 && supportedLanguages.includes(segments[0] as Language)) {
+      return "/" + segments.slice(1).join("/")
+    }
+
+    if (segments.length > 1 && segments[0] === "telc" && supportedLanguages.includes(segments[1] as Language)) {
+      const rest = segments.slice(2).join("/")
+      return "/telc" + (rest ? `/${rest}` : "")
     }
 
     return path
@@ -80,11 +106,27 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
 
   // Get path with the specified language
   const getLanguagePath = (path: string): string => {
+    const segments = path.split("/").filter(Boolean)
+
+    if (segments.length > 0 && segments[0] === "telc") {
+      const hasTelcLang = segments.length > 1 && ["de", "uz", "en", "ru"].includes(segments[1] as Language)
+      const rest = hasTelcLang ? segments.slice(2).join("/") : segments.slice(1).join("/")
+      return `/telc/${language}${rest ? `/${rest}` : ""}`
+    }
+
     const pathWithoutLang = getPathWithoutLanguage(path)
     return `/${language}${pathWithoutLang === "/" ? "" : pathWithoutLang}`
   }
 
   useEffect(() => {
+    if (!pathname) return
+
+    const pathLang = getLanguageFromPath(pathname) || getTelcLanguageFromPath(pathname)
+    if (pathLang && pathLang !== language) {
+      setLanguageState(pathLang)
+      document.documentElement.lang = pathLang
+    }
+
     // Detect browser language
     const browserLang = detectBrowserLanguage()
     setDetectedLanguage(browserLang)
@@ -123,7 +165,11 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
 
     // Navigate to the same page but with new language prefix
     const currentPath = pathname || "/"
-    const newPath = `/${lang}${getPathWithoutLanguage(currentPath) === "/" ? "" : getPathWithoutLanguage(currentPath)}`
+    const isTelcPath = currentPath === "/telc" || currentPath.startsWith("/telc/")
+    const telcRest = currentPath.split("/").slice(3).join("/")
+    const newPath = isTelcPath
+      ? `/telc/${lang}${telcRest ? `/${telcRest}` : ""}`
+      : `/${lang}${getPathWithoutLanguage(currentPath) === "/" ? "" : getPathWithoutLanguage(currentPath)}`
 
     // Preserve current scroll position so we can restore it after navigation
     try {
