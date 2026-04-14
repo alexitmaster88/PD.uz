@@ -16,6 +16,7 @@ const Header = () => {
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false)
   const { t, getLanguagePath, language, setLanguage } = useLanguage()
   const pathname = usePathname()
+  const telegramUrl = "https://t.me/UZ_profideutsch"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,7 +96,11 @@ const Header = () => {
           <LangLink href="#kontakt" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("contact")}
           </LangLink>
-          <Button>{t("register_now")}</Button>
+          <Button asChild>
+            <a href={telegramUrl} target="_blank" rel="noreferrer">
+              {t("register_now")}
+            </a>
+          </Button>
 
           {/* Language switcher icon - only visible when scrolled */}
           {showLanguageSwitcher && (
@@ -235,7 +240,11 @@ const Header = () => {
             >
               {t("contact")}
             </LangLink>
-            <Button onClick={() => setIsMenuOpen(false)}>{t("register_now")}</Button>
+            <Button asChild onClick={() => setIsMenuOpen(false)}>
+              <a href={telegramUrl} target="_blank" rel="noreferrer">
+                {t("register_now")}
+              </a>
+            </Button>
           </nav>
         </div>
       )}

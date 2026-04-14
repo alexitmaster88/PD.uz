@@ -14,6 +14,11 @@ const ru = {
   // benefits: "Преимущества",
   contact: "Контакт",
   register_now: "Зарегистрироваться",
+  left_menu_title: "Быстрое меню",
+  left_menu_home: "Главная",
+  left_menu_telc: "Регистрация TELC",
+  left_menu_telc_booking: "Бронирование TELC",
+  left_menu_contact: "Контакт",
 
   // TELC Page
   telc_page_title: "Регистрация на экзамен TELC",
@@ -24,6 +29,7 @@ const ru = {
   telc_feature_3: "Персонализированное сопровождение для успеха",
   telc_cta: "Зарегистрироваться на TELC",
   telc_back_to_home: "Назад на главную",
+  telc_back_to_registration: "Назад на страницу регистрации TELC",
   telc_page_info_label: "Регистрация TELC",
   telc_page_info_text: "Получите официальный экзаменационный билет TELC с полной поддержкой нашей команды на вашем языке.",
   telc_page_ticket_label: "Уровни экзамена",

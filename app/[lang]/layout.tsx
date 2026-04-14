@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import LanguageSwitcher from "@/components/language-switcher"
+import LeftSlidingMenu from "@/components/left-sliding-menu"
 import type { Metadata } from "next"
 import { LanguageProvider } from "@/contexts/language-context"
 
@@ -67,6 +68,7 @@ export default async function LangLayout({
     <LanguageProvider initialLanguage={lang as "de" | "en" | "ru" | "uz"}>
       <Header />
       <main className="relative min-h-screen bg-white/10 backdrop-blur-sm">{children}</main>
+      <LeftSlidingMenu />
       <Footer />
       <LanguageSwitcher />
     </LanguageProvider>

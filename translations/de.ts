@@ -14,6 +14,11 @@ const de = {
 // benefits: "Vorteile",
   contact: "Kontakt",
   register_now: "Jetzt Anmelden",
+  left_menu_title: "Schnellmenü",
+  left_menu_home: "Startseite",
+  left_menu_telc: "TELC Anmeldung",
+  left_menu_telc_booking: "TELC Buchung",
+  left_menu_contact: "Kontakt",
 
   // TELC Page
   telc_page_title: "TELC-Prüfungsanmeldung",
@@ -24,6 +29,7 @@ const de = {
   telc_feature_3: "Personalisierte Unterstützung für Ihren Erfolg",
   telc_cta: "Zur TELC-Anmeldung",
   telc_back_to_home: "Zurück zur Hauptseite",
+  telc_back_to_registration: "Zurück zur TELC-Anmeldeseite",
   telc_page_info_label: "TELC-Anmeldung",
   telc_page_info_text: "Erhalten Sie einen offiziellen TELC-Prüfungstermin mit voller Unterstützung durch unser Team in Ihrer Sprache.",
   telc_page_ticket_label: "Prüfungsniveaus",

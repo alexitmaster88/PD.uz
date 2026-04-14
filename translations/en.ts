@@ -14,6 +14,11 @@ const en = {
   // benefits: "Benefits",
   contact: "Contact",
   register_now: "Register Now",
+  left_menu_title: "Quick menu",
+  left_menu_home: "Home",
+  left_menu_telc: "TELC registration",
+  left_menu_telc_booking: "TELC booking",
+  left_menu_contact: "Contact",
 
   // TELC Page
   telc_page_title: "TELC Exam Registration",
@@ -24,6 +29,7 @@ const en = {
   telc_feature_3: "Personalized coaching for success",
   telc_cta: "Register for TELC",
   telc_back_to_home: "Back to main page",
+  telc_back_to_registration: "Back to TELC registration page",
   telc_page_info_label: "TELC Registration",
   telc_page_info_text: "Get an official TELC exam date with full support from our team in your preferred language.",
   telc_page_ticket_label: "Exam Levels",

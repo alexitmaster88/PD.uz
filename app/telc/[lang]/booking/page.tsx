@@ -151,7 +151,7 @@ export default function TelcBookingPage({ params }: TelcBookingPageProps) {
                   {t("telc")}
                 </span>
                 <Link href={backUrl} className="transition-colors hover:text-primary">
-                  ← {t("telc_back_to_home")}
+                  ← {t("telc_back_to_registration")}
                 </Link>
               </div>
 

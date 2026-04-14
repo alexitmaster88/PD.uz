@@ -14,6 +14,11 @@ const uz = {
   // benefits: "Afzalliklar",
   contact: "Aloqa",
   register_now: "Hozir ro'yxatdan o'tish",
+  left_menu_title: "Tez menyu",
+  left_menu_home: "Bosh sahifa",
+  left_menu_telc: "TELC ro‘yxati",
+  left_menu_telc_booking: "TELC bronlash",
+  left_menu_contact: "Aloqa",
 
   // TELC Page
   telc_page_title: "TELC imtihoniga ro‘yxatdan o‘tish",
@@ -24,6 +29,7 @@ const uz = {
   telc_feature_3: "Muvaffaqiyat uchun shaxsiy tayyorlanish",
   telc_cta: "TELC ga ro‘yxatdan o‘tish",
   telc_back_to_home: "Bosh sahifaga qaytish",
+  telc_back_to_registration: "TELC ro‘yxat sahifasiga qaytish",
   telc_page_info_label: "TELC ro‘yxati",
   telc_page_info_text: "Jamoamizning to‘liq yordami bilan o‘z tilingizdagi rasmiy TELC imtihonini oling.",
   telc_page_ticket_label: "Imtihon darajalari",
