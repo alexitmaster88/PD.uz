@@ -116,7 +116,7 @@ const uz = {
   telc_booking_preparatory_course_title: "Tayyorlov kursi",
   telc_booking_preparatory_course_text: "Bizning TELC tayyorlov kursimiz yozma va og‘zaki qismlar uchun maqsadli mashqlar, imtihon strategiyalari va ishonchni oshirishni o‘z ichiga oladi.",
   telc_booking_preparatory_course_question: "Siz TELC tayyorlov kursi yoki TELC Deutsch B1-B2 Pflege imtihoni uchun TELC intensiv kursi qidiryapsizmi? Profi-deutsch markazi O‘zbekistonda sizni muvaffaqiyatli imtihon uchun mukammal dastur bilan ta’minlaydi.",
-  telc_booking_preparation_bullet_1: "FOKUS sizni to‘rtta imtihon bo‘limiga maxsus tayyorlaydi (o‘qishni tushunish, tinglashni tushunish, yozma ifoda va og‘zaki ifoda)",
+  telc_booking_preparation_bullet_1: "Profi-deutsch Uzbekistan sizni to‘rtta imtihon bo‘limiga maxsus tayyorlaydi (o‘qishni tushunish, tinglashни tushunish, yozma ifoda va og‘zaki ifoda)",
   telc_booking_preparation_bullet_2: "Barcha kurslar uchun biz onlayn va darsxona formatlarini taklif etamiz",
   telc_booking_preparation_bullet_3: "Bizning malakali murabbiylar TELC imtihonining tuzilishi va formatiga umumiy nazar tashlaydi",
   telc_booking_preparation_bullet_4: "Sinovdan o‘tgan maslahatlar va strategiyalar model testlari orqali tushuntiriladi",

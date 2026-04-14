@@ -116,7 +116,7 @@ const de = {
   telc_booking_preparatory_course_title: "Vorbereitungskurs",
   telc_booking_preparatory_course_text: "Unser TELC-Vorbereitungskurs umfasst gezieltes Training für schriftliche und mündliche Prüfungsabschnitte sowie Prüfungsstrategien und Selbstvertrauen.",
   telc_booking_preparatory_course_question: "Suchen Sie einen TELC-Vorbereitungskurs oder einen TELC-Crashkurs für die Prüfung TELC Deutsch B1-B2 Pflege? Das Profi-deutsch Zentrum in Usbekistan bietet Ihnen die ideale Vorlage für eine erfolgreiche Prüfung.",
-  telc_booking_preparation_bullet_1: "FOKUS bereitet Sie speziell auf die vier Prüfungsabschnitte vor (Leseverstehen, Hörverstehen, Schriftlicher Ausdruck und Mündlicher Ausdruck)",
+  telc_booking_preparation_bullet_1: "Profi-deutsch Usbekistan bereitet Sie speziell auf die vier Prüfungsabschnitte vor (Leseverstehen, Hörverstehen, Schriftlicher Ausdruck und Mündlicher Ausdruck)",
   telc_booking_preparation_bullet_2: "Für alle Kurse bieten wir Online- und Präsenzformate an",
   telc_booking_preparation_bullet_3: "Unsere qualifizierten Trainer geben Ihnen einen Überblick über Aufbau und Format der TELC-Prüfung",
   telc_booking_preparation_bullet_4: "Erprobte Tipps und Strategien werden anhand von Modelltests erklärt",

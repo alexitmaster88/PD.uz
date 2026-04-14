@@ -116,7 +116,7 @@ const en = {
   telc_booking_preparatory_course_title: "Preparatory course",
   telc_booking_preparatory_course_text: "Our TELC preparation course includes targeted practice for both the written and oral exam parts, plus exam strategy and confidence coaching.",
   telc_booking_preparatory_course_question: "Are you looking for a TELC preparation course or a TELC crash course for the exam TELC Deutsch B1-B2 Pflege? Profi-deutsch center in Uzbekistan provides you with the ideal template for a successful examination.",
-  telc_booking_preparation_bullet_1: "FOKUS prepares you specifically for the four examination sections (Reading Comprehension, Listening Comprehension, Written Expression and Oral Expression)",
+  telc_booking_preparation_bullet_1: "Profi-deutsch Uzbekistan prepares you specifically for the four examination sections (Reading Comprehension, Listening Comprehension, Written Expression and Oral Expression)",
   telc_booking_preparation_bullet_2: "For all courses we offer online and classroom formats",
   telc_booking_preparation_bullet_3: "Our qualified trainers provide you with an overview of the structure and format of the TELC exam",
   telc_booking_preparation_bullet_4: "Tried and tested tips and strategies are explained using model tests",
