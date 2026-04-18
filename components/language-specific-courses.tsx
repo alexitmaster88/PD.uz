@@ -140,17 +140,17 @@ const LanguageSpecificCourses = () => {
     ],
     usbekisch: [
       {
-        level: "A1",
-        title: t("beginner"),
-        description: t("course_desc_a1_beginner"),
-        features: ["60 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
+        level: t("telc_b1_level"),
+        title: "",
+        description: "",
+        features: [t("telc_duration_2_months"), t("telc_two_hours"), t("telc_max_8_students")],
         price: "",
       },
       {
-        level: "A2",
-        title: t("beginner"),
-        description: t("course_desc_a2_basic"),
-        features: ["80 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
+        level: t("telc_b2_level"),
+        title: "",
+        description: "",
+        features: [t("telc_duration_2_months"), t("telc_two_hours"), t("telc_max_8_students")],
         price: "",
       },
     ],
@@ -254,7 +254,9 @@ const LanguageSpecificCourses = () => {
                       </div>
                     </CardHeader>
                     <CardContent className="flex-grow">
-                      <p className="text-sm text-muted-foreground mb-4">{course.description}</p>
+                      {course.description ? (
+                        <p className="text-sm text-muted-foreground mb-4">{course.description}</p>
+                      ) : null}
                       <ul className="space-y-2">
                         {course.features.map((feature: string, i: number) => (
                           <li key={i} className="flex items-start">

@@ -280,6 +280,11 @@ const ru = {
   course_desc_b1_intermediate: "B1 — Продвинутые языковые навыки: беглое общение, непосредственное общение в ключевых ситуациях (обучение, досуг)",
   course_desc_b2_advanced: "B2 — Независимые языковые навыки: беглая речь, сложные тексты, технические дискуссии",
   course_desc_a1_a2_beginner_plus: "Для начинающих и слегка продвинутых изучающих",
+  telc_b1_level: "Для уровня TELC B1",
+  telc_b2_level: "Для уровня TELC B2",
+  telc_duration_2_months: "Продолжительность 2 месяца",
+  telc_two_hours: "2 часа",
+  telc_max_8_students: "Максимум 8 студентов в одной группе",
 
   // Group size indicators
   max_12_participants: " (макс. 12 участников)",

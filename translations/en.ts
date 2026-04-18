@@ -283,6 +283,11 @@ const en = {
   course_desc_b1_intermediate: "B1 - Advanced language skills: Fluent communication, direct communication in key situations (training, leisure)",
   course_desc_b2_advanced: "B2 - Independent language skills: Fluent speech, complex texts, technical discussions",
   course_desc_a1_a2_beginner_plus: "For beginners and slightly advanced learners",
+  telc_b1_level: "For TELC B1 level",
+  telc_b2_level: "For TELC B2 level",
+  telc_duration_2_months: "Duration 2 months",
+  telc_two_hours: "2 hours",
+  telc_max_8_students: "Maximum 8 students in one group",
 
   // Group size indicators
   max_12_participants: " (max. 12 participants)",

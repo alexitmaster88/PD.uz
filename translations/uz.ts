@@ -280,6 +280,11 @@ const uz = {
   course_desc_b1_intermediate: " Rivojlangan til ko'nikmalari: Erkin muloqot, asosiy vaziyatlarda bevosita muloqot (Ausbildung, bo'sh vaqt)",
   course_desc_b2_advanced: "Mustaqil til ko'nikmalari: Erkin nutq, murakkab matnlar, texnik muhokamalar",
   course_desc_a1_a2_beginner_plus: "Boshlovchilar va biroz ilg'or o'rganuvchilar uchun",
+  telc_b1_level: "TELC B1 darajasi uchun",
+  telc_b2_level: "TELC B2 darajasi uchun",
+  telc_duration_2_months: "Davomiyligi 2 oy",
+  telc_two_hours: "2 soat",
+  telc_max_8_students: "Bitta guruhda maksimal 8 nafar talabalar",
 
   // Group size indicators
   max_12_participants: " (maks. 12-16 ishtirokchi)",

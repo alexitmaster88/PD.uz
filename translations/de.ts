@@ -289,6 +289,11 @@ const de = {
   course_desc_b1_intermediate: "B1 – Fortgeschrittene Sprachkenntnisse: Flüssige Kommunikation, direkte Kommunikation in wichtigen Situationen (Ausbildung, Freizeit)",
   course_desc_b2_advanced: "B2 – Selbstständige Sprachkenntnisse: Flüssiges Sprechen, komplexe Texte, fachliche Diskussionen",
   course_desc_a1_a2_beginner_plus: "Für Anfänger und leicht Fortgeschrittene",
+  telc_b1_level: "Für TELC B1 Level",
+  telc_b2_level: "Für TELC B2 Level",
+  telc_duration_2_months: "Dauer 2 Monate",
+  telc_two_hours: "2 Stunden",
+  telc_max_8_students: "Maximal 8 Teilnehmer in einer Gruppe",
 
   // Group size indicators
   max_12_participants: " (max. 12 Teilnehmer)",
