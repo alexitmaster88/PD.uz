@@ -145,7 +145,7 @@ const en = {
 
   // Course Types
   course_type_german: "Language level",
-  course_type_uzbek: "Telc exam preparation",
+  course_type_uzbek: "TELC exam",
   course_type_english: "Ausbildung-Training",
   course_type_russian: "Consultancy service",
 

@@ -114,7 +114,7 @@ export default function TelcPage({ params }: TelcPageProps) {
 
             <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 backdrop-blur-xl p-8 shadow-xl shadow-slate-200/30">
               <div className="space-y-6">
-                <div className="rounded-3xl bg-gradient-to-br from-slate-950 via-indigo-900 to-slate-800 p-6 text-white shadow-lg">
+                <div className="rounded-3xl bg-gradient-to-br from-[#6577c2] via-[#c1bfff] to-slate-800 p-6 text-white shadow-lg">
                   <p className="text-sm uppercase tracking-[0.3em] text-white">{t("telc_page_ticket_label")}</p>
                   <h2 className="mt-4 text-3xl font-semibold text-white">{t("telc_page_ticket_title")}</h2>
                   <p className="mt-4 text-sm leading-6 text-white">{t("telc_page_ticket_subtitle")}</p>

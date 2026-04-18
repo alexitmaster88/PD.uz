@@ -138,7 +138,7 @@ const uz = {
 
   // Course Types
   course_type_german: "Til darajasi",
-  course_type_uzbek: "Telc imtihoniga tayyorgarlik",
+  course_type_uzbek: "TELC imtihoni",
   course_type_english: "Ausbildung - Training",
   course_type_russian: "Konsultatsiya xizmati",
 

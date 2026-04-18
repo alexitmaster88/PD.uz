@@ -138,7 +138,7 @@ const de = {
 
   // Course Types
   course_type_german: "Niveaustufe",
-  course_type_uzbek: "Telc-Prüfungsvorbereitung",
+  course_type_uzbek: "TELC-Prüfung",
   course_type_english: "Ausbildung-Training",
   course_type_russian: "Beratungsservice",
 
