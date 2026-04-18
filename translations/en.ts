@@ -318,6 +318,13 @@ const en = {
   partner_ssp_desc: "Chamber of Commerce and industry of the Republic of Uzbekistan",
   partner_tavi_desc: "Tashkent regional administration",
   partner_xb_desc: "Joint-stock Commercial People's Bank",
+
+  // Courses
+  course_german_a1: "German (A1)",
+  course_german_a2: "German (A2)",
+  course_german_b1: "German (B1)",
+  course_german_b2: "German (B2)",
+
   partner_yosh_desc: "Youth Affairs Agency",
   partner_edu_desc: "Ministry of Higher Education, Science and Innovations",
   partner_uzedu_desc: "Ministry of Preschool and School Education",
@@ -327,6 +334,10 @@ const en = {
   early_bird_discount: "Early Bird Discount",
   early_bird_desc: "Register 4 weeks in advance and get 15% off",
   // Teacher
-  teacher_trained_in_germany: "The pedagogue trained in Germany",}
+  teacher_trained_in_germany: "The pedagogue trained in Germany",
+
+  // Locations
+  tashkent_address: "TASHKENT CITY, UCHTEPA DISTRICT, BOG'OBOD MFY, 15 MAVZESI, 14-UY",
+}
 
 export default en

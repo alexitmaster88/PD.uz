@@ -3,7 +3,7 @@
 import React, { useState, useEffect, startTransition } from "react"
 import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
-import { ChevronUp, Facebook, Instagram, MessageCircle } from "lucide-react"
+import { ChevronUp, Facebook, Instagram, MessageCircle, Youtube } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
@@ -13,17 +13,22 @@ const SOCIAL_ICONS = [
   { 
     type: 'lucide',
     icon: Facebook, 
-    link: "https://facebook.com/profideutsch"
+    link: "https://www.facebook.com/profideutschuz"
   },
   { 
     type: 'lucide',
     icon: Instagram, 
-    link: "https://instagram.com/profideutsch"
+    link: "https://www.instagram.com/profi_deutsch_uz?igsh=MW1zNzV0cWh4cXc1bQ=="
   },
   { 
     type: 'custom',
     imageSrc: "/images/telegram-icon.svg",
-    link: "https://t.me/profideutsch"
+    link: "https://t.me/profi_deutsch_uz"
+  },
+  { 
+    type: 'lucide',
+    icon: Youtube, 
+    link: "http://www.youtube.com/@profi_deutsch_uz"
   }
 ]
 
@@ -215,71 +220,56 @@ export default function LanguageSwitcher() {
         )}
       </AnimatePresence>
 
-      {/* Main toggle button */}
+      {/* Main toggle button or social link */}
       <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-        <Button
-          onClick={toggleExpanded}
-          size="icon"
-          className={cn(
-            "h-14 w-14 rounded-full shadow-lg transition-all duration-300",
-            isExpanded ? "bg-secondary hover:bg-secondary/90" : "bg-primary hover:bg-primary/90",
-          )}
-          aria-label="Change language"
-        >
-          <AnimatePresence mode="wait">
-            {isExpanded ? (
-              <motion.div
-                key="chevron"
-                initial={{ opacity: 0, rotate: -90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 90 }}
-                transition={{ duration: 0.2 }}
-              >
-                <ChevronUp className="h-6 w-6" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="social"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.2 }}
-                className="relative"
-              >
-                <a
-                  href={SOCIAL_ICONS[currentIconIndex]?.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                  }}
-                >
-                  <motion.div
-                    key={currentIconIndex}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {SOCIAL_ICONS[currentIconIndex]?.type === 'lucide' ? (
-                      React.createElement(SOCIAL_ICONS[currentIconIndex].icon!, {
-                        className: "h-6 w-6 text-white",
-                      })
-                    ) : (
-                      <Image
-                        src={SOCIAL_ICONS[currentIconIndex]?.imageSrc || ''}
-                        alt="Social Media Icon"
-                        width={24}
-                        height={24}
-                        className="h-6 w-6 brightness-0 invert"
-                      />
-                    )}
-                  </motion.div>
-                </a>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Button>
+        {isExpanded ? (
+          <Button
+            onClick={toggleExpanded}
+            size="icon"
+            className="h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 shadow-lg transition-all duration-300"
+            aria-label="Change language"
+          >
+            <motion.div
+              key="chevron"
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronUp className="h-6 w-6" />
+            </motion.div>
+          </Button>
+        ) : (
+          <a
+            href={SOCIAL_ICONS[currentIconIndex]?.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 flex items-center justify-center h-14 w-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg transition-all duration-300"
+            aria-label="Social media link"
+          >
+            <motion.div
+              key={currentIconIndex}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.3 }}
+            >
+              {SOCIAL_ICONS[currentIconIndex]?.type === 'lucide' ? (
+                React.createElement(SOCIAL_ICONS[currentIconIndex].icon!, {
+                  className: "h-6 w-6 text-white",
+                })
+              ) : (
+                <Image
+                  src={SOCIAL_ICONS[currentIconIndex]?.imageSrc || ''}
+                  alt="Social Media Icon"
+                  width={24}
+                  height={24}
+                  className="h-6 w-6 brightness-0 invert"
+                />
+              )}
+            </motion.div>
+          </a>
+        )}
       </motion.div>
 
       {/* Pulsing effect when first visible */}
@@ -295,7 +285,7 @@ export default function LanguageSwitcher() {
             repeat: 2,
             repeatDelay: 1,
           }}
-          className="absolute inset-0 bg-primary rounded-full"
+          className="absolute inset-0 bg-primary rounded-full pointer-events-none"
         />
       )}
     </motion.div>

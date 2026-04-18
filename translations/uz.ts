@@ -324,6 +324,15 @@ const uz = {
 
   // Teacher
   teacher_trained_in_germany: "Germaniyada malaka o'tagan pedagog",
+
+  // Locations
+  tashkent_address: "TOSHKENT SHAHAR, UCHTEPA TUMANI, BOG'OBOD MFY, 15 MAVZESI, 14-UY",
+
+  // Courses
+  course_german_a1: "Nemis tili (A1)",
+  course_german_a2: "Nemis tili (A2)",
+  course_german_b1: "Nemis tili (B1)",
+  course_german_b2: "Nemis tili (B2)",
 }
 
 export default uz

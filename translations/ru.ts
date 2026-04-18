@@ -324,6 +324,15 @@ const ru = {
 
   // Teacher
   teacher_trained_in_germany: "Педагог, прошедший подготовку в Германии",
+
+  // Locations
+  tashkent_address: "ГОРОД ТАШКЕНТ, УЧТЕПИНСКИЙ РАЙОН, БОГОБОД МФЙ, 15 МАВЗЕСИ, 14-УЙ",
+
+  // Courses
+  course_german_a1: "Немецкий (A1)",
+  course_german_a2: "Немецкий (A2)",
+  course_german_b1: "Немецкий (B1)",
+  course_german_b2: "Немецкий (B2)",
 }
 
 export default ru

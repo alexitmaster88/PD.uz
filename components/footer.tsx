@@ -4,7 +4,7 @@ import type React from "react"
 
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Instagram, MessageSquare } from "lucide-react"
+import { Facebook, Instagram, MessageSquare, Youtube } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 
 const Footer = () => {
@@ -51,6 +51,10 @@ const Footer = () => {
               <LangLink href="https://t.me/profi_deutsch_uz" className="text-foreground/80 hover:text-foreground transition-colors">
                 <MessageSquare size={20} />
                 <span className="sr-only">Telegram</span>
+              </LangLink>
+              <LangLink href="http://www.youtube.com/@profi_deutsch_uz" className="text-foreground/80 hover:text-foreground transition-colors">
+                <Youtube size={20} />
+                <span className="sr-only">YouTube</span>
               </LangLink>
             </div>
           </div>

@@ -26,10 +26,10 @@ const MapSection = () => {
   const locations: LocationsData = {
     tashkent_city: {
       name: "Taschkent Stadt",
-      address: "Amir Temur Straße 107A, Taschkent",
+      address: t("tashkent_address"),
       phone: "+998 77 178 06 66",
       email: "info@profi-deutsch.uz",
-      courses: ["Deutsch (A1-C1)", "Englisch (A1-B2)", "Russisch (A1-B2)", "Usbekisch (A1-B1)"],
+      courses: [t("course_german_a1"), t("course_german_a2"), t("course_german_b1"), t("course_german_b2")],
       coordinates: { lat: 41.337767, lng: 69.253528 },
       // image: "/images/german-classroom-1.png",
     },

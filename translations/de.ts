@@ -333,6 +333,15 @@ const de = {
 
   // Teacher
   teacher_trained_in_germany: "In Deutschland ausgebildeter Pädagoge",
+
+  // Locations
+  tashkent_address: "STADT TASCHKENT, BEZIRK UCHTEPA, BOG'OBOD MFY, 15 MAVZESI, 14-UY",
+
+  // Courses
+  course_german_a1: "Deutsch (A1)",
+  course_german_a2: "Deutsch (A2)",
+  course_german_b1: "Deutsch (B1)",
+  course_german_b2: "Deutsch (B2)",
 }
 
 export default de
