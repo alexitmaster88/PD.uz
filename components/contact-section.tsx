@@ -35,8 +35,13 @@ const ContactSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Here you would normally send the form data to your backend
-    console.log("Form submitted:", formState)
+
+    const telegramMessage = `Name: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\nCourse: ${formState.course}\nSubject: ${formState.subject}\nMessage: ${formState.message}`
+    const telegramUrl = `https://t.me/UZ_profideutsch?text=${encodeURIComponent(telegramMessage)}`
+
+    if (typeof window !== "undefined") {
+      window.open(telegramUrl, "_blank", "noopener,noreferrer")
+    }
 
     // Show success message
     setIsSubmitted(true)
@@ -243,11 +248,7 @@ const ContactSection = () => {
             <div className="mt-6 p-4 bg-background rounded-lg border">
               <h4 className="font-bold mb-2">{t("headquarters")}</h4>
               <address className="not-italic text-muted-foreground">
-                Amir Temur Straße 107A
-                <br />
-                Taschkent, 100084
-                <br />
-                Usbekistan
+                {t("tashkent_address")}
               </address>
             </div>
           </div>

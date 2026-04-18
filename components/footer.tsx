@@ -93,10 +93,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t("contact")}</h3>
             <address className="not-italic text-sm text-muted-foreground space-y-2">
-              <p>Amir Temur Straße 107A</p>
-              <p>Taschkent, Usbekistan</p>
-              <p>Telefon: +998 77 178 06 66</p>
-              <p>E-Mail: info@profi-deutsch.uz</p>
+              <p>{t("tashkent_address")}</p>
+              <p>{t("phone")}: +998 77 178 06 66</p>
+              <p>{t("email")}: info@profi-deutsch.uz</p>
             </address>
           </div>
         </div>
