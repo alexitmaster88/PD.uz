@@ -99,15 +99,23 @@ const HeroSection = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-2xl font-bold text-primary"
+          >
+            {t("hero_tagline")}
+          </motion.p>
+          {/* <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-xl font-medium text-[#0c02a3]"
           >
             {t("discover")}
-          </motion.p>
+          </motion.p> */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
             className="flex flex-wrap justify-center gap-4 pt-4"
           >
             <Button size="lg" asChild>
@@ -134,7 +142,7 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
+            transition={{ delay: 0.9, duration: 0.5 }}
             className="flex justify-center gap-8 pt-8"
           >
             {["de", "uz", "en", "ru"].map((lang, index) => (
@@ -148,7 +156,7 @@ const HeroSection = () => {
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
+                transition={{ delay: 0.9 + index * 0.1, duration: 0.5 }}
                 style={{ WebkitTapHighlightColor: "transparent" }}
                 aria-label={`Switch to ${
                   lang === "de" ? "German" : lang === "uz" ? "Uzbek" : lang === "en" ? "English" : "Russian"

@@ -1,6 +1,7 @@
 const en = {
   // Hero Section
   welcome: "Welcome to \"PROFI DEUTSCH\" the German Language Center in Uzbekistan",
+  hero_tagline: "Profi Deutsch – the right choice, the exact result.",
   discover:
     "Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
   explore_courses: "Explore Courses",
@@ -238,6 +239,8 @@ const en = {
 
   // Home Page
   welcome_center: "Welcome to our Language Center",
+  welcome_center_tagline: "Profi Deutsch – the right choice, the exact result.",
+  welcome_center_description: "Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
   // intro_video_description: "Watch our introductory video and learn more about our language courses and offerings.",
   // intro_video_title: "Learning German: The Most Important Phrases for Beginners",
 

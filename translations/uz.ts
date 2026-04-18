@@ -1,6 +1,7 @@
 const uz = {
   // Hero Section
   welcome: "O'zbekistondagi \"PROFI DEUTSCH\" nemis til markaziga xush kelibsiz",
+  hero_tagline: "Profi Deutsch —to'g'ri tanlov, aniq natija.",
   discover:
     "Zamonaviy \"Telc\" metodikasi asosida nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lish imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
   explore_courses: "Kurslarni ko'rish",
@@ -233,7 +234,9 @@ const uz = {
   next: "Keyingi rasm",
 
   // Home Page
-  welcome_center: "Markazimiz to'g'risida batafsil ma'lumot olish uchun quyidagi videoni tomosha qiling",
+  welcome_center: "Bizning Til Markaziga Xush Kelibsiz",
+  welcome_center_tagline: "Profi Deutsch —to'g'ri tanlov, aniq natija.",
+  welcome_center_description: "Zamonaviy \"Telc\" metodikasi asosida nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lish imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
   // intro_video_description:
   // "Kirish videomizni tomosha qiling va til kurslarimiz va takliflarimiz haqida ko'proq ma'lumot oling.",
   // intro_video_title: "Nemis tilini o'rganish: Boshlang'ichlar uchun eng muhim iboralar",

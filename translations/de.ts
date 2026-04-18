@@ -1,6 +1,7 @@
 const de = {
   // Hero Section
   welcome: "Willkommen im \"PROFI DEUTSCH\" Sprachzentrum in Usbekistan",
+  hero_tagline: "Profi Deutsch – die richtige Wahl, das exakte Ergebnis.",
   discover:
     "Lernen Sie Deutsch strukturiert und effizient nach der modernen TELC-Methode und sichern Sie sich die Chance auf ein anerkanntes internationales TELC-Zertifikat. Darüber hinaus bieten wir Ihnen gemeinsam mit unseren deutschen Partnern praxisnahe Unterstützung rund um Ausbildung und Beruf.",
   explore_courses: "Kurse Entdecken",
@@ -243,6 +244,8 @@ const de = {
 
   // Home Page
   welcome_center: "Willkommen in unserem Sprachzentrum",
+  welcome_center_tagline: "Profi Deutsch – die richtige Wahl, das exakte Ergebnis.",
+  welcome_center_description: "Lernen Sie Deutsch systematisch mit der modernen Telc-Methode und nutzen Sie die Gelegenheit, ein internationales Telc-Zertifikat zu erhalten. Erhalten Sie darüber hinaus praktische Unterstützung in Bezug auf Ihre Studien und Arbeit in Zusammenarbeit mit unseren deutschen Partnern!",
   // intro_video_description:
     // "Sehen Sie sich unser Einführungsvideo an und erfahren Sie mehr über unsere Sprachkurse und Angebote.",
   // intro_video_title: "Deutsch lernen: Die wichtigsten Sätze für Anfänger",
