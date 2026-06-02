@@ -9,8 +9,8 @@ interface Props {
   data: any
   lang: string
   existingRegistrationId?: number | null
-  preloadedExams?: any[]
-  preloadedLevels?: any[]
+  preloadedExams: any[] | undefined
+  preloadedLevels: any[] | undefined
   onDataChange: (data: any) => void
   onNext: () => void
   onPrevious: () => void
@@ -102,8 +102,8 @@ export default function StepExamSelection({
   preloadedExams, preloadedLevels,
   onDataChange, onNext, onPrevious, onRegistrationComplete,
 }: Props) {
-  const l = ui[lang] ?? ui.en
-  const rl = regionLabels[lang] ?? regionLabels.en
+  const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
+  const rl: Record<string, string> = regionLabels[lang] ?? regionLabels['en'] ?? {}
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [selectedDate, setSelectedDate] = useState(data.selectedDate ?? "")
   const [selectedTime, setSelectedTime] = useState(data.selectedTime ?? "")
@@ -186,10 +186,10 @@ export default function StepExamSelection({
 
   const validate = () => {
     const e: Record<string, string> = {}
-    if (!data.region) e.region = l.errRegion
-    if (!data.levelId) e.level = l.errLevel
-    if (!selectedDate) e.date = l.errDate
-    if (!selectedTime) e.time = l.errTime
+    if (!data.region) e.region = l.errRegion ?? ""
+    if (!data.levelId) e.level = l.errLevel ?? ""
+    if (!selectedDate) e.date = l.errDate ?? ""
+    if (!selectedTime) e.time = l.errTime ?? ""
     setErrors(e)
     return Object.keys(e).length === 0
   }

@@ -28,16 +28,14 @@ export async function POST(req: Request) {
   })
 
   if (error) {
-    console.warn('[OTP] Supabase insert failed (DB may not be set up yet):', error.message)
-    // In dev/test, still return success so the 123456 demo bypass can be used
-    return NextResponse.json({ success: true, message: 'OTP sent (demo mode — use code 123456)' })
+    console.error('[OTP] Supabase insert failed:', error.message)
+    return NextResponse.json({ error: 'Failed to send OTP. Please try again.' }, { status: 500 })
   }
 
   try {
     await sendOtpEmail(email, otp)
   } catch (emailErr) {
     console.error('[OTP] Email send error:', emailErr)
-    // Don't block the flow — user can still use the demo OTP 123456
   }
 
   return NextResponse.json({ success: true, message: 'OTP sent to your email' })

@@ -81,8 +81,8 @@ export default function RegisterPage({ params }: PageProps) {
     setStep(targetStep)
   }
 
-  const steps = stepLabels[activeLang] ?? stepLabels.en
-  const hl = headerLabels[activeLang] ?? headerLabels.en
+  const steps: string[] = stepLabels[activeLang] ?? stepLabels['en'] ?? []
+  const hl: Record<string, string> = headerLabels[activeLang] ?? headerLabels['en'] ?? {}
 
   return (
     <div className="min-h-screen bg-slate-50">

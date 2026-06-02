@@ -5,9 +5,6 @@ export async function POST(req: Request) {
   const { email, otp } = await req.json()
   if (!email || !otp) return NextResponse.json({ error: 'email and otp required' }, { status: 400 })
 
-  // Demo bypass for development / testing
-  if (otp === "123456") return NextResponse.json({ success: true })
-
   const { data, error } = await supabaseAdmin
     .from('otp_verifications')
     .select('*')

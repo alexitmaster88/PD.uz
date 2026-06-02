@@ -113,44 +113,58 @@ const LanguageSpecificCourses = () => {
         level: "A1",
         title: t("A1.1-A1.2"),
         description: t("course_desc_a1_beginner"),
-        features: [t("teacher_trained_in_germany"), "144 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
+        features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
         price: "",
       },
       {
         level: "A2",
         title: t("A2.1-A2.2"),
         description: t("course_desc_a2_basic"),
-        features: [t("teacher_trained_in_germany"), "144 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
+        features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
         price: "",
       },
       {
         level: "B1",
         title: t("B1.1-B1.2"),
         description: t("course_desc_b1_intermediate"),
-        features: [t("teacher_trained_in_germany"), "144 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
+        features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "",
       },
       {
         level: "B2",
         title: t("B2.1-B2.2"),
         description: t("course_desc_b2_advanced"),
-        features: [t("teacher_trained_in_germany"), "144 " + t("hours"), t("small_groups") + t("max_8_participants"), t("materials")],
+        features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_8_participants"), t("materials")],
         price: "",
       },
     ],
     usbekisch: [
       {
-        level: t("telc_b1_level"),
-        title: "",
+        level: t("telc_a2_level"),
+        title: t("telc_prep_title"),
         description: "",
-        features: [t("telc_duration_2_months"), t("telc_two_hours"), t("telc_max_8_students")],
+        features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
+        price: "",
+      },
+      {
+        level: t("telc_a2_b1_level"),
+        title: t("telc_prep_title"),
+        description: "",
+        features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
+        price: "",
+      },
+      {
+        level: t("telc_b1_level"),
+        title: t("telc_prep_title"),
+        description: "",
+        features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
       },
       {
         level: t("telc_b2_level"),
-        title: "",
+        title: t("telc_prep_title"),
         description: "",
-        features: [t("telc_duration_2_months"), t("telc_two_hours"), t("telc_max_8_students")],
+        features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
       },
     ],
@@ -209,15 +223,14 @@ const LanguageSpecificCourses = () => {
 
         {/* Regular course listings */}
         <Tabs defaultValue="deutsch" value={courseLanguage} onValueChange={val => setCourseLanguage(val as keyof CourseDataType)} className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
+          <TabsList className="grid grid-cols-2 mb-8">
             <TabsTrigger value="deutsch">{t("course_type_german")}</TabsTrigger>
             <TabsTrigger value="usbekisch">{t("course_type_uzbek")}</TabsTrigger>
-            <TabsTrigger value="englisch">{t("course_type_english")}</TabsTrigger>
-            <TabsTrigger value="russisch">{t("course_type_russian")}</TabsTrigger>
           </TabsList>
 
-          {(Object.keys(courseData) as Array<keyof CourseDataType>).map((lang) => (
-            <TabsContent key={lang} value={lang} className="mt-0">
+          <div className="grid">
+          {(['deutsch', 'usbekisch'] as Array<keyof CourseDataType>).map((lang) => (
+            <TabsContent key={lang} value={lang} forceMount className="mt-0 [grid-area:1/1] data-[state=inactive]:invisible">
               <div
                 className={`grid gap-6 ${
                   courseData[lang].length === 1
@@ -285,6 +298,7 @@ const LanguageSpecificCourses = () => {
               </div>
             </TabsContent>
           ))}
+          </div>
         </Tabs>
       </div>
     </section>
