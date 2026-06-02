@@ -69,9 +69,7 @@ export default function AdminLoginPage() {
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-xs text-slate-400">
-            Default: admin@profi-deutsch.uz / Admin1234
-          </p>
+
         </div>
       </div>
     </div>

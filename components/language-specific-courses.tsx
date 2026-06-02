@@ -101,6 +101,7 @@ const LanguageSpecificCourses = () => {
     description: string;
     features: string[];
     price: string;
+    image?: string;
   }
 
   type CourseDataType = {
@@ -115,6 +116,7 @@ const LanguageSpecificCourses = () => {
         description: t("course_desc_a1_beginner"),
         features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_12_participants"), t("materials")],
         price: "",
+        image: "/images/beginner.jpg",
       },
       {
         level: "A2",
@@ -122,6 +124,7 @@ const LanguageSpecificCourses = () => {
         description: t("course_desc_a2_basic"),
         features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
         price: "",
+        image: "/images/pre_inter.jpg",
       },
       {
         level: "B1",
@@ -129,6 +132,7 @@ const LanguageSpecificCourses = () => {
         description: t("course_desc_b1_intermediate"),
         features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
         price: "",
+        image: "/images/inter.jpg",
       },
       {
         level: "B2",
@@ -136,6 +140,7 @@ const LanguageSpecificCourses = () => {
         description: t("course_desc_b2_advanced"),
         features: [t("teacher_trained_in_germany"), "108 " + t("hours"), t("small_groups") + t("max_8_participants"), t("materials")],
         price: "",
+        image: "/images/advanced.jpg",
       },
     ],
     usbekisch: [
@@ -145,6 +150,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
+        image: "/images/TELCexam.png",
       },
       {
         level: t("telc_a2_b1_level"),
@@ -152,6 +158,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
+        image: "/images/TELCexam.png",
       },
       {
         level: t("telc_b1_level"),
@@ -159,6 +166,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
+        image: "/images/TELCexam.png",
       },
       {
         level: t("telc_b2_level"),
@@ -166,6 +174,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
+        image: "/images/TELCexam.png",
       },
     ],
     englisch: [
@@ -246,7 +255,7 @@ const LanguageSpecificCourses = () => {
                   <Card key={index} className="flex flex-col">
                     <div className="relative h-40 w-full">
                       <Image
-                        src={courseImages[lang] || "/images/language-learning-1.png"}
+                        src={course.image || courseImages[lang] || "/images/language-learning-1.png"}
                         alt={`${lang} ${course.level}`}
                         fill
                         className="object-cover"

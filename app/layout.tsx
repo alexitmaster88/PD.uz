@@ -5,7 +5,12 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/contexts/language-context"
 import { ParallaxProvider } from "@/components/parallax-provider"
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] })
+const inter = Inter({
+  subsets: ["latin", "cyrillic", "latin-ext"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-inter",
+})
 
 export const metadata = {
   title: "Profi Deutsch in Usbekistan",
@@ -28,7 +33,7 @@ export default function RootLayout({
         {/* Removed hardcoded Framer Motion preload to avoid 404 when chunk name differs */}
         <link rel="icon" href="/PDico.png" />
       </head>
-      <body className={`${inter.className} relative min-h-screen text-style-override`}>
+      <body className={`${inter.variable} font-sans relative min-h-screen text-style-override antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <ParallaxProvider>
             <div className="relative z-10">
