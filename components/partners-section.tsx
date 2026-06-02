@@ -18,7 +18,6 @@ interface Partner {
 export default function PartnersSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const scrollingRef = useRef<boolean>(false);
   const { t } = useLanguage();
 
@@ -79,34 +78,6 @@ export default function PartnersSection() {
       website: "https://gov.uz/oz/uzedu",
       descriptionKey: "partner_uzedu_desc",
     },
-    // {
-    //   id: "lufthansa",
-    //   name: "Lufthansa",
-    //   logo: "/images/logos/lufthansalogo.svg",
-    //   website: "https://www.lufthansa.com",
-    //   descriptionKey: "partner_lufthansa_desc",
-    // },
-    // {
-    //   id: "lufthansa",
-    //   name: "Lufthansa",
-    //   logo: "/images/logos/lufthansalogo.svg",
-    //   website: "https://www.lufthansa.com",
-    //   descriptionKey: "partner_lufthansa_desc",
-    // },
-    // {
-    //   id: "lufthansa",
-    //   name: "Lufthansa",
-    //   logo: "/images/logos/lufthansalogo.svg",
-    //   website: "https://www.lufthansa.com",
-    //   descriptionKey: "partner_lufthansa_desc",
-    // },
-    // {
-    //   id: "lufthansa",
-    //   name: "Lufthansa",
-    //   logo: "/images/logos/lufthansalogo.svg",
-    //   website: "https://www.lufthansa.com",
-    //   descriptionKey: "partner_lufthansa_desc",
-    // },
   ];
 
   const handleScroll = useCallback((direction: 'left' | 'right'): void => {
@@ -221,7 +192,7 @@ export default function PartnersSection() {
     <section id="partners" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/partners-section.tsx/photo-1654442137037-fe784a7189af.png"
+          src="/images/partners-bg.png"
           alt="Business partnership background"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"
@@ -234,9 +205,6 @@ export default function PartnersSection() {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
             {t("our_partners")}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          {/* {t("partners_description")} */}
-          </p>
         </div>
 
         <div className="relative group">
@@ -252,15 +220,11 @@ export default function PartnersSection() {
                       <div>
                         <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
                           <Image
-                            src={partner.logo || "/placeholder.svg"}
+                            src={partner.logo}
                             alt={`${partner.name} logo`}
                             width={120}
                             height={80}
                             className="object-contain max-h-full max-w-full w-auto h-auto"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = "/placeholder.svg?height=80&width=120";
-                            }}
                           />
                         </div>
                         <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">{partner.name}</h3>
@@ -285,15 +249,11 @@ export default function PartnersSection() {
                       <div>
                         <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
                           <Image
-                            src={partner.logo || "/placeholder.svg"}
+                            src={partner.logo}
                             alt={`${partner.name} logo`}
                             width={120}
                             height={80}
                             className="object-contain max-h-full max-w-full w-auto h-auto"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = "/placeholder.svg?height=80&width=120";
-                            }}
                           />
                         </div>
                         <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">{partner.name}</h3>

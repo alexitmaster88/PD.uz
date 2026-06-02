@@ -11,88 +11,25 @@ import Image from "next/image"
 
 const LanguageSpecificCourses = () => {
   const [courseLanguage, setCourseLanguage] = useState<keyof CourseDataType>("deutsch")
-  const { t, language, getLanguagePath } = useLanguage()
+  const { t, getLanguagePath } = useLanguage()
   const telegramUrl = "https://t.me/profi_deutsch_uz"
   const telcBookingPath = getLanguagePath("/telc/register")
 
   const languageSpecificCourses: LanguageContent<{
     title: string
     description: string
-    popularCourses: string[]
-    specialOffers: {
-      title: string
-      description: string
-      price: string
-      discount?: string
-      image?: string
-    }[]
   }> = {
-    de: {
-      title: t("our_courses"),
-      description: t(""),
-      popularCourses: [t("popular_courses")],
-      specialOffers: [
-        {
-          title: t("early_bird_discount"),
-          description: t("early_bird_desc"),
-          price: "",
-          discount: "",
-          // image: "/images/german-classroom-1.png",
-        },
-      ],
-    },
-    en: {
-      title: t("our_courses"),
-      description: t(""),
-      popularCourses: [t("popular_courses")],
-      specialOffers: [
-        {
-          title: t("early_bird_discount"),
-          description: t("early_bird_desc"),
-          price: "",
-          discount: "",
-          image: "/images/german-classroom-2.png",
-        },
-      ],
-    },
-    ru: {
-      title: t("our_courses"),
-      description: t(""),
-      popularCourses: [t("popular_courses")],
-      specialOffers: [
-        {
-          title: t("early_bird_discount"),
-          description: t("early_bird_desc"),
-          price: "2 125 000 UZS",
-          discount: "2 500 000 UZS",
-          image: "/images/students-1.png",
-        },
-      ],
-    },
-    uz: {
-      title: t("our_courses"),
-      description: t(""),
-      popularCourses: [t("popular_courses")],
-      specialOffers: [
-        {
-          title: t("early_bird_discount"),
-          description: t("early_bird_desc"),
-          price: "2,125,000 UZS",
-          discount: "2,500,000 UZS",
-          image: "/images/students-2.png",
-        },
-      ],
-    },
+    de: { title: t("our_courses"), description: t("") },
+    en: { title: t("our_courses"), description: t("") },
+    ru: { title: t("our_courses"), description: t("") },
+    uz: { title: t("our_courses"), description: t("") },
   }
 
   const currentCourses = useLanguageContent(languageSpecificCourses)
 
-  // Course images by language
-  const courseImages: Record<keyof CourseDataType, string> = {
+  const courseImages: Record<string, string> = {
     deutsch: "/images/course-german.png",
     usbekisch: "/images/course-uzbek.png",
-    englisch: "/images/course-english.png",
-    russisch: "/images/course-russian.png",
   }
 
   type CourseType = {
@@ -105,7 +42,7 @@ const LanguageSpecificCourses = () => {
   }
 
   type CourseDataType = {
-    [key in 'deutsch' | 'usbekisch' | 'englisch' | 'russisch']: CourseType[];
+    [key in 'deutsch' | 'usbekisch']: CourseType[];
   }
 
   const courseData: CourseDataType = {
@@ -177,45 +114,13 @@ const LanguageSpecificCourses = () => {
         image: "/images/TELCexam.png",
       },
     ],
-    englisch: [
-      {
-        level: "A1",
-        title: t("beginner"),
-        description: t("course_desc_a1_a2_beginner_plus"),
-        features: ["100 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
-        price: "",
-      },
-      {
-        level: "B1-B2",
-        title: t("intermediate"),
-        description: t("course_desc_b1_intermediate"),
-        features: ["120 " + t("hours"), t("small_groups") + t("max_10_participants"), t("materials")],
-        price: "",
-      },
-    ],
-    russisch: [
-      {
-        level: "A1",
-        title: t("beginner"),
-        description: t("course_desc_a1_beginner"),
-        features: ["80 " + t("hours"), t("small_groups") + t("max_12_participants"),  t("materials")],
-        price: "",
-      },
-      {
-        level: "A2",
-        title: t("beginner"),
-        description: t("course_desc_a2_basic"),
-        features: ["100 " + t("hours"), t("small_groups") + t("max_10_participants"),  t("materials")],
-        price: "",
-      },
-    ],
   }
 
   return (
     <section id="kurse" className="py-16 md:py-24 relative overflow-hidden bg-background/82">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/language-specific-courses.tsx/photo-1434030216411-0b793f4b4173.png"
+          src="/images/courses-bg.png"
           alt="Education and learning background"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"
@@ -255,7 +160,7 @@ const LanguageSpecificCourses = () => {
                   <Card key={index} className="flex flex-col">
                     <div className="relative h-40 w-full">
                       <Image
-                        src={course.image || courseImages[lang] || "/images/language-learning-1.png"}
+                        src={course.image || courseImages[lang]}
                         alt={`${lang} ${course.level}`}
                         fill
                         className="object-cover"
@@ -271,7 +176,7 @@ const LanguageSpecificCourses = () => {
                           <CardDescription>{course.title}</CardDescription>
                         </div>
                         <div className="bg-primary/10 text-primary px-2 py-1 rounded text-sm font-medium">
-                          Deutsch
+                          {lang === "usbekisch" ? "TELC" : t("course_type_german")}
                         </div>
                       </div>
                     </CardHeader>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="200" height="60" viewBox="0 0 200 60" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <style>.text-blue{fill:#00457C;}</style>
-  <g>
-    <text x="20" y="35" class="text-blue" font-family="Arial" font-size="28" font-weight="700">DAAD</text>
-    <line x1="20" y1="40" x2="180" y2="40" stroke="#00457C" stroke-width="2"/>
-    <text x="20" y="55" class="text-blue" font-family="Arial" font-size="12">Deutscher Akademischer Austauschdienst</text>
-  </g>
-</svg>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="200" height="60" viewBox="0 0 200 60" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <style>.text-red{fill:#C8102E;}</style>
-  <g>
-    <text x="20" y="35" class="text-red" font-family="Arial" font-size="28" font-weight="700">BMZ</text>
-    <text x="20" y="50" class="text-red" font-family="Arial" font-size="10">Bundesministerium für wirtschaftliche</text>
-    <text x="20" y="58" class="text-red" font-family="Arial" font-size="10">Zusammenarbeit und Entwicklung</text>
-  </g>
-</svg>

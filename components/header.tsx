@@ -132,7 +132,7 @@ const Header = () => {
                         }}
                       >
                         <img
-                          src={lang.flag || "/placeholder.svg"}
+                          src={lang.flag}
                           alt={`${lang.name} flag`}
                           className="w-4 h-4 rounded-full mr-2 object-cover"
                         />
@@ -180,7 +180,7 @@ const Header = () => {
                         }}
                       >
                         <img
-                          src={lang.flag || "/placeholder.svg"}
+                          src={lang.flag}
                           alt={`${lang.name} flag`}
                           className="w-4 h-4 rounded-full mr-2 object-cover"
                         />

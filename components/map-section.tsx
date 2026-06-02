@@ -50,7 +50,7 @@ const MapSection = () => {
     <section id="standorte" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/map-section.tsx/photo-1488646953014-85cb44e25828.png"
+          src="/images/map-bg.png"
           alt="Travel and location background"
           fill
           className="object-cover opacity-85 filter blur-[1.5px]"
@@ -158,7 +158,7 @@ const MapSection = () => {
             {activeRegion && locations[activeRegion]?.image && (
               <div className="mt-6 aspect-video relative overflow-hidden rounded-lg">
                 <Image
-                  src={locations[activeRegion]?.image || "/placeholder.svg"}
+                  src={locations[activeRegion]!.image!}
                   alt={locations[activeRegion]?.name || "Location image"}
                   fill
                   className="object-cover"
