@@ -16,8 +16,6 @@ const Header = () => {
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false)
   const { t, getLanguagePath, language, setLanguage } = useLanguage()
   const pathname = usePathname()
-  const telegramUrl = "https://t.me/UZ_profideutsch"
-
   useEffect(() => {
     const handleScroll = () => {
       // Show language switcher when scrolled past 300px
@@ -87,7 +85,7 @@ const Header = () => {
             <LangLink href="#partners" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
               {t("partners")}
             </LangLink>
-          <Link href={`/telc/${language}`} className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
+          <Link href={`/telc/${language}/register`} className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("telc")}
           </Link>
           <LangLink href="#standorte" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
@@ -97,9 +95,9 @@ const Header = () => {
             {t("contact")}
           </LangLink>
           <Button asChild>
-            <a href={telegramUrl} target="_blank" rel="noreferrer">
+            <Link href={`/telc/${language}/register`}>
               {t("register_now")}
-            </a>
+            </Link>
           </Button>
 
           {/* Language switcher icon - only visible when scrolled */}
@@ -227,7 +225,7 @@ const Header = () => {
               {t("locations")}
             </LangLink>
             <Link
-              href={`/telc/${language}`}
+              href={`/telc/${language}/register`}
               className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -241,9 +239,9 @@ const Header = () => {
               {t("contact")}
             </LangLink>
             <Button asChild onClick={() => setIsMenuOpen(false)}>
-              <a href={telegramUrl} target="_blank" rel="noreferrer">
+              <Link href={`/telc/${language}/register`}>
                 {t("register_now")}
-              </a>
+              </Link>
             </Button>
           </nav>
         </div>

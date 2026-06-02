@@ -1,6 +1,6 @@
 const en = {
   // Hero Section
-  welcome: "Welcome to \"PROFI DEUTSCH\" the German Language Center in Uzbekistan",
+  welcome: "Welcome to the ‘PROFI DEUTSCH’ Education and Examination Centre in Uzbekistan",
   hero_tagline: "Profi Deutsch – the right choice, the exact result.",
   discover:
     "Learn German systematically using the modern Telc method and take advantage of the opportunity to obtain an international Telc certificate. In addition, receive practical support related to your studies and work in cooperation with our German partners!",
@@ -22,12 +22,19 @@ const en = {
   left_menu_contact: "Contact",
 
   // TELC Page
-  telc_page_title: "TELC Exam Registration",
-  telc_page_subtitle: "Register for your TELC German exam with our fast online process.",
+  telc_page_title: "Official TELC Exam Platform in Uzbekistan",
+  telc_page_subtitle: "International certification for German language learners",
   telc_page_description: "Book your TELC exam online with the right language version and get support from our certified team.",
   telc_feature_1: "Official TELC exam booking",
   telc_feature_2: "Preparation support and materials",
   telc_feature_3: "Personalized coaching for success",
+  telc_feature_easy_title: "Easy Registration",
+  telc_feature_easy_desc: "Register for your exam in just a few minutes",
+  telc_feature_secure_title: "Secure Payment",
+  telc_feature_secure_desc: "Multiple payment methods for your convenience",
+  telc_feature_cert_title: "Official Certificate",
+  telc_feature_cert_desc: "Receive your international telc certificate",
+  telc_register_for_exam: "Register for Exam",
   telc_cta: "Register for TELC",
   telc_back_to_home: "Back to main page",
   telc_back_to_registration: "Back to TELC registration page",
@@ -349,6 +356,7 @@ const en = {
 
   // Locations
   tashkent_address: "TASHKENT CITY, UCHTEPA DISTRICT, BOG'OBOD MFY, 15 MAVZESI, 14-UY",
+  samarkand_address: "Samarqand shahri, O'zbekiston ko'chasi, 63 uy, 140105\n(Yoshlar kreativ shaharchasi)",
 }
 
 export default en

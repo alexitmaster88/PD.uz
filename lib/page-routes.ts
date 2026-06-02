@@ -1,4 +1,4 @@
-import { BookOpen, Home, MapPin, Menu as MenuIcon } from "lucide-react"
+import { Home, MapPin, Menu as MenuIcon } from "lucide-react"
 
 export const pageRoutes = [
   {
@@ -7,14 +7,9 @@ export const pageRoutes = [
     icon: Home,
   },
   {
-    href: "/telc",
+    href: "/telc/register",
     labelKey: "left_menu_telc",
     icon: MenuIcon,
-  },
-  {
-    href: "/telc/booking",
-    labelKey: "left_menu_telc_booking",
-    icon: BookOpen,
   },
   {
     href: "#kontakt",

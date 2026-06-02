@@ -1,6 +1,6 @@
 const ru = {
   // Hero Section
-  welcome: "Добро пожаловать в Немецкий языковой центр \"PROFI DEUTSCH\" в Узбекистане",
+  welcome: "Добро пожаловать в Учебный и экзаменационный центр «PROFI DEUTSCH» в Узбекистане",
   hero_tagline: "Profi Deutsch — правильный выбор, точный результат.",
   discover:
     "Систематически изучайте немецкий язык по современной методике «Telc» и воспользуйтесь возможностью получить международный сертификат «Telc». Кроме того, получите практическую поддержку, связанную с вашим обучением и работой, в сотрудничестве с нашими немецкими партнерами!",
@@ -22,12 +22,19 @@ const ru = {
   left_menu_contact: "Контакт",
 
   // TELC Page
-  telc_page_title: "Регистрация на экзамен TELC",
-  telc_page_subtitle: "Зарегистрируйтесь на экзамен TELC German через наш быстрый онлайн-процесс.",
+  telc_page_title: "Официальная платформа TELC в Узбекистане",
+  telc_page_subtitle: "Международная сертификация для изучающих немецкий язык",
   telc_page_description: "Забронируйте экзамен TELC онлайн в нужной языковой версии и получите поддержку нашей сертифицированной команды.",
   telc_feature_1: "Официальная регистрация TELC",
   telc_feature_2: "Поддержка подготовки и материалы",
   telc_feature_3: "Персонализированное сопровождение для успеха",
+  telc_feature_easy_title: "Простая регистрация",
+  telc_feature_easy_desc: "Запишитесь на экзамен за несколько минут",
+  telc_feature_secure_title: "Безопасная оплата",
+  telc_feature_secure_desc: "Несколько способов оплаты для вашего удобства",
+  telc_feature_cert_title: "Официальный сертификат",
+  telc_feature_cert_desc: "Получите международный сертификат telc",
+  telc_register_for_exam: "Записаться на экзамен",
   telc_cta: "Зарегистрироваться на TELC",
   telc_back_to_home: "Назад на главную",
   telc_back_to_registration: "Назад на страницу регистрации TELC",
@@ -338,6 +345,7 @@ const ru = {
 
   // Locations
   tashkent_address: "ГОРОД ТАШКЕНТ, УЧТЕПИНСКИЙ РАЙОН, БОГОБОД МФЙ, 15 МАВЗЕСИ, 14-УЙ",
+  samarkand_address: "Samarqand shahri, O'zbekiston ko'chasi, 63 uy, 140105\n(Yoshlar kreativ shaharchasi)",
 
   // Courses
   course_german_a1: "Немецкий (A1)",

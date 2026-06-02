@@ -1,41 +1,15 @@
-<file name=components/hero-section.tsx>
-import React from "react";
-import { motion } from "framer-motion";
-import { useSoftLangSwitch } from "@/hooks/use-soft-lang-switch";
+"use client"
 
-export default function HeroSection() {
-  const softSwitch = useSoftLangSwitch();
+import { useLanguage } from "@/contexts/language-context"
 
-  return (
-    <div>
-      {["de", "uz", "en", "ru"].map((lang, index) => (
-        <motion.button
-          key={lang}
-          onClick={() => softSwitch(lang)}
-        >
-          {lang.toUpperCase()}
-        </motion.button>
-      ))}
-    </div>
-  );
+type Lang = "de" | "en" | "ru" | "uz"
+const VALID_LANGS = new Set<Lang>(["de", "en", "ru", "uz"])
+
+export function useSoftLangSwitch() {
+  const { setLanguage } = useLanguage()
+  return (lang: string) => {
+    if (VALID_LANGS.has(lang as Lang)) {
+      setLanguage(lang as Lang)
+    }
+  }
 }
-</file>
-
-<file name=components/language-switcher.tsx>
-import React from "react";
-import { useSoftLangSwitch } from "@/hooks/use-soft-lang-switch";
-
-export function LanguageSwitcher() {
-  const softSwitch = useSoftLangSwitch();
-
-  return (
-    <div>
-      {["de", "en", "ru", "uz"].map((code) => (
-        <button key={code} onClick={() => softSwitch(code)}>
-          {code.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
-}
-</file>

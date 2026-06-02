@@ -1,6 +1,6 @@
 const de = {
   // Hero Section
-  welcome: "Willkommen im \"PROFI DEUTSCH\" Sprachzentrum in Usbekistan",
+  welcome: "Willkommen im „PROFI DEUTSCH“ Bildungs-und Prüfungzentrum in Usbekistan",
   hero_tagline: "Profi Deutsch – die richtige Wahl, das exakte Ergebnis.",
   discover:
     "Lernen Sie Deutsch strukturiert und effizient nach der modernen TELC-Methode und sichern Sie sich die Chance auf ein anerkanntes internationales TELC-Zertifikat. Darüber hinaus bieten wir Ihnen gemeinsam mit unseren deutschen Partnern praxisnahe Unterstützung rund um Ausbildung und Beruf.",
@@ -22,12 +22,19 @@ const de = {
   left_menu_contact: "Kontakt",
 
   // TELC Page
-  telc_page_title: "TELC-Prüfungsanmeldung",
-  telc_page_subtitle: "Melden Sie sich für Ihre TELC Deutschprüfung mit unserem schnellen Online-Prozess an.",
+  telc_page_title: "Offizielle TELC-Prüfungsplattform in Usbekistan",
+  telc_page_subtitle: "Internationale Zertifizierung für Deutschlernende",
   telc_page_description: "Buchen Sie Ihre TELC-Prüfung online mit der passenden Sprachversion und erhalten Sie Unterstützung von unserem zertifizierten Team.",
   telc_feature_1: "Offizielle TELC-Prüfungsanmeldung",
   telc_feature_2: "Vorbereitungsunterstützung und Materialien",
   telc_feature_3: "Personalisierte Unterstützung für Ihren Erfolg",
+  telc_feature_easy_title: "Einfache Anmeldung",
+  telc_feature_easy_desc: "Melden Sie sich in wenigen Minuten für Ihre Prüfung an",
+  telc_feature_secure_title: "Sichere Zahlung",
+  telc_feature_secure_desc: "Mehrere Zahlungsmethoden für Ihren Komfort",
+  telc_feature_cert_title: "Offizielles Zertifikat",
+  telc_feature_cert_desc: "Erhalten Sie Ihr internationales telc-Zertifikat",
+  telc_register_for_exam: "Zur Prüfung anmelden",
   telc_cta: "Zur TELC-Anmeldung",
   telc_back_to_home: "Zurück zur Hauptseite",
   telc_back_to_registration: "Zurück zur TELC-Anmeldeseite",
@@ -347,6 +354,7 @@ const de = {
 
   // Locations
   tashkent_address: "STADT TASCHKENT, BEZIRK UCHTEPA, BOG'OBOD MFY, 15 MAVZESI, 14-UY",
+  samarkand_address: "Samarqand shahri, O'zbekiston ko'chasi, 63 uy, 140105\n(Yoshlar kreativ shaharchasi)",
 
   // Courses
   course_german_a1: "Deutsch (A1)",

@@ -12,6 +12,7 @@ interface LocationInfo {
   email: string
   courses: string[]
   coordinates: { lat: number; lng: number }
+  mapEmbedUrl?: string
   image?: string
 }
 
@@ -20,63 +21,18 @@ interface LocationsData {
 }
 
 const MapSection = () => {
-  const [activeRegion, setActiveRegion] = useState<string | null>("tashkent_city")
+  const [activeRegion, setActiveRegion] = useState<string | null>("samarkand")
   const { t, language } = useLanguage()
 
   const locations: LocationsData = {
-    tashkent_city: {
-      name: t("telc_booking_city_tashkent"),
-      address: t("tashkent_address"),
+    samarkand: {
+      name: t("telc_booking_city_samarkand"),
+      address: t("samarkand_address"),
       phone: "+998 77 178 06 66",
       email: "info@profi-deutsch.uz",
       courses: [t("course_german_a1"), t("course_german_a2"), t("course_german_b1"), t("course_german_b2")],
-      coordinates: { lat: 41.337767, lng: 69.253528 },
-      // image: "/images/german-classroom-1.png",
-    },
-    samarkand: {
-      name: t("telc_booking_city_samarkand"),
-      address: "Registan Platz 45, Samarkand",
-      phone: "+998 77 178 06 66",
-      email: "info@profi-deutsch.uz",
-      courses: ["Deutsch (A1-B2)", "Englisch (A1-B1)", "Usbekisch (A1-A2)"],
       coordinates: { lat: 39.654388, lng: 66.975628 },
-      // image: "/images/uzbek-german-1.png",
-    },
-    bukhara: {
-      name: t("telc_booking_city_bukhara"),
-      address: "Lyabi-Hauz Komplex 12, Buchara",
-      phone: "+998 77 178 06 66",
-      email: "info@profi-deutsch.uz",
-      courses: ["Deutsch (A1-B1)", "Englisch (A1-A2)"],
-      coordinates: { lat: 39.767927, lng: 64.421998 },
-      // image: "/images/uzbek-german-2.png",
-    },
-    fergana: {
-      name: t("telc_booking_city_fergana"),
-      address: "Mustaqillik Straße 15, Fergana",
-      phone: "+998 77 178 06 66",
-      email: "info@profi-deutsch.uz",
-      courses: ["Deutsch (A1-A2)", "Englisch (A1-A2)"],
-      coordinates: { lat: 40.387054, lng: 71.783005 },
-      // image: "/images/students-1.png",
-    },
-    khorezm: {
-      name: t("telc_booking_city_khorezm"),
-      address: "Al-Khwarizmi Straße 10, Urgench",
-      phone: "+998 77 178 06 66",
-      email: "info@profi-deutsch.uz",
-      courses: ["Deutsch (A1)", "Englisch (A1)"],
-      coordinates: { lat: 41.550942, lng: 60.631594 },
-      // image: "/images/cultural-event-1.png",
-    },
-    qashqadaryo: {
-      name: t("telc_booking_city_qashqadaryo"),
-      address: "Amir Temur Straße 43, Karshi",
-      phone: "+998 77 178 06 66",
-      email: "info@profi-deutsch.uz",
-      courses: ["Deutsch (A1)", "Englisch (A1)"],
-      coordinates: { lat: 38.857138, lng: 65.789058 },
-      // image: "/images/teacher-1.png",
+      mapEmbedUrl: "https://maps.google.com/maps?q=Yoshlar+Creative+Shaharchasi,+Uzbekistan+St+86,+Samarkand,+Samarqand+Region&ftid=0x3f4d190016b650a1:0xdfff3848f263cdf4&output=embed&z=17",
     },
   }
 
@@ -144,8 +100,9 @@ const MapSection = () => {
                     <div className="h-[500px] relative">
                       {locations[activeRegion] && (
                         (() => {
-                          const { lat, lng } = locations[activeRegion].coordinates
-                          const src = `https://maps.google.com/maps?q=${lat},${lng}&z=13&output=embed`
+                          const loc = locations[activeRegion]
+                          const src = loc.mapEmbedUrl
+                            ?? `https://maps.google.com/maps?q=${loc.coordinates.lat},${loc.coordinates.lng}&z=13&output=embed`
                           return (
                             <iframe
                               src={src}
@@ -171,7 +128,7 @@ const MapSection = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                           <div>
                             <p className="font-medium mb-2">{t("address")}</p>
-                            <p className="text-muted-foreground">{locations[activeRegion]?.address}</p>
+                            <p className="text-muted-foreground whitespace-pre-line">{locations[activeRegion]?.address}</p>
                           </div>
 
                           <div>

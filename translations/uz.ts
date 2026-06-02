@@ -1,6 +1,6 @@
 const uz = {
   // Hero Section
-  welcome: "O'zbekistondagi \"PROFI DEUTSCH\" nemis til markaziga xush kelibsiz",
+  welcome: "O‘zbekistondagi “PROFI DEUTSCH” Ta‘lim va Imtihon Markaziga xush kelibsiz",
   hero_tagline: "Profi Deutsch —to'g'ri tanlov, aniq natija.",
   discover:
     "Zamonaviy \"Telc\" metodikasi asosida nemis tilini tizimli tarzda o'rganing va xalqaro \"Telc\" sertifikatiga ega bo'lish imkoniyatidan foydalaning. Shuningdek, bizning Germaniyalik hamkorlar bilan birgalikda ta'lim va mehnat jarayoni bilan bog'liq bo'lgan amaliy ko'makka ega bo'ling!",
@@ -22,12 +22,19 @@ const uz = {
   left_menu_contact: "Aloqa",
 
   // TELC Page
-  telc_page_title: "TELC imtihoniga ro‘yxatdan o‘tish",
-  telc_page_subtitle: "TELC German imtihoniga tez va qulay onlayn tarzda ro‘yxatdan o‘ting.",
+  telc_page_title: "O’zbekistonda rasmiy TELC imtihon platformasi",
+  telc_page_subtitle: "Nemis tilini o’rganuvchilar uchun xalqaro sertifikatlash",
   telc_page_description: "Kerakli til versiyasi bilan TELC imtihonini onlayn bron qiling va sertifikatlangan jamoamizdan yordam oling.",
   telc_feature_1: "Rasmiy TELC imtihonini bron qilish",
   telc_feature_2: "Tayyorlov yordami va materiallar",
   telc_feature_3: "Muvaffaqiyat uchun shaxsiy tayyorlanish",
+  telc_feature_easy_title: "Oson ro’yxat",
+  telc_feature_easy_desc: "Bir necha daqiqada imtihonga ro’yxatdan o’ting",
+  telc_feature_secure_title: "Xavfsiz to’lov",
+  telc_feature_secure_desc: "Qulay to’lov usullari mavjud",
+  telc_feature_cert_title: "Rasmiy sertifikat",
+  telc_feature_cert_desc: "Xalqaro telc sertifikatini oling",
+  telc_register_for_exam: "Imtihonga ro’yxatdan o’tish",
   telc_cta: "TELC ga ro‘yxatdan o‘tish",
   telc_back_to_home: "Bosh sahifaga qaytish",
   telc_back_to_registration: "TELC ro‘yxat sahifasiga qaytish",
@@ -338,6 +345,7 @@ const uz = {
 
   // Locations
   tashkent_address: "TOSHKENT SHAHAR, UCHTEPA TUMANI, BOG'OBOD MFY, 15 MAVZESI, 14-UY",
+  samarkand_address: "Samarqand shahri, O'zbekiston ko'chasi, 63 uy, 140105\n(Yoshlar kreativ shaharchasi)",
 
   // Courses
   course_german_a1: "Nemis tili (A1)",

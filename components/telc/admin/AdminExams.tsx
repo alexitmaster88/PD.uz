@@ -1,0 +1,292 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Plus, Trash2, Edit2, Save, X, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { type AdminLang, adminT } from "@/lib/admin-i18n"
+
+const REGIONS = ["tashkent","samarkand","fergana","kashkadarya","bukhara","urgench"]
+const REGION_LABELS: Record<string,string> = { tashkent:"Tashkent", samarkand:"Samarkand", fergana:"Fergana", kashkadarya:"Kashkadarya", bukhara:"Bukhara", urgench:"Urgench" }
+
+const inputCls = "w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+const labelCls = "mb-1 block text-xs font-medium text-slate-600"
+
+type ExamForm = { levelId: string; region: string; address: string; examDate: string; startTime: string; endTime: string; capacity: string }
+const emptyForm: ExamForm = { levelId: "1", region: "tashkent", address: "", examDate: "", startTime: "09:00", endTime: "11:00", capacity: "30" }
+
+interface Props { lang: AdminLang }
+
+export default function AdminExams({ lang }: Props) {
+  const t = (key: string) => adminT(lang, key)
+  const [exams, setExams] = useState<any[]>([])
+  const [levels, setLevels] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [showForm, setShowForm] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [form, setForm] = useState<ExamForm>(emptyForm)
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<ExamForm>(emptyForm)
+  const [saving, setSaving] = useState(false)
+
+  const load = async () => {
+    setLoading(true)
+    const [e, l] = await Promise.all([
+      fetch("/api/telc/exams").then(r => r.json()).catch(() => []),
+      fetch("/api/telc/exam-levels").then(r => r.json()).catch(() => []),
+    ])
+    setExams(Array.isArray(e) ? e : [])
+    setLevels(Array.isArray(l) ? l : [])
+    setLoading(false)
+  }
+
+  useEffect(() => { load() }, [])
+
+  const handleEdit = (ex: any) => {
+    setEditingId(ex.id)
+    setEditForm({
+      levelId: String(ex.level_id),
+      region: ex.region,
+      address: ex.address ?? "",
+      examDate: ex.exam_date ? ex.exam_date.split("T")[0] : "",
+      startTime: ex.start_time ?? "09:00",
+      endTime: ex.end_time ?? "11:00",
+      capacity: String(ex.capacity),
+    })
+  }
+
+  const handleSaveEdit = async () => {
+    setSaving(true)
+    try {
+      const res = await fetch("/api/telc/exams", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: editingId,
+          levelId: parseInt(editForm.levelId),
+          region: editForm.region,
+          address: editForm.address || null,
+          examDate: editForm.examDate ? new Date(editForm.examDate).toISOString() : undefined,
+          startTime: editForm.startTime,
+          endTime: editForm.endTime,
+          capacity: parseInt(editForm.capacity),
+        }),
+      })
+      if (!res.ok) throw new Error()
+      toast.success(t("exam_updated"))
+      setEditingId(null)
+      load()
+    } catch {
+      toast.error(t("exam_update_failed"))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!confirm(t("confirm_delete_exam"))) return
+    const res = await fetch(`/api/telc/exams?id=${id}`, { method: "DELETE" })
+    if (res.ok) { toast.success(t("exam_deleted")); load() }
+    else toast.error(t("exam_delete_failed"))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.examDate) { toast.error(t("exam_date_required")); return }
+    setSubmitting(true)
+    try {
+      const res = await fetch("/api/telc/exams", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          levelId: parseInt(form.levelId),
+          region: form.region,
+          address: form.address || null,
+          examDate: new Date(form.examDate).toISOString(),
+          startTime: form.startTime,
+          endTime: form.endTime,
+          capacity: parseInt(form.capacity),
+        }),
+      })
+      if (!res.ok) throw new Error()
+      toast.success(t("exam_created"))
+      setShowForm(false)
+      setForm(emptyForm)
+      load()
+    } catch {
+      toast.error(t("exam_create_failed"))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-slate-900">{t("manage_exams")}</h2>
+        <Button onClick={() => setShowForm(!showForm)} size="sm">
+          <Plus size={16} className="mr-1" /> {t("add_exam")}
+        </Button>
+      </div>
+
+      {showForm && (
+        <div className="rounded-xl border border-slate-200 bg-white p-6">
+          <h3 className="text-base font-semibold text-slate-900 mb-4">{t("create_exam")}</h3>
+          <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>{t("label_level")}</label>
+              <select className={inputCls} value={form.levelId} onChange={e => setForm({...form, levelId: e.target.value})}>
+                {levels.map((l: any) => <option key={l.id} value={l.id}>{l.level}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className={labelCls}>{t("label_region")}</label>
+              <select className={inputCls} value={form.region} onChange={e => setForm({...form, region: e.target.value})}>
+                {REGIONS.map(r => <option key={r} value={r}>{REGION_LABELS[r]}</option>)}
+              </select>
+            </div>
+            <div className="sm:col-span-2">
+              <label className={labelCls}>{t("label_address")}</label>
+              <input className={inputCls} placeholder={t("label_address")} value={form.address} onChange={e => setForm({...form, address: e.target.value})} />
+            </div>
+            <div>
+              <label className={labelCls}>{t("label_exam_date")}</label>
+              <input type="date" className={inputCls} required value={form.examDate} onChange={e => setForm({...form, examDate: e.target.value})} />
+            </div>
+            <div>
+              <label className={labelCls}>{t("label_capacity")}</label>
+              <input type="number" className={inputCls} min="1" value={form.capacity} onChange={e => setForm({...form, capacity: e.target.value})} />
+            </div>
+            <div>
+              <label className={labelCls}>{t("label_start_time")}</label>
+              <input type="time" className={inputCls} value={form.startTime} onChange={e => setForm({...form, startTime: e.target.value})} />
+            </div>
+            <div>
+              <label className={labelCls}>{t("label_end_time")}</label>
+              <input type="time" className={inputCls} value={form.endTime} onChange={e => setForm({...form, endTime: e.target.value})} />
+            </div>
+            <div className="sm:col-span-2 flex gap-3">
+              <Button type="submit" disabled={submitting} className="flex-1">
+                {submitting && <Loader2 size={16} className="animate-spin mr-2" />} {t("btn_create")}
+              </Button>
+              <Button type="button" variant="outline" className="flex-1" onClick={() => setShowForm(false)}>{t("btn_cancel")}</Button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+        {loading ? (
+          <div className="flex items-center justify-center gap-2 p-8 text-slate-500"><Loader2 className="animate-spin" size={20}/> {t("loading")}</div>
+        ) : exams.length === 0 ? (
+          <p className="p-8 text-center text-slate-500">{t("no_exams")}</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>{[t("label_level"), t("label_region"), t("col_date"), t("col_time"), t("col_capacity"), t("col_actions")].map(h => <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-700">{h}</th>)}</tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {exams.map((ex: any) => {
+                  const pct = ex.capacity > 0 ? Math.min(100, Math.round((ex.registered_count / ex.capacity) * 100)) : 0
+                  const isFull = ex.registered_count >= ex.capacity
+                  const barColor = isFull ? "bg-red-500" : pct >= 75 ? "bg-amber-400" : "bg-green-500"
+                  const isEditing = editingId === ex.id
+                  return (
+                    <>
+                      <tr key={ex.id} className={`hover:bg-slate-50 ${isEditing ? "bg-amber-50" : ""}`}>
+                        <td className="px-4 py-3 font-medium">{ex.exam_levels?.level ?? `Level ${ex.level_id}`}</td>
+                        <td className="px-4 py-3 text-slate-600 capitalize">{REGION_LABELS[ex.region] ?? ex.region}</td>
+                        <td className="px-4 py-3 text-slate-600">{new Date(ex.exam_date).toLocaleDateString()}</td>
+                        <td className="px-4 py-3 text-slate-600">{ex.start_time} – {ex.end_time}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2 min-w-[120px]">
+                            <div className="flex-1 h-2 rounded-full bg-slate-200 overflow-hidden">
+                              <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${pct}%` }} />
+                            </div>
+                            <span className="text-xs text-slate-600 whitespace-nowrap">{ex.registered_count}/{ex.capacity}</span>
+                            {isFull && <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">{t("full")}</span>}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={() => isEditing ? setEditingId(null) : handleEdit(ex)}
+                              className={`flex items-center gap-1 text-xs font-medium ${isEditing ? "text-slate-500 hover:text-slate-700" : "text-amber-600 hover:text-amber-800"}`}
+                            >
+                              {isEditing ? <><X size={14}/> {t("btn_cancel")}</> : <><Edit2 size={14}/> {t("btn_edit")}</>}
+                            </button>
+                            <button onClick={() => handleDelete(ex.id)} className="flex items-center gap-1 text-red-600 hover:text-red-800 text-xs font-medium">
+                              <Trash2 size={14}/> {t("btn_delete")}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      {isEditing && (
+                        <tr key={`edit-${ex.id}`}>
+                          <td colSpan={6} className="px-4 py-4 bg-amber-50 border-t border-amber-100">
+                            <p className="text-xs font-semibold text-amber-800 mb-3 uppercase tracking-wide">{t("edit_exam")}</p>
+                            <div className="grid sm:grid-cols-3 gap-3">
+                              <div>
+                                <label className={labelCls}>{t("label_level")}</label>
+                                <select className={inputCls} value={editForm.levelId} onChange={e => setEditForm({...editForm, levelId: e.target.value})}>
+                                  {levels.map((l: any) => <option key={l.id} value={l.id}>{l.level}</option>)}
+                                </select>
+                              </div>
+                              <div>
+                                <label className={labelCls}>{t("label_region")}</label>
+                                <select className={inputCls} value={editForm.region} onChange={e => setEditForm({...editForm, region: e.target.value})}>
+                                  {REGIONS.map(r => <option key={r} value={r}>{REGION_LABELS[r]}</option>)}
+                                </select>
+                              </div>
+                              <div>
+                                <label className={labelCls}>{t("label_exam_date")}</label>
+                                <input type="date" className={inputCls} value={editForm.examDate} onChange={e => setEditForm({...editForm, examDate: e.target.value})} />
+                              </div>
+                              <div>
+                                <label className={labelCls}>{t("label_start_time")}</label>
+                                <input type="time" className={inputCls} value={editForm.startTime} onChange={e => setEditForm({...editForm, startTime: e.target.value})} />
+                              </div>
+                              <div>
+                                <label className={labelCls}>{t("label_end_time")}</label>
+                                <input type="time" className={inputCls} value={editForm.endTime} onChange={e => setEditForm({...editForm, endTime: e.target.value})} />
+                              </div>
+                              <div>
+                                <label className={labelCls}>{t("label_capacity")}</label>
+                                <input type="number" className={inputCls} min="1" value={editForm.capacity} onChange={e => setEditForm({...editForm, capacity: e.target.value})} />
+                              </div>
+                              <div className="sm:col-span-3">
+                                <label className={labelCls}>{t("label_address")}</label>
+                                <input className={inputCls} value={editForm.address} onChange={e => setEditForm({...editForm, address: e.target.value})} />
+                              </div>
+                              <div className="sm:col-span-3 flex gap-3">
+                                <button
+                                  onClick={handleSaveEdit}
+                                  disabled={saving}
+                                  className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60"
+                                >
+                                  {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+                                  {t("btn_save")}
+                                </button>
+                                <button
+                                  onClick={() => setEditingId(null)}
+                                  className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100"
+                                >
+                                  <X size={14} /> {t("btn_cancel")}
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

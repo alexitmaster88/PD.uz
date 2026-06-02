@@ -13,7 +13,7 @@ const LanguageSpecificCourses = () => {
   const [courseLanguage, setCourseLanguage] = useState<keyof CourseDataType>("deutsch")
   const { t, language, getLanguagePath } = useLanguage()
   const telegramUrl = "https://t.me/profi_deutsch_uz"
-  const telcBookingPath = getLanguagePath("/telc/booking")
+  const telcBookingPath = getLanguagePath("/telc/register")
 
   const languageSpecificCourses: LanguageContent<{
     title: string

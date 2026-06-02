@@ -122,9 +122,9 @@ const HeroSection = () => {
               <LangLink href="#kurse">{t("explore_courses")}</LangLink>
             </Button>
             <Button size="lg" variant="ghost" asChild className="h-auto min-h-0 p-0">
-              <LangLink href={getLanguagePath("/telc")} className="inline-flex items-center justify-center p-0">
+              <LangLink href="/telc/register" className="inline-flex items-center justify-center p-0">
                 <Image
-                  src="/images/telc-Pruefungszentrum-1024x315.png"
+                  src="/images/TELCnew06.png"
                   alt="TELC Prüfungszentrum"
                   width={352}
                   height={110}
