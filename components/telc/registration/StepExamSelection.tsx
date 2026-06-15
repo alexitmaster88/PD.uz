@@ -1,20 +1,17 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
-import { Calendar, Clock, Loader2, MapPin, Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
+import { MapPin, Phone, Users, ChevronDown, Calendar, Clock } from "lucide-react"
+import { CONTACT } from "@/lib/contact"
 
 interface Props {
   data: any
   lang: string
-  existingRegistrationId?: number | null
   preloadedExams: any[] | undefined
   preloadedLevels: any[] | undefined
   onDataChange: (data: any) => void
   onNext: () => void
   onPrevious: () => void
-  onRegistrationComplete: (regId: number) => void
 }
 
 const regionLabels: Record<string, Record<string, string>> = {
@@ -24,97 +21,146 @@ const regionLabels: Record<string, Record<string, string>> = {
   uz: { tashkent: "Toshkent", samarkand: "Samarqand", fergana: "Farg'ona", kashkadarya: "Qashqadaryo", bukhara: "Buxoro", urgench: "Urganch" },
 }
 
-const regionInfo: Record<string, { address: string; phone: string; email: string }> = {
+const regionInfo: Record<string, { address: Record<string, string>; phone: string; email: string }> = {
   samarkand: {
-    address: "Samarqand shahri, O'zbekiston ko'chasi, 63 uy, 140105\n(Yoshlar kreativ shaharchasi)",
-    phone: "+998 77 178 06 66",
-    email: "info@profi-deutsch.uz",
+    address: {
+      uz: "Samarqand shahar, O'zbekiston ko'chasi, 53-uy, Yoshlar kreativ bog'i",
+      en: "Samarkand, Uzbekiston Street, 53, Yoshlar Creative Park",
+      de: "Samarkand, Uzbekiston-Straße, Haus 53, Yoshlar Kreativpark",
+      ru: "г. Самарканд, ул. Узбекистан, дом 53, Молодёжный творческий парк",
+    },
+    phone: CONTACT.phone1,
+    email: CONTACT.email,
+  },
+  tashkent: {
+    address: {
+      uz: "Toshkent shahar, Olmazor tumani, Sebzor ko'chasi, 313-uy (sobiq Toshkent shahar dizayner va texnologlarni tayyorlash texnikumi)",
+      en: "Tashkent, Olmazor district, Sebzor Street, 313 (former Tashkent city designer and technologist training college)",
+      de: "Taschkent, Bezirk Olmazor, Sebzor-Straße, Haus 313 (ehemaliges Institut für Ausbildung von Designern und Technologen)",
+      ru: "г. Ташкент, Олмазорский р-н, ул. Сабзор, дом 313 (бывший Ташкентский техникум подготовки дизайнеров и технологов)",
+    },
+    phone: CONTACT.phone1,
+    email: CONTACT.email,
   },
 }
 
 const ui: Record<string, Record<string, string>> = {
   en: {
-    title: "Exam Selection", region: "Region", level: "Level", date: "Date", time: "Time",
-    selectRegion: "Select region", selectLevel: "Select level", selectDate: "Select date", selectTime: "Select time",
+    title: "Exam Information",
+    region: "Exam region", level: "Level",
+    selectRegion: "Select region", selectLevel: "Select level",
+    spotsAvailable: "Available spots", spots: "spots",
+    examType: "Exam type",
+    oralWritten: "Oral + Written", oral: "Oral", written: "Written",
+    examDate: "Exam date", time: "Time",
     noExams: "No exams available for selected region and level",
-    previous: "← Previous", next: "Next →", summary: "Summary",
-    submitting: "Creating registration...", loading: "Loading exam data...",
-    errRegion: "Select a region", errLevel: "Select a level", errDate: "Select a date", errTime: "Select a time",
-    errFail: "Failed to create registration",
-    full: "Full", examFull: "This exam date is fully booked.", suggestAlt: "Available alternative dates:", spots: "spots left",
+    confirmInfo: "I confirm the above information is correct",
+    next: "Next step", previous: "← Back",
+    loading: "Loading exam data...",
+    full: "Full", spotsLeft: "spots left",
+    errRegion: "Select a region", errLevel: "Select a level",
+    errDate: "Select a date", errExamType: "Select exam type",
+    errConfirm: "Please confirm the information",
     labelAddress: "Venue Address", labelContact: "Contact",
-    docReminderTitle: "Required documents — bring with you 30 minutes before the exam:",
-    docPassport: "Passport or national ID card (original)",
+    docReminderTitle: "Bring with you 30 min before the exam:",
+    docPassport: "Passport or national ID (original)",
     docPrint: "Printed confirmation (PDF) with payment receipt",
   },
   de: {
-    title: "Prüfung wählen", region: "Region", level: "Stufe", date: "Datum", time: "Zeit",
-    selectRegion: "Region wählen", selectLevel: "Stufe wählen", selectDate: "Datum wählen", selectTime: "Zeit wählen",
+    title: "Prüfungsinformationen",
+    region: "Prüfungsregion", level: "Stufe",
+    selectRegion: "Region wählen", selectLevel: "Stufe wählen",
+    spotsAvailable: "Verfügbare Plätze", spots: "Plätze",
+    examType: "Prüfungstyp",
+    oralWritten: "Mündlich + Schriftlich", oral: "Mündlich", written: "Schriftlich",
+    examDate: "Prüfungsdatum", time: "Zeit",
     noExams: "Keine Prüfungen verfügbar",
-    previous: "← Zurück", next: "Weiter →", summary: "Zusammenfassung",
-    submitting: "Anmeldung wird erstellt...", loading: "Prüfungsdaten werden geladen...",
-    errRegion: "Wählen Sie eine Region", errLevel: "Wählen Sie eine Stufe", errDate: "Wählen Sie ein Datum", errTime: "Wählen Sie eine Zeit",
-    errFail: "Anmeldung fehlgeschlagen",
-    full: "Voll", examFull: "Dieser Prüfungstermin ist ausgebucht.", suggestAlt: "Verfügbare alternative Termine:", spots: "Plätze frei",
+    confirmInfo: "Ich bestätige die Richtigkeit der obigen Angaben",
+    next: "Nächster Schritt", previous: "← Zurück",
+    loading: "Prüfungsdaten werden geladen...",
+    full: "Voll", spotsLeft: "Plätze frei",
+    errRegion: "Region wählen", errLevel: "Stufe wählen",
+    errDate: "Datum wählen", errExamType: "Prüfungstyp wählen",
+    errConfirm: "Bitte bestätigen",
     labelAddress: "Prüfungsort", labelContact: "Kontakt",
-    docReminderTitle: "Erforderliche Dokumente — 30 Minuten vor der Prüfung mitbringen:",
+    docReminderTitle: "30 Min. vor der Prüfung mitbringen:",
     docPassport: "Reisepass oder Personalausweis (Original)",
     docPrint: "Ausgedruckte Bestätigung (PDF) mit Zahlungsbeleg",
   },
   ru: {
-    title: "Выбор экзамена", region: "Регион", level: "Уровень", date: "Дата", time: "Время",
-    selectRegion: "Выберите регион", selectLevel: "Выберите уровень", selectDate: "Выберите дату", selectTime: "Выберите время",
+    title: "Информация об экзамене",
+    region: "Регион экзамена", level: "Уровень",
+    selectRegion: "Выберите регион", selectLevel: "Выберите уровень",
+    spotsAvailable: "Доступные места", spots: "мест",
+    examType: "Тип экзамена",
+    oralWritten: "Устный + Письменный", oral: "Устный", written: "Письменный",
+    examDate: "Дата экзамена", time: "Время",
     noExams: "Нет доступных экзаменов",
-    previous: "← Назад", next: "Далее →", summary: "Итоги",
-    submitting: "Создание записи...", loading: "Загрузка данных...",
-    errRegion: "Выберите регион", errLevel: "Выберите уровень", errDate: "Выберите дату", errTime: "Выберите время",
-    errFail: "Ошибка создания записи",
-    full: "Занято", examFull: "Этот экзамен полностью заполнен.", suggestAlt: "Доступные альтернативные даты:", spots: "мест осталось",
-    labelAddress: "Адрес места проведения", labelContact: "Контакт",
-    docReminderTitle: "Необходимые документы — принести за 30 минут до экзамена:",
-    docPassport: "Паспорт или удостоверение личности (оригинал)",
-    docPrint: "Распечатанное подтверждение (PDF) с квитанцией об оплате",
+    confirmInfo: "Я подтверждаю правильность указанных данных",
+    next: "Следующий шаг", previous: "← Назад",
+    loading: "Загрузка данных...",
+    full: "Занято", spotsLeft: "мест осталось",
+    errRegion: "Выберите регион", errLevel: "Выберите уровень",
+    errDate: "Выберите дату", errExamType: "Выберите тип экзамена",
+    errConfirm: "Подтвердите данные",
+    labelAddress: "Адрес", labelContact: "Контакт",
+    docReminderTitle: "Принести за 30 мин до экзамена:",
+    docPassport: "Паспорт или удостоверение (оригинал)",
+    docPrint: "Распечатанное подтверждение (PDF) с квитанцией",
   },
   uz: {
-    title: "Imtihon tanlash", region: "Hudud", level: "Daraja", date: "Sana", time: "Vaqt",
-    selectRegion: "Hudud tanlang", selectLevel: "Daraja tanlang", selectDate: "Sana tanlang", selectTime: "Vaqt tanlang",
+    title: "Imtihon ma'lumotlari",
+    region: "Imtihon topshirish hududi", level: "Daraja",
+    selectRegion: "Hududni tanlang", selectLevel: "Darajani tanlang",
+    spotsAvailable: "Bo'sh o'rinlar", spots: "ta",
+    examType: "Imtihon turi",
+    oralWritten: "Og'zaki + Yozma", oral: "Og'zaki", written: "Yozma",
+    examDate: "Imtihon kuni", time: "Vaqt",
     noExams: "Tanlangan hudud va darajada imtihon yo'q",
-    previous: "← Oldingi", next: "Keyingi →", summary: "Xulosa",
-    submitting: "Ro'yxat yaratilmoqda...", loading: "Ma'lumotlar yuklanmoqda...",
-    errRegion: "Hudud tanlang", errLevel: "Daraja tanlang", errDate: "Sana tanlang", errTime: "Vaqt tanlang",
-    errFail: "Ro'yxatdan o'tishda xato",
-    full: "To'liq", examFull: "Bu imtihon sanasi to'lib ketgan.", suggestAlt: "Mavjud muqobil sanalar:", spots: "joy qoldi",
+    confirmInfo: "Yuqoridagi ma'lumotlar to'g'ri ekanligiga ishonch hosil qildim",
+    next: "Keyingi qadam", previous: "← Orqaga",
+    loading: "Ma'lumotlar yuklanmoqda...",
+    full: "To'liq", spotsLeft: "o'rin qoldi",
+    errRegion: "Hududni tanlang", errLevel: "Darajani tanlang",
+    errDate: "Sanani tanlang", errExamType: "Imtihon turini tanlang",
+    errConfirm: "Ma'lumotlarni tasdiqlang",
     labelAddress: "Imtihon manzili", labelContact: "Aloqa",
-    docReminderTitle: "Kerakli hujjatlar — imtihon kuni imtihon vaqtidan 30 minut oldin o'zingiz bilan olib keling:",
+    docReminderTitle: "Imtihon kuni 30 daqiqa oldin olib keling:",
     docPassport: "Pasport yoki ID karta (original)",
     docPrint: "To'lov cheki bilan tasdiqlash (PDF) chop etilgan nusxasi",
   },
 }
 
 function todayStart() {
-  const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  return d
+  const d = new Date(); d.setHours(0, 0, 0, 0); return d
+}
+
+function formatDate(dateStr: string, lang: string) {
+  const d = new Date(dateStr + "T00:00:00")
+  if (lang === "uz") {
+    const dd = String(d.getDate()).padStart(2, "0")
+    const mm = String(d.getMonth() + 1).padStart(2, "0")
+    return `${dd}.${mm}.${d.getFullYear()}`
+  }
+  return d.toLocaleDateString(
+    lang === "ru" ? "ru-RU" : lang === "de" ? "de-DE" : "en-GB",
+    { day: "2-digit", month: "short", year: "numeric" }
+  )
 }
 
 export default function StepExamSelection({
-  data, lang, existingRegistrationId,
-  preloadedExams, preloadedLevels,
-  onDataChange, onNext, onPrevious, onRegistrationComplete,
+  data, lang, preloadedExams, preloadedLevels, onDataChange, onNext, onPrevious,
 }: Props) {
-  const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
-  const rl: Record<string, string> = regionLabels[lang] ?? regionLabels['en'] ?? {}
+  const l = ui[lang] ?? ui.en
+  const rl = regionLabels[lang] ?? regionLabels.en
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [selectedDate, setSelectedDate] = useState(data.selectedDate ?? "")
-  const [selectedTime, setSelectedTime] = useState(data.selectedTime ?? "")
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
 
-  // Use preloaded data if available; fall back to local fetch only as a safety net
   const [localExams, setLocalExams] = useState<any[] | null>(null)
   const [localLevels, setLocalLevels] = useState<any[] | null>(null)
 
   useEffect(() => {
-    // Only fetch locally if parent didn't prefetch
     if (preloadedExams !== undefined && preloadedLevels !== undefined) return
     Promise.all([
       fetch("/api/telc/exams?future=true").then(r => r.json()).catch(() => []),
@@ -129,14 +175,19 @@ export default function StepExamSelection({
   const levels: any[] = preloadedLevels ?? localLevels ?? []
   const isLoading = preloadedExams === undefined && localExams === null
 
-  // Regions that have at least one upcoming exam — derived client-side, no extra fetch
   const activeRegions = useMemo(() => {
     const seen = new Set<string>()
     allExams.forEach(e => seen.add(e.region))
     return Array.from(seen)
   }, [allExams])
 
-  // Filter exams client-side — eliminates the per-interaction network request
+  const activeLevelsForRegion = useMemo(() => {
+    if (!data.region) return levels
+    const ids = new Set<string>()
+    allExams.forEach(e => { if (e.region === data.region) ids.add(String(e.level_id)) })
+    return levels.filter(lv => ids.has(String(lv.id)))
+  }, [allExams, levels, data.region])
+
   const exams = useMemo(() => {
     if (!data.region || !data.levelId) return []
     return allExams.filter(e =>
@@ -146,254 +197,237 @@ export default function StepExamSelection({
     )
   }, [allExams, data.region, data.levelId])
 
+  // Total available spots across all dates for this region+level
+  const totalSpots = useMemo(() =>
+    exams.reduce((sum, e) => sum + Math.max(0, e.capacity - e.registered_count), 0),
+    [exams])
+
   const availableDates = useMemo(() => {
     const dates = new Set<string>()
     exams.forEach(e => dates.add(e.exam_date.split("T")[0]))
     return Array.from(dates).sort()
   }, [exams])
 
-  const isDateFull = useMemo(() => {
-    const map: Record<string, boolean> = {}
-    availableDates.forEach(d => {
-      const dayExams = exams.filter(e => e.exam_date.split("T")[0] === d)
-      map[d] = dayExams.length > 0 && dayExams.every(e => e.registered_count >= e.capacity)
-    })
-    return map
-  }, [exams, availableDates])
-
-  const availableTimes = useMemo(() => {
-    if (!selectedDate) return []
-    const times = new Set<string>()
-    exams.forEach(e => { if (e.exam_date.split("T")[0] === selectedDate) times.add(e.start_time) })
-    return Array.from(times).sort()
-  }, [exams, selectedDate])
-
   const selectedExam = useMemo(() =>
-    exams.find(e => e.exam_date.split("T")[0] === selectedDate && e.start_time === selectedTime),
-    [exams, selectedDate, selectedTime])
+    exams.find(e => e.exam_date.split("T")[0] === selectedDate),
+    [exams, selectedDate])
 
-  const selectedExamFull = selectedExam
-    ? selectedExam.registered_count >= selectedExam.capacity
-    : false
+  const spotsForDate = (d: string) => {
+    const dayExams = exams.filter(e => e.exam_date.split("T")[0] === d)
+    return dayExams.reduce((sum, e) => sum + Math.max(0, e.capacity - e.registered_count), 0)
+  }
 
-  const alternativeDates = useMemo(() =>
-    availableDates.filter(d => !isDateFull[d] && d !== selectedDate),
-    [availableDates, isDateFull, selectedDate])
-
-  const locationAddress = selectedExam?.address || regionInfo[data.region]?.address || ""
-  const locationPhone = regionInfo[data.region]?.phone || ""
-  const locationEmail = regionInfo[data.region]?.email || ""
+  const examTypes = [
+    { value: "oral_written", label: l.oralWritten },
+    { value: "oral",         label: l.oral },
+    { value: "written",      label: l.written },
+  ]
 
   const validate = () => {
     const e: Record<string, string> = {}
-    if (!data.region) e.region = l.errRegion ?? ""
-    if (!data.levelId) e.level = l.errLevel ?? ""
-    if (!selectedDate) e.date = l.errDate ?? ""
-    if (!selectedTime) e.time = l.errTime ?? ""
+    if (!data.region)    e.region    = l.errRegion
+    if (!data.levelId)   e.level     = l.errLevel
+    if (!selectedDate)   e.date      = l.errDate
+    if (!data.examType)  e.examType  = l.errExamType
+    if (!confirmed)      e.confirmed = l.errConfirm
     setErrors(e)
     return Object.keys(e).length === 0
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate() || !selectedExam) return
-
-    const examPayload = {
+    onDataChange({
       examId: selectedExam.id,
       selectedDate,
-      selectedTime,
+      selectedTime: selectedExam.start_time,
       examAmount: selectedExam.exam_levels?.price,
       levelName: selectedExam.exam_levels?.level,
-      examAddress: locationAddress,
-    }
-
-    if (existingRegistrationId) {
-      onDataChange(examPayload)
-      onRegistrationComplete(existingRegistrationId)
-      return
-    }
-
-    setIsSubmitting(true)
-    try {
-      const res = await fetch("/api/telc/registrations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          examId: selectedExam.id,
-          firstName: data.firstName, lastName: data.lastName,
-          phoneNumber: data.phoneNumber, email: data.email,
-          passportNumber: data.passportNumber,
-        }),
-      })
-      if (!res.ok) {
-        const d = await res.json().catch(() => ({}))
-        throw new Error((d as any).error ?? l.errFail)
-      }
-      const reg = await res.json()
-      onDataChange(examPayload)
-      onRegistrationComplete(reg.id)
-      toast.success("Registration created!")
-    } catch (err: any) {
-      toast.error(err.message ?? l.errFail)
-    } finally {
-      setIsSubmitting(false)
-    }
+      examAddress: selectedExam.address || regionInfo[data.region]?.address[lang] || regionInfo[data.region]?.address.uz || "",
+    })
+    onNext()
   }
 
-  const selectCls = "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/10"
-  const labelCls = "mb-1 flex items-center gap-1 text-sm font-medium text-slate-700"
+  const selectCls = "w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 py-3 pr-10 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/10 disabled:bg-slate-50 disabled:text-slate-400"
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+    <div className="rounded-2xl bg-white border border-slate-200 shadow-sm p-6 sm:p-8">
       <h2 className="text-2xl font-bold text-slate-900 mb-6">{l.title}</h2>
 
       {isLoading ? (
-        <div className="flex items-center justify-center gap-2 py-16 text-slate-500">
-          <Loader2 className="animate-spin" size={20} />
-          <span>{l.loading}</span>
+        <div className="flex items-center justify-center gap-2 py-16 text-slate-400 text-sm">
+          <span className="animate-spin inline-block w-5 h-5 border-2 border-slate-300 border-t-primary rounded-full" />
+          {l.loading}
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5">
+
+          {/* Region */}
           <div>
-            <label className={labelCls}>{l.region}<span className="text-red-500 ml-0.5">*</span></label>
-            <select className={selectCls} value={data.region ?? ""} onChange={e => {
-              onDataChange({ region: e.target.value, levelId: "", selectedDate: "", selectedTime: "" })
-              setSelectedDate(""); setSelectedTime("")
-            }}>
-              <option value="">{l.selectRegion}</option>
-              {activeRegions.map(r => (
-                <option key={r} value={r}>{rl[r] ?? r}</option>
-              ))}
-            </select>
+            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-700">
+              <MapPin size={15} className="text-slate-400" /> {l.region} <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <select className={selectCls} value={data.region ?? ""} onChange={e => {
+                onDataChange({ region: e.target.value, levelId: "", selectedDate: "", selectedTime: "", examType: "" })
+                setSelectedDate("")
+              }}>
+                <option value="">{l.selectRegion}</option>
+                {activeRegions.map(r => <option key={r} value={r}>{rl[r] ?? r}</option>)}
+              </select>
+              <ChevronDown size={16} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            </div>
             {errors.region && <p className="mt-1 text-xs text-red-600">{errors.region}</p>}
           </div>
 
+          {/* Level */}
           <div>
-            <label className={labelCls}>{l.level}<span className="text-red-500 ml-0.5">*</span></label>
-            <select className={selectCls} value={data.levelId ?? ""} disabled={!data.region}
-              onChange={e => {
-                onDataChange({ levelId: e.target.value, selectedDate: "", selectedTime: "" })
-                setSelectedDate(""); setSelectedTime("")
-              }}>
-              <option value="">{l.selectLevel}</option>
-              {levels.map(lv => <option key={lv.id} value={lv.id}>{lv.level}</option>)}
-            </select>
+            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-700">
+              <Users size={15} className="text-slate-400" /> {l.level} <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <select className={selectCls} value={data.levelId ?? ""} disabled={!data.region}
+                onChange={e => {
+                  onDataChange({ levelId: e.target.value, selectedDate: "", selectedTime: "", examType: "" })
+                  setSelectedDate("")
+                }}>
+                <option value="">{l.selectLevel}</option>
+                {activeLevelsForRegion.map(lv => <option key={lv.id} value={lv.id}>{lv.level}</option>)}
+              </select>
+              <ChevronDown size={16} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            </div>
             {errors.level && <p className="mt-1 text-xs text-red-600">{errors.level}</p>}
           </div>
 
+          {/* Spots badge */}
+          {data.region && data.levelId && (
+            <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <Users size={18} className="shrink-0 text-primary" />
+              <span className="text-sm text-slate-600">{l.spotsAvailable}:</span>
+              <span className="ml-auto inline-flex items-center rounded-lg bg-primary px-3 py-1 text-sm font-bold text-white">
+                {totalSpots} {l.spots}
+              </span>
+            </div>
+          )}
+
+          {/* Exam type */}
           {data.region && data.levelId && (
             <div>
-              <label className={labelCls}><Calendar size={16} />{l.date}<span className="text-red-500 ml-0.5">*</span></label>
-              <select className={selectCls} value={selectedDate} onChange={e => { setSelectedDate(e.target.value); setSelectedTime("") }}>
-                <option value="">{l.selectDate}</option>
-                {availableDates.map(d => {
-                  const full = isDateFull[d]
-                  return (
-                    <option key={d} value={d}>
-                      {new Date(d).toLocaleDateString()}{full ? ` — ${l.full}` : ""}
-                    </option>
-                  )
-                })}
-              </select>
-              {availableDates.length === 0 && <p className="mt-1 text-xs text-amber-600">{l.noExams}</p>}
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                {l.examType} <span className="text-red-500">*</span>
+              </label>
+              <div className="space-y-2">
+                {examTypes.map(et => (
+                  <label key={et.value}
+                    className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-colors ${
+                      data.examType === et.value
+                        ? "border-primary bg-primary/5"
+                        : "border-slate-200 bg-white hover:border-primary/40"
+                    }`}>
+                    <input
+                      type="radio"
+                      name="examType"
+                      value={et.value}
+                      checked={data.examType === et.value}
+                      onChange={() => onDataChange({ examType: et.value })}
+                      className="accent-primary w-4 h-4 shrink-0"
+                    />
+                    <span className="text-sm font-medium text-slate-800">{et.label}</span>
+                  </label>
+                ))}
+              </div>
+              {errors.examType && <p className="mt-1 text-xs text-red-600">{errors.examType}</p>}
+            </div>
+          )}
+
+          {/* Date cards */}
+          {data.region && data.levelId && (
+            <div>
+              <label className="mb-2 flex items-center gap-1.5 text-sm font-medium text-slate-700">
+                <Calendar size={15} className="text-slate-400" /> {l.examDate} <span className="text-red-500">*</span>
+              </label>
+              {availableDates.length === 0 ? (
+                <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">{l.noExams}</p>
+              ) : (
+                <div className="flex flex-wrap gap-3">
+                  {availableDates.map(d => {
+                    const spots = spotsForDate(d)
+                    const full = spots <= 0
+                    return (
+                      <button
+                        key={d}
+                        type="button"
+                        disabled={full}
+                        onClick={() => { setSelectedDate(d); onDataChange({ selectedDate: d }) }}
+                        className={`flex flex-col items-center rounded-xl border-2 px-5 py-3 text-sm font-medium transition-all ${
+                          selectedDate === d
+                            ? "border-primary bg-primary text-white shadow-md"
+                            : full
+                              ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
+                              : "border-slate-200 bg-white text-slate-800 hover:border-primary/60 hover:shadow-sm"
+                        }`}
+                      >
+                        <span className="font-bold">{formatDate(d, lang)}</span>
+                        <span className={`mt-0.5 text-xs ${selectedDate === d ? "text-white/80" : full ? "text-slate-300" : "text-slate-400"}`}>
+                          {full ? l.full : `${spots} ${l.spotsLeft}`}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
               {errors.date && <p className="mt-1 text-xs text-red-600">{errors.date}</p>}
             </div>
           )}
 
-          {selectedDate && (
-            <div>
-              <label className={labelCls}><Clock size={16} />{l.time}<span className="text-red-500 ml-0.5">*</span></label>
-              <select className={selectCls} value={selectedTime} onChange={e => setSelectedTime(e.target.value)}>
-                <option value="">{l.selectTime}</option>
-                {availableTimes.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
-              {errors.time && <p className="mt-1 text-xs text-red-600">{errors.time}</p>}
-            </div>
-          )}
-
-          {/* Summary block */}
+          {/* Time info */}
           {selectedExam && (
-            <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 space-y-1">
-              <p className="font-semibold text-blue-900 mb-2">{l.summary}</p>
-              <p><strong>{l.region}:</strong> {rl[data.region]}</p>
-              <p><strong>{l.level}:</strong> {selectedExam.exam_levels?.level}</p>
-              <p><strong>{l.date}:</strong> {new Date(selectedDate).toLocaleDateString()}</p>
-              <p><strong>{l.time}:</strong> {selectedTime}</p>
-              {selectedExam.exam_levels?.price && (
-                <p><strong>Price:</strong> {Number(selectedExam.exam_levels.price).toLocaleString()} UZS</p>
-              )}
-              {!selectedExamFull && (
-                <p className="text-green-700 font-medium">
-                  {selectedExam.capacity - selectedExam.registered_count} {l.spots}
-                </p>
-              )}
-              {locationAddress && (
-                <div className="mt-3 pt-3 border-t border-blue-200 space-y-1">
-                  <p className="flex items-start gap-1.5">
-                    <MapPin size={14} className="mt-0.5 shrink-0" />
-                    <span>
-                      <strong>{l.labelAddress}:</strong><br />
-                      {locationAddress.split("\n").map((line: string, i: number) => (
-                        <span key={i}>{line}{i < locationAddress.split("\n").length - 1 ? <br /> : null}</span>
-                      ))}
-                    </span>
-                  </p>
-                  {locationPhone && (
-                    <p className="flex items-center gap-1.5">
-                      <Phone size={14} className="shrink-0" />
-                      <span><strong>{l.labelContact}:</strong> {locationPhone}{locationEmail ? `, ${locationEmail}` : ""}</span>
-                    </p>
-                  )}
-                </div>
-              )}
+            <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
+              <Clock size={17} className="shrink-0 text-slate-400" />
+              <span className="text-sm text-slate-600">{l.time}:</span>
+              <span className="font-bold text-primary">{selectedExam.start_time}</span>
             </div>
           )}
 
-          {/* Full exam warning */}
-          {selectedExamFull && (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
-              <p className="font-semibold mb-2">⚠ {l.examFull}</p>
-              {alternativeDates.length > 0 && (
-                <>
-                  <p className="mb-2 text-red-700">{l.suggestAlt}</p>
-                  <ul className="space-y-1">
-                    {alternativeDates.map(d => {
-                      const dayExams = exams.filter(e => e.exam_date.split("T")[0] === d)
-                      const minSpots = Math.min(...dayExams.map(e => e.capacity - e.registered_count))
-                      return (
-                        <li key={d}>
-                          <button type="button"
-                            className="text-red-900 underline hover:text-red-700 font-medium"
-                            onClick={() => { setSelectedDate(d); setSelectedTime("") }}>
-                            {new Date(d).toLocaleDateString()}
-                          </button>
-                          <span className="ml-2 text-red-600">({minSpots} {l.spots})</span>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </>
-              )}
+          {/* Venue info */}
+          {selectedExam && regionInfo[data.region] && (
+            <div className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm space-y-1.5">
+              <p className="flex items-start gap-2 text-blue-800">
+                <MapPin size={14} className="mt-0.5 shrink-0" />
+                <span><strong>{l.labelAddress}:</strong> {(selectedExam.address || regionInfo[data.region].address[lang] || regionInfo[data.region].address.uz).replace("\n", ", ")}</span>
+              </p>
+              <p className="flex items-center gap-2 text-blue-800">
+                <Phone size={14} className="shrink-0" />
+                <span><strong>{l.labelContact}:</strong> {regionInfo[data.region].phone}</span>
+              </p>
             </div>
           )}
 
-          {/* Document reminder */}
-          {selectedExam && !selectedExamFull && (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-              <p className="font-semibold mb-2">📋 {l.docReminderTitle}</p>
-              <ul className="space-y-1 list-none">
-                <li className="flex items-start gap-2">🛂 {l.docPassport}</li>
-                <li className="flex items-start gap-2">🖨️ {l.docPrint}</li>
-              </ul>
-            </div>
+          {/* Confirm checkbox */}
+          {selectedExam && (
+            <label className={`flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 transition-colors ${
+              confirmed ? "border-primary bg-primary/5" : "border-slate-200 bg-white hover:border-primary/40"
+            }`}>
+              <input
+                type="checkbox"
+                checked={confirmed}
+                onChange={e => setConfirmed(e.target.checked)}
+                className="accent-primary mt-0.5 w-4 h-4 shrink-0"
+              />
+              <span className="text-sm text-slate-700">{l.confirmInfo}</span>
+            </label>
           )}
+          {errors.confirmed && <p className="mt-1 text-xs text-red-600">{errors.confirmed}</p>}
 
-          <div className="flex gap-4 pt-2">
-            <Button type="button" variant="outline" size="lg" onClick={onPrevious} className="flex-1">{l.previous}</Button>
-            <Button type="submit" size="lg" className="flex-1" disabled={isSubmitting || !selectedExam || selectedExamFull}>
-              {isSubmitting && <Loader2 size={16} className="animate-spin mr-2" />}
-              {isSubmitting ? l.submitting : l.next}
-            </Button>
+          {/* Navigation */}
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={!selectedExam || !confirmed}
+              className="w-full rounded-xl bg-primary py-3.5 text-base font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {l.next}
+            </button>
           </div>
         </form>
       )}

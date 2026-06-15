@@ -85,7 +85,7 @@ const Header = () => {
             <LangLink href="#partners" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
               {t("partners")}
             </LangLink>
-          <Link href={`/telc/${language}/register`} className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
+          <Link href={`/telc/${language}/booking`} className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
             {t("telc")}
           </Link>
           <LangLink href="#standorte" className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80">
@@ -95,7 +95,7 @@ const Header = () => {
             {t("contact")}
           </LangLink>
           <Button asChild>
-            <Link href={`/telc/${language}/register`}>
+            <Link href={`/telc/${language}/booking`}>
               {t("register_now")}
             </Link>
           </Button>
@@ -113,7 +113,7 @@ const Header = () => {
 
               {/* Language dropdown menu */}
               {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-background rounded-md shadow-lg overflow-hidden z-50 language-menu-container">
+                <div className="absolute right-0 mt-2 w-32 bg-white border border-[#130080]/15 rounded-xl shadow-lg overflow-hidden z-50 language-menu-container">
                   <div className="py-1">
                     {[
                       { code: "de", name: t("language_german"), flag: "/images/flag-de.png" },
@@ -123,8 +123,8 @@ const Header = () => {
                     ].map((lang) => (
                       <button
                         key={lang.code}
-                        className={`flex items-center w-full px-3 py-2 text-sm hover:bg-secondary transition-colors ${
-                          language === lang.code ? "bg-primary/10 font-medium" : ""
+                        className={`flex items-center w-full px-3 py-2 text-sm text-[#130080] hover:bg-[#130080]/8 transition-colors ${
+                          language === lang.code ? "bg-[#130080]/10 font-semibold" : ""
                         }`}
                         onClick={() => {
                           setLanguage(lang.code as "de" | "en" | "ru" | "uz")
@@ -161,7 +161,7 @@ const Header = () => {
 
               {/* Language dropdown menu */}
               {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-background rounded-md shadow-lg overflow-hidden z-50">
+                <div className="absolute right-0 mt-2 w-32 bg-white border border-[#130080]/15 rounded-xl shadow-lg overflow-hidden z-50">
                   <div className="py-1">
                     {[
                       { code: "de", name: t("language_german"), flag: "/images/flag-de.png" },
@@ -171,8 +171,8 @@ const Header = () => {
                     ].map((lang) => (
                       <button
                         key={lang.code}
-                        className={`flex items-center w-full px-3 py-2 text-sm hover:bg-secondary transition-colors ${
-                          language === lang.code ? "bg-primary/10 font-medium" : ""
+                        className={`flex items-center w-full px-3 py-2 text-sm text-[#130080] hover:bg-[#130080]/8 transition-colors ${
+                          language === lang.code ? "bg-[#130080]/10 font-semibold" : ""
                         }`}
                         onClick={() => {
                           setLanguage(lang.code as "de" | "en" | "ru" | "uz")
@@ -201,7 +201,7 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden container py-4 bg-background">
+        <div className="md:hidden container py-4 bg-white/95 backdrop-blur-md border-t border-[#130080]/10">
           <nav className="flex flex-col space-y-4">
             <LangLink
               href="#kurse"
@@ -225,7 +225,7 @@ const Header = () => {
               {t("locations")}
             </LangLink>
             <Link
-              href={`/telc/${language}/register`}
+              href={`/telc/${language}/booking`}
               className="text-sm font-medium text-[#130080] transition-colors hover:text-[#130080]/80"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -239,7 +239,7 @@ const Header = () => {
               {t("contact")}
             </LangLink>
             <Button asChild onClick={() => setIsMenuOpen(false)}>
-              <Link href={`/telc/${language}/register`}>
+              <Link href={`/telc/${language}/booking`}>
                 {t("register_now")}
               </Link>
             </Button>

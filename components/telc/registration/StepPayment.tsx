@@ -32,6 +32,11 @@ const ui: Record<string, Record<string, string>> = {
     errFail: "Failed to submit payment. Please try again.",
     errPersonalId: "Please enter your Personal ID (ИНН)",
     errCheckId: "Please enter the Check ID",
+    sendViaTelegram: "I will send the payment receipt photo to the admin via Telegram",
+    click: "Click",
+    clickInstruction: "Click the button below to pay via Click",
+    payWithClick: "Pay with Click →",
+    clickComingSoon: "Soon this payment option also will be added",
   },
   de: {
     title: "Zahlung", amount: "Betrag", selectMethod: "Zahlungsmethode wählen",
@@ -49,6 +54,11 @@ const ui: Record<string, Record<string, string>> = {
     errFail: "Fehler beim Einreichen der Zahlung.",
     errPersonalId: "Bitte persönliche ID (ИНН) eingeben",
     errCheckId: "Bitte Check-ID eingeben",
+    sendViaTelegram: "Ich sende das Zahlungsbeleg-Foto über Telegram an den Administrator",
+    click: "Click",
+    clickInstruction: "Klicken Sie auf die Schaltfläche unten, um über Click zu bezahlen",
+    payWithClick: "Mit Click bezahlen →",
+    clickComingSoon: "Diese Zahlungsoption wird bald ebenfalls verfügbar sein",
   },
   ru: {
     title: "Оплата", amount: "Сумма", selectMethod: "Выберите способ оплаты",
@@ -66,6 +76,11 @@ const ui: Record<string, Record<string, string>> = {
     errFail: "Ошибка отправки платежа.",
     errPersonalId: "Введите персональный ID (ИНН)",
     errCheckId: "Введите ID чека",
+    sendViaTelegram: "Я отправлю фото чека об оплате администратору через Telegram",
+    click: "Click",
+    clickInstruction: "Нажмите кнопку ниже для оплаты через Click",
+    payWithClick: "Оплатить через Click →",
+    clickComingSoon: "Скоро этот способ оплаты также будет добавлен",
   },
   uz: {
     title: "To'lov", amount: "Summa", selectMethod: "To'lov usulini tanlang",
@@ -83,26 +98,34 @@ const ui: Record<string, Record<string, string>> = {
     errFail: "To'lovni yuborishda xato.",
     errPersonalId: "Shaxsiy ID (ИНН) ni kiriting",
     errCheckId: "Chek ID ni kiriting",
+    sendViaTelegram: "Telegram orqali administratorga to'lov chek suratini yuboraman",
+    click: "Click",
+    clickInstruction: "Click tizimi orqali to'lash uchun quyidagi tugmani bosing",
+    payWithClick: "Click orqali to'lash →",
+    clickComingSoon: "Tez orada bu to'lov usuli ham qo'shiladi",
   },
 }
 
 const PAYNET_LOGO = "/images/logos/PAYNETLOGO.jpg"
 const PAYME_LOGO  = "/images/logos/paymeLOGO.png"
+const CLICK_LOGO  = "/images/logos/clickLOGO.svg"
 const BANK_PDF    = "/pdf_docs/PDBankinfo.pdf"
 
 const METHODS = [
-  { id: "paynet", logo: PAYNET_LOGO, colorSelected: "border-blue-400 bg-blue-50",   colorBase: "border-slate-200 hover:border-blue-300" },
-  { id: "payme",  logo: PAYME_LOGO,  colorSelected: "border-purple-400 bg-purple-50", colorBase: "border-slate-200 hover:border-purple-300" },
-  { id: "other",  logo: null,        colorSelected: "border-green-400 bg-green-50",  colorBase: "border-slate-200 hover:border-green-300" },
+  { id: "paynet", logo: PAYNET_LOGO, logoSize: "w-36 h-[72px]", colorSelected: "border-blue-400 bg-blue-50",    colorBase: "border-slate-200 hover:border-blue-300" },
+  { id: "payme",  logo: PAYME_LOGO,  logoSize: "w-36 h-[72px]", colorSelected: "border-purple-400 bg-purple-50", colorBase: "border-slate-200 hover:border-purple-300" },
+  { id: "click",  logo: CLICK_LOGO,  logoSize: "w-24 h-12", colorSelected: "border-blue-400 bg-blue-50",    colorBase: "border-slate-200 hover:border-blue-300" },
+  { id: "other",  logo: null,        logoSize: "w-24 h-12", colorSelected: "border-green-400 bg-green-50",   colorBase: "border-slate-200 hover:border-green-300" },
 ]
 
 export default function StepPayment({ registrationId, amount, lang, onPaymentComplete, onPrevious }: Props) {
-  const l = ui[lang] ?? ui.en
+  const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null)
   const [personalId, setPersonalId] = useState("")
   const [checkId, setCheckId] = useState("")
   const [isVerifying, setIsVerifying] = useState(false)
   const [paymentVerified, setPaymentVerified] = useState(false)
+  const [sendViaTelegram, setSendViaTelegram] = useState(false)
 
   const paymeMerchantId = process.env.NEXT_PUBLIC_PAYME_MERCHANT_ID ?? ""
   const paymeAmountTiyin = String(Math.round(Number(amount) * 100))
@@ -111,12 +134,19 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
     ? "https://test.paycom.uz"
     : "https://checkout.paycom.uz"
 
-  const canVerify = !!selectedMethod && personalId.trim().length > 0 && checkId.trim().length > 0
+  const canVerify = !!selectedMethod && selectedMethod !== "click" && (sendViaTelegram || (personalId.trim().length > 0 && checkId.trim().length > 0))
+
+  const clickServiceId = process.env.NEXT_PUBLIC_CLICK_SERVICE_ID ?? ""
+  const clickMerchantId = process.env.NEXT_PUBLIC_CLICK_MERCHANT_ID ?? ""
+  const clickReturnUrl = typeof window !== "undefined" ? window.location.href : ""
+  const clickPayUrl = clickServiceId && clickMerchantId
+    ? `https://my.click.uz/services/pay?service_id=${clickServiceId}&merchant_id=${clickMerchantId}&amount=${amount}&transaction_param=${registrationId}&return_url=${encodeURIComponent(clickReturnUrl)}`
+    : ""
 
   const handleVerify = async () => {
     if (!selectedMethod) { toast.error(l.errMethod); return }
-    if (!personalId.trim()) { toast.error(l.errPersonalId); return }
-    if (!checkId.trim()) { toast.error(l.errCheckId); return }
+    if (!sendViaTelegram && !personalId.trim()) { toast.error(l.errPersonalId); return }
+    if (!sendViaTelegram && !checkId.trim()) { toast.error(l.errCheckId); return }
     setIsVerifying(true)
     try {
       const res = await fetch("/api/telc/payments", {
@@ -169,7 +199,7 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
         <h3 className="text-base font-semibold text-slate-900 mb-4">
           {l.selectMethod}<span className="text-red-500 ml-0.5">*</span>
         </h3>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {METHODS.map(m => (
             <button key={m.id} type="button"
               onClick={() => setSelectedMethod(m.id)}
@@ -177,21 +207,21 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
                 selectedMethod === m.id ? m.colorSelected : m.colorBase
               }`}>
               {/* Provider logo */}
-              <div className="w-20 h-10 flex items-center justify-center">
+              <div className={`${m.logoSize} flex items-center justify-center`}>
                 {m.logo ? (
-                  <img src={m.logo} alt={m.id} className="max-w-full max-h-full object-contain" />
+                  <img src={m.logo} alt={m.id} className="w-full h-full object-contain" />
                 ) : (
                   <span className="text-3xl">🏦</span>
                 )}
               </div>
               <span className="text-sm font-semibold text-slate-900">{l[m.id as keyof typeof l]}</span>
-              {/* QR thumbnail for Paynet and Payme */}
+              {/* QR thumbnail — Paynet and Payme only, not Click */}
               <div className="mt-1 w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center bg-slate-50">
-                {m.id !== "other" ? (
+                {m.id === "paynet" || m.id === "payme" ? (
                   <img src={QR_IMAGE} alt="QR Code" className="w-full h-full object-contain" />
-                ) : (
+                ) : m.id === "other" ? (
                   <span className="text-3xl">🏦</span>
-                )}
+                ) : null}
               </div>
               {selectedMethod === m.id && (
                 <span className="text-xs font-semibold text-primary flex items-center gap-1">
@@ -205,7 +235,12 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
 
       {/* Payment Instructions */}
       {selectedMethod && !paymentVerified && (
-        selectedMethod === "other" ? (
+        selectedMethod === "click" ? (
+          <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 p-5 flex items-center gap-4">
+            <img src={CLICK_LOGO} alt="Click" className="w-12 h-12 object-contain shrink-0" />
+            <p className="text-sm font-medium text-blue-900">{l.clickComingSoon}</p>
+          </div>
+        ) : selectedMethod === "other" ? (
           <div className="mb-6 rounded-xl border border-green-200 bg-green-50 overflow-hidden">
             <div className="px-5 py-3 border-b border-green-200">
               <h4 className="font-semibold text-green-900 text-center">{l.instructions}</h4>
@@ -239,9 +274,9 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
       {/* Post-payment confirmation fields */}
       {selectedMethod && !paymentVerified && (
         <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-5 space-y-4">
-          <div>
+          <div className={sendViaTelegram ? "opacity-40 pointer-events-none" : ""}>
             <label className="block text-sm font-semibold text-slate-700 mb-1">
-              {l.personalId}<span className="text-red-500 ml-0.5">*</span>
+              {l.personalId}{!sendViaTelegram && <span className="text-red-500 ml-0.5">*</span>}
             </label>
             <input
               type="text"
@@ -251,9 +286,9 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
               className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
             />
           </div>
-          <div>
+          <div className={sendViaTelegram ? "opacity-40 pointer-events-none" : ""}>
             <label className="block text-sm font-semibold text-slate-700 mb-1">
-              {l.checkId}<span className="text-red-500 ml-0.5">*</span>
+              {l.checkId}{!sendViaTelegram && <span className="text-red-500 ml-0.5">*</span>}
             </label>
             <input
               type="text"
@@ -263,6 +298,19 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
               className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
             />
           </div>
+
+          {/* Telegram alternative */}
+          <label className="flex items-start gap-3 cursor-pointer select-none pt-1 border-t border-slate-200">
+            <input
+              type="checkbox"
+              checked={sendViaTelegram}
+              onChange={(e) => setSendViaTelegram(e.target.checked)}
+              className="mt-0.5 w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary shrink-0"
+            />
+            <span className="text-sm text-slate-700 leading-snug">
+              {l.sendViaTelegram}
+            </span>
+          </label>
         </div>
       )}
 
@@ -277,21 +325,24 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
         </div>
       )}
 
-      <div className="flex gap-4">
-        <Button type="button" variant="outline" size="lg" className="flex-1"
-          disabled={isVerifying || paymentVerified} onClick={onPrevious}>
+      <div className="flex gap-3 pt-2">
+        <button type="button" onClick={onPrevious}
+          disabled={isVerifying || paymentVerified}
+          className="flex-1 rounded-xl border border-slate-200 bg-white py-3.5 text-sm font-medium text-slate-700 hover:border-primary/40 hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
           {l.previous}
-        </Button>
+        </button>
         {!paymentVerified ? (
-          <Button type="button" size="lg" className="flex-1"
-            disabled={!canVerify || isVerifying} onClick={handleVerify}>
-            {isVerifying && <Loader2 size={16} className="animate-spin mr-2" />}
+          <button type="button" onClick={handleVerify}
+            disabled={!canVerify || isVerifying}
+            className="flex-1 rounded-xl bg-primary py-3.5 text-sm font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40">
+            {isVerifying && <Loader2 size={15} className="animate-spin inline mr-2" />}
             {isVerifying ? l.verifying : l.verifyBtn}
-          </Button>
+          </button>
         ) : (
-          <Button type="button" size="lg" className="flex-1" onClick={onPaymentComplete}>
+          <button type="button" onClick={onPaymentComplete}
+            className="flex-1 rounded-xl bg-primary py-3.5 text-sm font-bold text-white transition-colors hover:bg-primary/90">
             {l.submit}
-          </Button>
+          </button>
         )}
       </div>
     </div>

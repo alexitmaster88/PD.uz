@@ -12,7 +12,7 @@ export const registrationsRouter = router({
         examId: z.number(),
         firstName: z.string().min(1),
         lastName: z.string().min(1),
-        phoneNumber: z.string().min(1),
+        phoneNumber: z.string().regex(/^\+998\d{9}$/, "Phone must be in format +998XXXXXXXXX"),
         email: z.string().email(),
         passportNumber: z.string().min(1),
       })
@@ -53,7 +53,7 @@ export const registrationsRouter = router({
   listAll: adminProcedure.query(() => db.getAllRegistrations()),
 
   updateStatus: adminProcedure
-    .input(z.object({ registrationId: z.number(), status: z.string() }))
+    .input(z.object({ registrationId: z.number(), status: z.enum(["pending", "verified", "paid", "completed", "cancelled", "denied"]) }))
     .mutation(({ input }) =>
       db.updateRegistration(input.registrationId, {
         status: input.status as Parameters<typeof db.updateRegistration>[1]["status"],

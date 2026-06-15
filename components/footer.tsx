@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, MessageSquare, Youtube } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
+import { CONTACT } from "@/lib/contact"
 
 const Footer = () => {
   const { t, getLanguagePath } = useLanguage()
@@ -94,8 +95,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">{t("contact")}</h3>
             <address className="not-italic text-sm text-muted-foreground space-y-2">
               <p>{t("tashkent_address")}</p>
-              <p>{t("phone")}: +998 77 178 06 66</p>
-              <p>{t("email")}: info@profi-deutsch.uz</p>
+              <p>{t("phone")}: {CONTACT.phone1}</p>
+              <p>{t("email")}: {CONTACT.email}</p>
             </address>
           </div>
         </div>

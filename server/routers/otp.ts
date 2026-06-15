@@ -20,8 +20,7 @@ export const otpRouter = router({
   verify: publicProcedure
     .input(z.object({ email: z.string().email(), otp: z.string() }))
     .mutation(async ({ input }) => {
-      // Demo OTP for testing
-      if (input.otp === "123456") {
+      if (process.env.NODE_ENV === "development" && input.otp === "123456") {
         return { success: true }
       }
 

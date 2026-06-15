@@ -14,20 +14,30 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { examId, firstName, lastName, phoneNumber, email, passportNumber } = body
+    const {
+      examId, firstName, lastName, phoneNumber, email, passportNumber,
+      dateOfBirth, gender, nationality, countryOfBirth, cityOfBirth,
+      currentAddress, documentType, examType,
+    } = body
 
     if (!examId || !firstName || !lastName || !phoneNumber || !email || !passportNumber) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Check exam capacity
+    // Check exam capacity using live count of approved registrations
     const { data: exam } = await supabaseAdmin
       .from('exams')
-      .select('capacity, registered_count')
+      .select('capacity')
       .eq('id', examId)
       .maybeSingle()
 
-    if (exam && exam.registered_count >= exam.capacity) {
+    const { count: approvedCount } = await supabaseAdmin
+      .from('registrations')
+      .select('*', { count: 'exact', head: true })
+      .eq('exam_id', examId)
+      .in('status', ['paid', 'completed'])
+
+    if (exam && (approvedCount ?? 0) >= exam.capacity) {
       return NextResponse.json(
         { error: 'This exam is fully booked. Please choose a different date.' },
         { status: 409 }
@@ -58,6 +68,14 @@ export async function POST(req: Request) {
         phone_number: phoneNumber,
         email,
         passport_number: passportNumber,
+        date_of_birth: dateOfBirth ?? null,
+        gender: gender ?? null,
+        nationality: nationality ?? null,
+        country_of_birth: countryOfBirth ?? null,
+        city_of_birth: cityOfBirth ?? null,
+        current_address: currentAddress ?? null,
+        document_type: documentType ?? 'passport',
+        exam_type: examType ?? null,
         status: 'pending',
         email_verified: false,
         payment_verified: false,
@@ -66,8 +84,6 @@ export async function POST(req: Request) {
       .single()
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-
-    try { await supabaseAdmin.rpc('increment_registered_count', { exam_id_param: examId }) } catch {}
 
     return NextResponse.json(data, { status: 201 })
   } catch (err: any) {

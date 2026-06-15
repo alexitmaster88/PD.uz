@@ -1,9 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 import Image from "next/image";
 
@@ -18,80 +16,18 @@ interface Partner {
 export default function PartnersSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const scrollingRef = useRef<boolean>(false);
   const { t } = useLanguage();
 
   const partners: Partner[] = [
-    {
-      id: "goethe-institut",
-      name: "TELC gGmbH",
-      logo: "/images/logos/telc.svg",
-      website: "https://www.telc.net/en/",
-      descriptionKey: "partner_telc_desc",
-    },
-    {
-      id: "daad",
-      name: "DUWK Büro",
-      logo: "/images/logos/duwk.svg",
-      website: "https://duwk.de/en/main-page/",
-      descriptionKey: "partner_duwk_desc",
-    },
-    {
-      id: "bmz",
-      name: "SSP",
-      logo: "/images/logos/ssp.svg",
-      website: "https://chamber.uz/oz",
-      descriptionKey: "partner_ssp_desc",
-    },
-    {
-      id: "giz",
-      name: "Toshkent viloyat hokimligi",
-      logo: "/images/logos/tashvil.svg",
-      website: "https://toshkentviloyati.uz/ru",
-      descriptionKey: "partner_tavi_desc",
-    },
-    {
-      id: "siemens",
-      name: "Xalq Banki",
-      logo: "/images/logos/xb.svg",
-      website: "https://xb.uz/",
-      descriptionKey: "partner_xb_desc",
-    },
-    {
-      id: "volkswagen",
-      name: "Yoshlar ishlari agentligi",
-      logo: "/images/logos/yosh.svg",
-      website: "https://gov.uz/oz/yoshlar",
-      descriptionKey: "partner_yosh_desc",
-    },
-    {
-      id: "bosch",
-      name: "Oliy taʼlim, fan va innovatsiyalar vаzirligi",
-      logo: "/images/logos/edu.svg",
-      website: "https://gov.uz/oz/edu",
-      descriptionKey: "partner_edu_desc",
-    },
-    {
-      id: "sap",
-      name: "Maktabgacha va maktab ta’limi vazirligi",
-      logo: "/images/logos/uzedu.svg",
-      website: "https://gov.uz/oz/uzedu",
-      descriptionKey: "partner_uzedu_desc",
-    },
+    { id: "telc", name: "TELC gGmbH", logo: "/images/logos/telc.svg", website: "https://www.telc.net/en/", descriptionKey: "partner_telc_desc" },
+    { id: "duwk", name: "DUWK Büro", logo: "/images/logos/duwk.svg", website: "https://duwk.de/en/main-page/", descriptionKey: "partner_duwk_desc" },
+    { id: "ssp", name: "SSP", logo: "/images/logos/ssp.svg", website: "https://chamber.uz/oz", descriptionKey: "partner_ssp_desc" },
+    { id: "tashvil", name: "Toshkent viloyat hokimligi", logo: "/images/logos/tashvil.svg", website: "https://toshkentviloyati.uz/ru", descriptionKey: "partner_tavi_desc" },
+    { id: "xb", name: "Xalq Banki", logo: "/images/logos/xb.svg", website: "https://xb.uz/", descriptionKey: "partner_xb_desc" },
+    { id: "yosh", name: "Yoshlar ishlari agentligi", logo: "/images/logos/yosh.svg", website: "https://gov.uz/oz/yoshlar", descriptionKey: "partner_yosh_desc" },
+    { id: "edu", name: "Oliy taʼlim, fan va innovatsiyalar vazirligi", logo: "/images/logos/edu.svg", website: "https://gov.uz/oz/edu", descriptionKey: "partner_edu_desc" },
+    { id: "uzedu", name: "Maktabgacha va maktab taʼlimi vazirligi", logo: "/images/logos/uzedu.svg", website: "https://gov.uz/oz/uzedu", descriptionKey: "partner_uzedu_desc" },
   ];
-
-  const handleScroll = useCallback((direction: 'left' | 'right'): void => {
-    if (scrollContainerRef.current && !scrollingRef.current) {
-      const container = scrollContainerRef.current;
-      const cardWidth = 280;
-      const gapWidth = 24;
-      const scrollAmount = cardWidth + gapWidth;
-      container.scrollBy({ 
-        left: direction === 'left' ? -scrollAmount : scrollAmount, 
-        behavior: "smooth" 
-      });
-    }
-  }, []);
 
   const handlePartnerClick = (website: string): void => {
     window.open(website, "_blank", "noopener,noreferrer");
@@ -104,37 +40,22 @@ export default function PartnersSection() {
 
     let rafId: number | null = null;
     let lastTime = 0;
-    const speed = 80; // px per second
+    const speed = 80;
     let paused = false;
     let offset = 0;
-    let groupWidth = 0; // width of one partners group
+    let groupWidth = 0;
 
     const updateWidths = () => {
       const firstGroup = inner.querySelector('.partners-group') as HTMLElement | null;
-      if (!firstGroup) {
-        groupWidth = 0;
-        return;
-      }
-
+      if (!firstGroup) { groupWidth = 0; return; }
       const items = Array.from(firstGroup.children) as HTMLElement[];
       const totalCardsWidth = items.reduce((sum, el) => sum + el.offsetWidth, 0);
       const containerWidth = container.clientWidth || 0;
-
-      const minGap = 24; // fallback gap
-      let gap = minGap;
-
-      // If cards fit within container, distribute remaining space equally between them
-      if (totalCardsWidth + minGap * (items.length - 1) < containerWidth && items.length > 1) {
+      let gap = 24;
+      if (totalCardsWidth + gap * (items.length - 1) < containerWidth && items.length > 1) {
         gap = (containerWidth - totalCardsWidth) / (items.length - 1);
       }
-
-      // Apply computed gap to both groups (inline style overrides tailwind class)
-      const groups = inner.querySelectorAll('.partners-group');
-      groups.forEach((g) => {
-        (g as HTMLElement).style.gap = `${gap}px`;
-      });
-
-      // Recompute group width after applying gap
+      inner.querySelectorAll('.partners-group').forEach(g => { (g as HTMLElement).style.gap = `${gap}px`; });
       groupWidth = firstGroup.offsetWidth;
       inner.style.transform = `translateX(0px)`;
     };
@@ -144,16 +65,11 @@ export default function PartnersSection() {
       if (!lastTime) lastTime = time;
       const dt = time - lastTime;
       lastTime = time;
-
       if (!paused && groupWidth > 0) {
         offset += (speed * dt) / 1000;
-        if (offset >= groupWidth) {
-          // loop seamlessly
-          offset -= groupWidth;
-        }
+        if (offset >= groupWidth) offset -= groupWidth;
         inner.style.transform = `translateX(${-offset}px)`;
       }
-
       rafId = requestAnimationFrame(animate);
     };
 
@@ -167,12 +83,9 @@ export default function PartnersSection() {
     container.addEventListener('touchstart', pause, { passive: true } as AddEventListenerOptions);
     window.addEventListener('touchend', resume);
 
-    const ro = new ResizeObserver(() => {
-      updateWidths();
-    });
+    const ro = new ResizeObserver(() => { updateWidths(); });
     ro.observe(inner);
     ro.observe(container);
-
     updateWidths();
     rafId = requestAnimationFrame(animate);
 
@@ -188,111 +101,63 @@ export default function PartnersSection() {
     };
   }, []);
 
-  return (
-    <section id="partners" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0">
+  const PartnerCard = ({ partner }: { partner: Partner }) => (
+    <div
+      className="min-w-[260px] w-[260px] flex-shrink-0 flex flex-col h-[340px] rounded-2xl border border-white/30 bg-white/8 backdrop-blur-md shadow-md hover:shadow-lg hover:bg-white/20 transition-all cursor-pointer overflow-hidden"
+      onClick={() => handlePartnerClick(partner.website)}
+    >
+      {/* Logo area */}
+      <div className="flex items-center justify-center h-[130px] bg-white/60 border-b border-white/40 p-5">
         <Image
-          src="/images/partners-bg.png"
-          alt="Business partnership background"
-          fill
-          className="object-cover opacity-85 filter blur-[1.5px]"
-          priority
+          src={partner.logo}
+          alt={`${partner.name} logo`}
+          width={130}
+          height={80}
+          className="object-contain max-h-full max-w-full w-auto h-auto"
         />
-        <div className="absolute inset-0 bg-[#aef2ea]/50" />
       </div>
-      <div className="container relative z-10">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
-            {t("our_partners")}
-          </h2>
+      {/* Info */}
+      <div className="flex flex-col flex-1 p-5 text-center">
+        <h3 className="font-bold text-[#130080] text-sm mb-1.5 leading-snug">{partner.name}</h3>
+        <p className="text-xs text-[#130080]/60 leading-relaxed flex-1 overflow-hidden">{t(partner.descriptionKey)}</p>
+        <button
+          className="mt-4 flex items-center justify-center gap-1.5 rounded-xl border border-[#130080]/25 bg-white/50 backdrop-blur-sm px-4 py-2 text-xs font-semibold text-[#130080] hover:bg-[#130080] hover:text-white transition-colors"
+          onClick={e => { e.stopPropagation(); handlePartnerClick(partner.website); }}
+        >
+          <ExternalLink className="h-3.5 w-3.5" />
+          {t("visit_website")}
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <section id="partners" className="relative overflow-hidden py-16 md:py-24">
+      <div className="absolute inset-0 -z-10">
+        <Image src="/images/partners-bg.png" alt="" fill className="object-cover opacity-30" priority />
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm" />
+      </div>
+
+      <div className="container relative">
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-[#130080] md:text-4xl">{t("our_partners")}</h2>
         </div>
 
-        <div className="relative group">
-          <div ref={scrollContainerRef} className="overflow-hidden pb-6">
+        <div className="relative">
+          <div ref={scrollContainerRef} className="overflow-hidden pb-4">
             <div ref={innerRef} className="flex gap-6 will-change-transform">
-              <div className="partners-group flex">
-                {partners.map((partner, index) => (
-                  <Card
-                    key={`${partner.id}-a-${index}`}
-                    className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
-                  >
-                    <CardContent className="p-6 text-center flex flex-col justify-between h-full">
-                      <div>
-                        <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={partner.logo}
-                            alt={`${partner.name} logo`}
-                            width={120}
-                            height={80}
-                            className="object-contain max-h-full max-w-full w-auto h-auto"
-                          />
-                        </div>
-                        <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">{partner.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-4 h-[60px] overflow-hidden">{t(partner.descriptionKey)}</p>
-                      </div>
-                      <Button variant="outline" size="sm" className="w-full mt-auto bg-transparent" onClick={() => handlePartnerClick(partner.website)}>
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        {t("visit_website")}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="partners-group flex gap-6">
+                {partners.map((p, i) => <PartnerCard key={`${p.id}-a-${i}`} partner={p} />)}
               </div>
-
-              <div className="partners-group flex" aria-hidden>
-                {partners.map((partner, index) => (
-                  <Card
-                    key={`${partner.id}-b-${index}`}
-                    className="min-w-[280px] w-[280px] flex-shrink-0 overflow-hidden shadow-md hover:shadow-lg transition-shadow h-[380px] flex flex-col"
-                  >
-                    <CardContent className="p-6 text-center flex flex-col justify-between h-full">
-                      <div>
-                        <div className="h-[120px] w-full mb-4 bg-white rounded-lg p-4 flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={partner.logo}
-                            alt={`${partner.name} logo`}
-                            width={120}
-                            height={80}
-                            className="object-contain max-h-full max-w-full w-auto h-auto"
-                          />
-                        </div>
-                        <h3 className="font-semibold text-lg mb-2 h-[28px] flex items-center justify-center">{partner.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-4 h-[60px] overflow-hidden">{t(partner.descriptionKey)}</p>
-                      </div>
-                      <Button variant="outline" size="sm" className="w-full mt-auto bg-transparent" onClick={() => handlePartnerClick(partner.website)}>
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        {t("visit_website")}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="partners-group flex gap-6" aria-hidden>
+                {partners.map((p, i) => <PartnerCard key={`${p.id}-b-${i}`} partner={p} />)}
               </div>
             </div>
           </div>
-
-          <Button
-            size="icon"
-            variant="secondary"
-            className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-            onClick={() => handleScroll('left')}
-            aria-label={t("previous_partners")}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-
-          <Button
-            size="icon"
-            variant="secondary"
-            className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-            onClick={() => handleScroll('right')}
-            aria-label={t("next_partners")}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
         </div>
 
-        <div className="text-center mt-8">
-          <p className="text-sm text-muted-foreground">{t("partnership_interest")}</p>
+        <div className="mt-8 text-center">
+          <p className="text-sm text-[#130080]/60">{t("partnership_interest")}</p>
         </div>
       </div>
     </section>

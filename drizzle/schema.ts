@@ -9,6 +9,7 @@ import {
   unique,
   serial,
   uuid,
+  index,
 } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 
@@ -18,6 +19,7 @@ export const registrationStatusEnum = pgEnum("registration_status", [
   "paid",
   "completed",
   "cancelled",
+  "denied",
 ])
 
 export const paymentStatusEnum = pgEnum("payment_status", [
@@ -45,21 +47,34 @@ export const exams = pgTable("exams", {
   endTime: text("end_time").notNull(),
   capacity: integer("capacity").notNull().default(30),
   registeredCount: integer("registered_count").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-})
+}, (table) => [
+  index("idx_exams_level_id").on(table.levelId),
+])
 
 export const registrations = pgTable(
   "registrations",
   {
     id: serial("id").primaryKey(),
-    userId: uuid("user_id"), // Supabase auth.users UUID (nullable for anonymous)
+    userId: uuid("user_id"),
     examId: integer("exam_id").notNull(),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
     phoneNumber: text("phone_number").notNull(),
     email: text("email").notNull(),
     passportNumber: text("passport_number").notNull(),
+    // Extended personal info
+    dateOfBirth: text("date_of_birth"),
+    gender: text("gender"),           // 'male' | 'female'
+    nationality: text("nationality"),
+    countryOfBirth: text("country_of_birth"),
+    cityOfBirth: text("city_of_birth"),
+    currentAddress: text("current_address"),
+    documentType: text("document_type").default("passport"), // 'id_card' | 'passport'
+    // Exam registration details
+    examType: text("exam_type"),      // 'oral_written' | 'oral' | 'written'
     status: registrationStatusEnum("status").default("pending").notNull(),
     emailVerified: boolean("email_verified").default(false).notNull(),
     paymentVerified: boolean("payment_verified").default(false).notNull(),
@@ -67,7 +82,10 @@ export const registrations = pgTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
-  (table) => [unique("unique_passport_exam").on(table.passportNumber, table.examId)]
+  (table) => [
+    unique("unique_passport_exam").on(table.passportNumber, table.examId),
+    index("idx_registrations_exam_id").on(table.examId),
+  ]
 )
 
 export const payments = pgTable("payments", {
@@ -94,7 +112,9 @@ export const payments = pgTable("payments", {
   paymeReason: integer("payme_reason"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-})
+}, (table) => [
+  index("idx_payments_registration_id").on(table.registrationId),
+])
 
 export const otpVerifications = pgTable("otp_verifications", {
   id: serial("id").primaryKey(),

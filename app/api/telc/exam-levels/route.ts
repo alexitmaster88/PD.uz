@@ -13,6 +13,22 @@ export async function GET() {
   })
 }
 
+export async function POST(req: Request) {
+  const { level, price } = await req.json()
+  if (!level || price === undefined) {
+    return NextResponse.json({ error: 'level and price required' }, { status: 400 })
+  }
+
+  const { data, error } = await supabaseAdmin
+    .from('exam_levels')
+    .insert({ level: level.trim(), price: parseFloat(price) })
+    .select()
+    .single()
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  return NextResponse.json(data, { status: 201 })
+}
+
 export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')

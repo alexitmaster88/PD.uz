@@ -13,6 +13,37 @@ export async function POST(req: Request) {
   const otp = generateOtp()
   const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString() // 10 min
 
+  // Block denied emails from registering
+  const { data: deniedReg } = await supabaseAdmin
+    .from('registrations')
+    .select('id')
+    .eq('email', email)
+    .eq('status', 'denied')
+    .limit(1)
+    .maybeSingle()
+
+  if (deniedReg) {
+    return NextResponse.json(
+      { error: 'This email has been blocked. Please contact us or register with a different email.' },
+      { status: 403 }
+    )
+  }
+
+  // Rate limit: one OTP per 60 seconds
+  const oneMinuteAgo = new Date(Date.now() - 60 * 1000).toISOString()
+  const { data: recentOtp } = await supabaseAdmin
+    .from('otp_verifications')
+    .select('created_at')
+    .eq('email', email)
+    .eq('verified', false)
+    .gte('created_at', oneMinuteAgo)
+    .limit(1)
+    .maybeSingle()
+
+  if (recentOtp) {
+    return NextResponse.json({ error: 'Please wait 60 seconds before requesting another OTP' }, { status: 429 })
+  }
+
   // Delete any previous unverified OTPs for this email
   await supabaseAdmin
     .from('otp_verifications')

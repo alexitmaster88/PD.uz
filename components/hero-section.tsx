@@ -118,11 +118,11 @@ const HeroSection = () => {
             transition={{ delay: 0.7, duration: 0.5 }}
             className="flex flex-wrap justify-center gap-4 pt-4"
           >
-            <Button size="lg" asChild>
+            <Button size="lg" asChild className="bg-white/30 backdrop-blur-md border border-white/60 text-[#130080] font-bold shadow-md hover:bg-white/50 hover:border-white/90 hover:shadow-lg hover:scale-[1.03] transition-all duration-200">
               <LangLink href="#kurse">{t("explore_courses")}</LangLink>
             </Button>
-            <Button size="lg" variant="ghost" asChild className="h-auto min-h-0 p-0">
-              <LangLink href="/telc/register" className="inline-flex items-center justify-center p-0">
+            <Button size="lg" variant="ghost" asChild className="h-auto min-h-0 p-0 hover:bg-transparent focus:bg-transparent active:bg-transparent transition-all duration-200 hover:scale-[1.03] hover:shadow-lg hover:opacity-90 rounded-xl overflow-hidden">
+              <LangLink href="/telc/booking" className="inline-flex items-center justify-center p-0">
                 <Image
                   src="/images/TELCnew06.png"
                   alt="TELC Prüfungszentrum"
@@ -133,7 +133,7 @@ const HeroSection = () => {
                 />
               </LangLink>
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" asChild className="bg-white/30 backdrop-blur-md border border-white/60 text-[#130080] font-bold shadow-md hover:bg-white/50 hover:border-white/90 hover:shadow-lg hover:scale-[1.03] transition-all duration-200">
               <LangLink href="#kontakt">{t("contact_us")}</LangLink>
             </Button>
           </motion.div>

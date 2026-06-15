@@ -8,7 +8,7 @@ export async function GET(req: Request) {
 
   let query = supabaseAdmin
     .from('exams')
-    .select('id, region, address, exam_date, start_time, end_time, capacity, registered_count, level_id, exam_levels(level, price)')
+    .select('id, region, address, exam_date, start_time, end_time, capacity, registered_count, is_active, level_id, exam_levels(level, price)')
     .order('exam_date')
 
   if (region) query = query.eq('region', region)
@@ -17,13 +17,35 @@ export async function GET(req: Request) {
   if (searchParams.get('future') === 'true') {
     query = query.gte('exam_date', new Date().toISOString())
   }
+  // Public requests only see active exams; admin passes ?admin=true to see all
+  if (searchParams.get('admin') !== 'true') {
+    query = query.eq('is_active', true)
+  }
 
   const { data, error } = await query
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  return NextResponse.json(data, {
-    headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=120' },
-  })
+  const exams = data ?? []
+
+  // Compute live registered_count from approved registrations — no stale counter
+  if (exams.length > 0) {
+    const examIds = exams.map((e: any) => e.id)
+    const { data: regs } = await supabaseAdmin
+      .from('registrations')
+      .select('exam_id')
+      .in('exam_id', examIds)
+      .in('status', ['paid', 'completed'])
+
+    const countMap: Record<number, number> = {}
+    regs?.forEach((r: any) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })
+
+    return NextResponse.json(
+      exams.map((e: any) => ({ ...e, registered_count: countMap[e.id] ?? 0 })),
+      { headers: { 'Cache-Control': 'no-store' } }
+    )
+  }
+
+  return NextResponse.json(exams, { headers: { 'Cache-Control': 'no-store' } })
 }
 
 export async function POST(req: Request) {
@@ -32,6 +54,19 @@ export async function POST(req: Request) {
 
   if (!levelId || !region || !examDate || !startTime || !endTime) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+  }
+
+  // Verify levelId exists before insert (prevents FK constraint error)
+  const { data: levelExists } = await supabaseAdmin
+    .from('exam_levels')
+    .select('id')
+    .eq('id', levelId)
+    .maybeSingle()
+
+  if (!levelExists) {
+    return NextResponse.json({
+      error: `Exam level id=${levelId} not found. Go to the Pricing tab and create exam levels first, then refresh this page.`,
+    }, { status: 400 })
   }
 
   const { data, error } = await supabaseAdmin
@@ -57,14 +92,16 @@ export async function PATCH(req: Request) {
   const { id, levelId, region, address, examDate, startTime, endTime, capacity } = body
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
 
+  const { isActive } = body
   const updates: Record<string, any> = { updated_at: new Date().toISOString() }
-  if (levelId)   updates.level_id   = levelId
-  if (region)    updates.region     = region
-  if (address !== undefined) updates.address = address || null
-  if (examDate)  updates.exam_date  = examDate
-  if (startTime) updates.start_time = startTime
-  if (endTime)   updates.end_time   = endTime
-  if (capacity)  updates.capacity   = parseInt(capacity)
+  if (levelId)              updates.level_id   = levelId
+  if (region)               updates.region     = region
+  if (address !== undefined) updates.address   = address || null
+  if (examDate)             updates.exam_date  = examDate
+  if (startTime)            updates.start_time = startTime
+  if (endTime)              updates.end_time   = endTime
+  if (capacity)             updates.capacity   = parseInt(capacity)
+  if (isActive !== undefined) updates.is_active = isActive
 
   const { data, error } = await supabaseAdmin
     .from('exams').update(updates).eq('id', parseInt(id)).select().single()

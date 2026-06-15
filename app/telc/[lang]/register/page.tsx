@@ -1,6 +1,7 @@
 "use client"
 
 import { use, useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { ChevronLeft, Check } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -21,10 +22,10 @@ const LANGUAGES = [
 ]
 
 const stepLabels: Record<string, string[]> = {
-  en: ["Personal Info", "Exam Selection", "Payment", "Done"],
-  de: ["Persönliche Daten", "Prüfung", "Zahlung", "Fertig"],
-  ru: ["Личные данные", "Экзамен", "Оплата", "Готово"],
-  uz: ["Ma'lumotlar", "Imtihon", "To'lov", "Tayyor"],
+  en: ["Exam Selection", "Personal Info", "Payment", "Done"],
+  de: ["Prüfung wählen", "Persönliche Daten", "Zahlung", "Fertig"],
+  ru: ["Выбор экзамена", "Личные данные", "Оплата", "Готово"],
+  uz: ["Imtihon tanlash", "Ma'lumotlar", "To'lov", "Tayyor"],
 }
 
 const headerLabels: Record<string, Record<string, string>> = {
@@ -41,11 +42,16 @@ interface FormData {
   levelName: string; examId: number | null; selectedDate: string
   selectedTime: string; examAmount: string; paymentMethod: string
   registeredAt: string; examAddress: string
+  // Extended personal info
+  dateOfBirth: string; gender: string; nationality: string
+  countryOfBirth: string; cityOfBirth: string; currentAddress: string
+  documentType: string; examType: string
 }
 
 export default function RegisterPage({ params }: PageProps) {
   const { lang } = use(params)
   const { language } = useLanguage()
+  const router = useRouter()
   const initialLang = (["de","en","ru","uz"].includes(lang) ? lang : language) as string
 
   const [activeLang, setActiveLang] = useState(initialLang)
@@ -69,6 +75,8 @@ export default function RegisterPage({ params }: PageProps) {
     passportNumber: "", agreeTerms: false, emailVerified: false,
     region: "", levelId: "", levelName: "", examId: null,
     selectedDate: "", selectedTime: "", examAmount: "", paymentMethod: "", registeredAt: "", examAddress: "",
+    dateOfBirth: "", gender: "", nationality: "", countryOfBirth: "",
+    cityOfBirth: "", currentAddress: "", documentType: "passport", examType: "",
   })
 
   const handleDataChange = (data: Partial<FormData>) =>
@@ -165,16 +173,16 @@ export default function RegisterPage({ params }: PageProps) {
       {/* Form Content */}
       <div className="container mx-auto max-w-2xl px-4 py-10">
         {step === 1 && (
-          <StepPersonalInfo data={formData} lang={activeLang}
-            onDataChange={handleDataChange} onNext={() => setStep(2)} />
-        )}
-        {step === 2 && (
           <StepExamSelection data={formData} lang={activeLang}
-            existingRegistrationId={registrationId}
             preloadedExams={preloadedExams}
             preloadedLevels={preloadedLevels}
             onDataChange={handleDataChange}
-            onNext={() => setStep(3)}
+            onNext={() => setStep(2)}
+            onPrevious={() => router.push(`/telc/${activeLang}`)} />
+        )}
+        {step === 2 && (
+          <StepPersonalInfo data={formData} lang={activeLang}
+            onDataChange={handleDataChange}
             onPrevious={() => setStep(1)}
             onRegistrationComplete={(id) => { setRegistrationId(id); setStep(3) }} />
         )}

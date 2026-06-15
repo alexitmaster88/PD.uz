@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Plus, Trash2, Edit2, Save, X, Loader2 } from "lucide-react"
+import React, { useState, useEffect } from "react"
+import { Plus, Trash2, Edit2, Save, X, Loader2, Power } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
@@ -28,15 +28,21 @@ export default function AdminExams({ lang }: Props) {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editForm, setEditForm] = useState<ExamForm>(emptyForm)
   const [saving, setSaving] = useState(false)
+  const [togglingId, setTogglingId] = useState<number | null>(null)
 
   const load = async () => {
     setLoading(true)
     const [e, l] = await Promise.all([
-      fetch("/api/telc/exams").then(r => r.json()).catch(() => []),
+      fetch("/api/telc/exams?admin=true", { cache: "no-store" }).then(r => r.json()).catch(() => []),
       fetch("/api/telc/exam-levels").then(r => r.json()).catch(() => []),
     ])
     setExams(Array.isArray(e) ? e : [])
-    setLevels(Array.isArray(l) ? l : [])
+    const lvls: any[] = Array.isArray(l) ? l : []
+    setLevels(lvls)
+    // Sync default levelId to the first real level from DB
+    if (lvls.length > 0 && lvls[0]) {
+      setForm(f => ({ ...f, levelId: String(lvls[0].id) }))
+    }
     setLoading(false)
   }
 
@@ -72,12 +78,15 @@ export default function AdminExams({ lang }: Props) {
           capacity: parseInt(editForm.capacity),
         }),
       })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        throw new Error((errData as any).error || `Server error: ${res.status}`)
+      }
       toast.success(t("exam_updated"))
       setEditingId(null)
       load()
-    } catch {
-      toast.error(t("exam_update_failed"))
+    } catch (err: any) {
+      toast.error(err.message || t("exam_update_failed"))
     } finally {
       setSaving(false)
     }
@@ -88,6 +97,24 @@ export default function AdminExams({ lang }: Props) {
     const res = await fetch(`/api/telc/exams?id=${id}`, { method: "DELETE" })
     if (res.ok) { toast.success(t("exam_deleted")); load() }
     else toast.error(t("exam_delete_failed"))
+  }
+
+  const handleToggle = async (id: number, currentActive: boolean) => {
+    setTogglingId(id)
+    try {
+      const res = await fetch("/api/telc/exams", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, isActive: !currentActive }),
+      })
+      if (!res.ok) throw new Error()
+      toast.success(currentActive ? t("exam_deactivated") : t("exam_activated"))
+      load()
+    } catch {
+      toast.error(t("exam_update_failed"))
+    } finally {
+      setTogglingId(null)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,13 +135,16 @@ export default function AdminExams({ lang }: Props) {
           capacity: parseInt(form.capacity),
         }),
       })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        throw new Error((errData as any).error || `Server error: ${res.status}`)
+      }
       toast.success(t("exam_created"))
       setShowForm(false)
-      setForm(emptyForm)
+      setForm(f => ({ ...f, examDate: "", address: "" }))
       load()
-    } catch {
-      toast.error(t("exam_create_failed"))
+    } catch (err: any) {
+      toast.error(err.message || t("exam_create_failed"))
     } finally {
       setSubmitting(false)
     }
@@ -132,6 +162,11 @@ export default function AdminExams({ lang }: Props) {
       {showForm && (
         <div className="rounded-xl border border-slate-200 bg-white p-6">
           <h3 className="text-base font-semibold text-slate-900 mb-4">{t("create_exam")}</h3>
+          {levels.length === 0 ? (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              ⚠️ No exam levels found. Go to the <strong>Pricing</strong> tab first and create at least one exam level, then come back here.
+            </div>
+          ) : (
           <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className={labelCls}>{t("label_level")}</label>
@@ -172,6 +207,7 @@ export default function AdminExams({ lang }: Props) {
               <Button type="button" variant="outline" className="flex-1" onClick={() => setShowForm(false)}>{t("btn_cancel")}</Button>
             </div>
           </form>
+          )}
         </div>
       )}
 
@@ -184,7 +220,7 @@ export default function AdminExams({ lang }: Props) {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>{[t("label_level"), t("label_region"), t("col_date"), t("col_time"), t("col_capacity"), t("col_actions")].map(h => <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-700">{h}</th>)}</tr>
+                <tr>{[t("label_level"), t("label_region"), t("col_date"), t("col_time"), t("col_capacity"), t("col_active"), t("col_actions")].map(h => <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-700">{h}</th>)}</tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {exams.map((ex: any) => {
@@ -192,9 +228,10 @@ export default function AdminExams({ lang }: Props) {
                   const isFull = ex.registered_count >= ex.capacity
                   const barColor = isFull ? "bg-red-500" : pct >= 75 ? "bg-amber-400" : "bg-green-500"
                   const isEditing = editingId === ex.id
+                  const isActive = ex.is_active !== false
                   return (
-                    <>
-                      <tr key={ex.id} className={`hover:bg-slate-50 ${isEditing ? "bg-amber-50" : ""}`}>
+                    <React.Fragment key={ex.id}>
+                      <tr className={`hover:bg-slate-50 ${isEditing ? "bg-amber-50" : ""} ${!isActive ? "opacity-50" : ""}`}>
                         <td className="px-4 py-3 font-medium">{ex.exam_levels?.level ?? `Level ${ex.level_id}`}</td>
                         <td className="px-4 py-3 text-slate-600 capitalize">{REGION_LABELS[ex.region] ?? ex.region}</td>
                         <td className="px-4 py-3 text-slate-600">{new Date(ex.exam_date).toLocaleDateString()}</td>
@@ -207,6 +244,26 @@ export default function AdminExams({ lang }: Props) {
                             <span className="text-xs text-slate-600 whitespace-nowrap">{ex.registered_count}/{ex.capacity}</span>
                             {isFull && <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">{t("full")}</span>}
                           </div>
+                        </td>
+                        {/* Active toggle */}
+                        <td className="px-4 py-3">
+                          <button
+                            onClick={() => handleToggle(ex.id, isActive)}
+                            disabled={togglingId === ex.id}
+                            title={isActive ? t("exam_deactivate") : t("exam_activate")}
+                            className="flex items-center gap-1.5 group"
+                          >
+                            {togglingId === ex.id ? (
+                              <Loader2 size={16} className="animate-spin text-slate-400" />
+                            ) : (
+                              <span className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors ${isActive ? "bg-green-500" : "bg-slate-300"}`}>
+                                <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform ${isActive ? "translate-x-4" : "translate-x-0.5"}`} />
+                              </span>
+                            )}
+                            <span className={`text-xs font-medium ${isActive ? "text-green-700" : "text-slate-400"}`}>
+                              {isActive ? t("exam_active") : t("exam_inactive")}
+                            </span>
+                          </button>
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
@@ -224,7 +281,7 @@ export default function AdminExams({ lang }: Props) {
                       </tr>
                       {isEditing && (
                         <tr key={`edit-${ex.id}`}>
-                          <td colSpan={6} className="px-4 py-4 bg-amber-50 border-t border-amber-100">
+                          <td colSpan={7} className="px-4 py-4 bg-amber-50 border-t border-amber-100">
                             <p className="text-xs font-semibold text-amber-800 mb-3 uppercase tracking-wide">{t("edit_exam")}</p>
                             <div className="grid sm:grid-cols-3 gap-3">
                               <div>
@@ -279,7 +336,7 @@ export default function AdminExams({ lang }: Props) {
                           </td>
                         </tr>
                       )}
-                    </>
+                    </React.Fragment>
                   )
                 })}
               </tbody>

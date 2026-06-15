@@ -4,8 +4,8 @@ const de = {
   hero_tagline: "Profi Deutsch – die richtige Wahl, das exakte Ergebnis.",
   discover:
     "Lernen Sie Deutsch strukturiert und effizient nach der modernen TELC-Methode und sichern Sie sich die Chance auf ein anerkanntes internationales TELC-Zertifikat. Darüber hinaus bieten wir Ihnen gemeinsam mit unseren deutschen Partnern praxisnahe Unterstützung rund um Ausbildung und Beruf.",
-  explore_courses: "Kurse Entdecken",
-  contact_us: "Kontakt Aufnehmen",
+  explore_courses: "Kursangebot",
+  contact_us: "Kontakt",
 
   // Header
   courses: "Kurse",

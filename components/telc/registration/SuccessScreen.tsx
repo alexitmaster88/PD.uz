@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { CheckCircle, Download, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { CONTACT } from "@/lib/contact"
 
 interface Props {
   registrationId: number
@@ -24,6 +25,9 @@ const ui: Record<string, Record<string, string>> = {
     r4: "Bring a printed copy of this confirmation (PDF) with payment receipt",
     emailNote: "A confirmation email has been sent to",
     download: "Download / Print Ticket", backHome: "Back to Home",
+    tgReminderTitle: "Send Payment Receipt",
+    tgReminderMsg: "If you chose to send your payment receipt via Telegram, please do so within 3 days. Otherwise, your registration and reserved exam place may be canceled.",
+    tgReminderBtn: "Send receipt via Telegram →",
   },
   de: {
     title: "Sie haben sich erfolgreich angemeldet!", regId: "Anmelde-ID",
@@ -37,6 +41,9 @@ const ui: Record<string, Record<string, string>> = {
     r4: "Drucken Sie diese Bestätigung (PDF) mit Zahlungsbeleg aus und bringen Sie sie mit",
     emailNote: "Eine Bestätigungs-E-Mail wurde gesendet an",
     download: "Ticket herunterladen / drucken", backHome: "Zur Startseite",
+    tgReminderTitle: "Zahlungsbeleg senden",
+    tgReminderMsg: "Wenn Sie Ihren Zahlungsbeleg über Telegram senden möchten, tun Sie dies bitte innerhalb von 3 Tagen. Andernfalls können Ihre Anmeldung und der reservierte Prüfungsplatz storniert werden.",
+    tgReminderBtn: "Beleg über Telegram senden →",
   },
   ru: {
     title: "Вы успешно зарегистрированы!", regId: "ID регистрации",
@@ -50,6 +57,9 @@ const ui: Record<string, Record<string, string>> = {
     r4: "Распечатайте это подтверждение (PDF) с квитанцией об оплате",
     emailNote: "Письмо с подтверждением отправлено на",
     download: "Скачать / Распечатать билет", backHome: "На главную",
+    tgReminderTitle: "Отправьте чек об оплате",
+    tgReminderMsg: "Если вы выбрали отправку чека через Telegram, пожалуйста, сделайте это в течение 3 дней. В противном случае ваша регистрация и забронированное место могут быть отменены.",
+    tgReminderBtn: "Отправить чек через Telegram →",
   },
   uz: {
     title: "Siz muvaffaqiyatli ro'yxatdan o'tdingiz!", regId: "Ro'yxat ID",
@@ -63,6 +73,9 @@ const ui: Record<string, Record<string, string>> = {
     r4: "Ushbu tasdiqlash (PDF) to'lov cheki bilan chop etilgan nusxasini olib keling",
     emailNote: "Tasdiqlash xati yuborildi:",
     download: "Chiptani yuklab olish / chop etish", backHome: "Bosh sahifaga",
+    tgReminderTitle: "To'lov chekini yuboring",
+    tgReminderMsg: "Agar to'lov chekini Telegram orqali yuborishni tanlaган bo'lsangiz, buni 3 kun ichida qiling. Aks holda ro'yxatdan o'tish va band qilingan imtihon o'rni bekor qilinishi mumkin.",
+    tgReminderBtn: "Telegram orqali chek yuborish →",
   },
 }
 
@@ -75,13 +88,13 @@ const regionLabels: Record<string, Record<string, string>> = {
 
 // Fallback contact info per region
 const regionContact: Record<string, { phone: string; email: string }> = {
-  samarkand: { phone: "+998 77 178 06 66", email: "info@profi-deutsch.uz" },
+  samarkand: { phone: CONTACT.phone1, email: CONTACT.email },
 }
 
 function generatePDF(registrationId: number, formData: any, lang: string) {
-  const l = ui[lang] ?? ui.en
-  const rl = regionLabels[lang] ?? regionLabels.en
-  const contact = regionContact[formData.region] ?? {}
+  const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
+  const rl: Record<string, string> = regionLabels[lang] ?? regionLabels['en'] ?? {}
+  const contact = regionContact[formData.region] ?? { phone: "", email: "" }
 
   const fmtDate = (d: string) => {
     try { return new Date(d).toLocaleDateString() } catch { return d }
@@ -162,7 +175,7 @@ function generatePDF(registrationId: number, formData: any, lang: string) {
 
 <div class="footer">
   <div class="badge">PROFI DEUTSCH</div><br/>
-  profi-deutsch.uz · info@profi-deutsch.uz · +998 77 178 06 66
+  ${CONTACT.website} · ${CONTACT.email} · ${CONTACT.phone1}
 </div>
 
 <script>window.onload = function() { window.print(); }</script>
@@ -176,9 +189,9 @@ function generatePDF(registrationId: number, formData: any, lang: string) {
 }
 
 export default function SuccessScreen({ registrationId, formData, lang }: Props) {
-  const l = ui[lang] ?? ui.en
-  const rl = regionLabels[lang] ?? regionLabels.en
-  const contact = regionContact[formData.region] ?? {}
+  const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
+  const rl: Record<string, string> = regionLabels[lang] ?? regionLabels['en'] ?? {}
+  const contact = regionContact[formData.region] ?? { phone: "", email: "" }
 
   // Send confirmation email once on mount — fire-and-forget
   useEffect(() => {
@@ -278,23 +291,41 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
         </div>
       </div>
 
+      {/* Telegram receipt reminder */}
+      <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl shrink-0">✈️</span>
+          <div className="flex-1">
+            <p className="font-semibold text-blue-900 mb-1">{l.tgReminderTitle}</p>
+            <p className="text-sm text-blue-800 mb-3">{l.tgReminderMsg}</p>
+            <a
+              href={CONTACT.telegramChannel}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
+            >
+              {l.tgReminderBtn}
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Email notice */}
       <div className="mb-6 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-900">
         ✓ {l.emailNote} <strong>{formData.email}</strong>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Button variant="outline" size="lg" className="flex-1"
-          onClick={() => generatePDF(registrationId, formData, lang)}>
-          <Download size={18} className="mr-2" />
+      <div className="flex flex-col sm:flex-row gap-3">
+        <button type="button" onClick={() => generatePDF(registrationId, formData, lang)}
+          className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-3.5 text-sm font-medium text-slate-700 hover:border-primary/40 hover:text-primary transition-colors">
+          <Download size={16} />
           {l.download}
-        </Button>
-        <Button asChild size="lg" className="flex-1">
-          <Link href={`/${lang}`}>
-            <Home size={18} className="mr-2" />
-            {l.backHome}
-          </Link>
-        </Button>
+        </button>
+        <Link href={`/${lang}`}
+          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-bold text-white hover:bg-primary/90 transition-colors">
+          <Home size={16} />
+          {l.backHome}
+        </Link>
       </div>
     </div>
   )

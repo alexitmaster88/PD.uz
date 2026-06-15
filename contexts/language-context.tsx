@@ -43,7 +43,7 @@ function detectBrowserLanguage(): Language {
     // Try to find a match with our supported languages
     for (const browserLang of browserLanguages) {
       // Get the base language code (e.g., "en" from "en-US")
-      const baseLang = browserLang.split("-")[0].toLowerCase()
+      const baseLang = (browserLang.split("-")[0] ?? "").toLowerCase()
 
       // Check if we support this language
       if (supportedLanguages.includes(baseLang as Language)) {
@@ -132,7 +132,8 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
     setDetectedLanguage(browserLang)
 
     // Load translations
-    import("@/translations").then((module) => {
+    import("@/translations").catch(() => null).then((module) => {
+      if (!module) return
       const normalized = Object.fromEntries(
         Object.entries(module.default).map(([lang, map]) => [
           lang,
@@ -155,7 +156,7 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
     setLanguageState(lang)
 
     // Save to localStorage
-    localStorage.setItem("preferredLanguage", lang)
+    try { localStorage.setItem("preferredLanguage", lang) } catch { /* ignore */ }
 
     // Update document language
     document.documentElement.lang = lang

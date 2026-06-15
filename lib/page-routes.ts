@@ -7,8 +7,8 @@ export const pageRoutes = [
     icon: Home,
   },
   {
-    href: "/telc/register",
-    labelKey: "left_menu_telc",
+    href: "/telc/booking",
+    labelKey: "left_menu_telc_booking",
     icon: MenuIcon,
   },
   {
