@@ -147,6 +147,12 @@ const ru = {
   telc_booking_faq_link_followup: "вы попадете на нашу страницу FAQ по telc. Здесь вы найдете ответы на наиболее часто задаваемые вопросы.",
   telc_booking_faq_support_text: "Если у вас есть дополнительные вопросы, напишите нам. Мы будем рады помочь!",
 
+  // Language Selection
+  language_german_course: "Немецкий А1-А2",
+  language_uzbek_course: "Немецкий Б1-Б2",
+  language_english_course: "TELC Сертификат",
+  language_russian_course: "Ausbildung-Тренинг",
+
   // Course Types
   course_type_german: "Уровень владения языком",
   course_type_uzbek: "TELC экзамен",

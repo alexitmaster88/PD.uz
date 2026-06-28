@@ -306,58 +306,62 @@ export default async function TelcBookingPage({ params }: PageProps) {
 
       {/* Exam Levels & Prices */}
       <section className="px-4 py-10">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-4xl">
           <div className="mb-8 text-center">
             <h2 className="mb-2 text-3xl font-bold text-[#130080]">{t.levelsTitle}</h2>
             <p className="text-[#130080]/65">{t.levelsDesc}</p>
           </div>
           {safeLevels.length === 0 ? (
             <p className="text-center text-[#130080]/50">{t.noExams}</p>
-          ) : (() => {
-            const n = safeLevels.length
-            const perRow = n <= 2 ? n : n === 3 ? 3 : n === 4 ? 2 : 3
-            const cardW = perRow === 1
-              ? "w-full max-w-xs"
-              : perRow === 2
-                ? "w-full sm:w-[calc(50%-10px)]"
-                : "w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
-            return (
-              <div className="flex flex-wrap justify-center gap-5">
-                {safeLevels.map((lv: any) => {
-                  const levelCode = (lv.level as string)?.match(/[A-C][12](?:[/-][A-C][12])?/)?.[0] ?? lv.level
-                  const fullName = lv.level
-                  return (
-                    <div key={lv.id} className={`${cardW} flex flex-col rounded-2xl border border-white/50 bg-white/70 p-6 shadow-md backdrop-blur-md transition-all hover:bg-white/85 hover:shadow-lg`}>
-                      {/* Level badge — always readable */}
-                      <div className="mb-4">
-                        <span className="inline-block rounded-xl bg-[#130080] px-4 py-1.5 text-xl font-extrabold tracking-wider" style={{ color: "#ffffff" }}>
+          ) : (
+            <div className={[
+              "grid gap-4",
+              safeLevels.length === 1 ? "grid-cols-1 max-w-[220px] mx-auto" :
+              safeLevels.length === 2 ? "grid-cols-2 max-w-sm mx-auto" :
+              safeLevels.length === 4 ? "grid-cols-2 sm:grid-cols-4 max-w-3xl mx-auto" :
+              "grid-cols-2 lg:grid-cols-3",
+            ].join(" ")}>
+              {safeLevels.map((lv: any) => {
+                const levelCode = (lv.level as string)?.match(/[A-C][12](?:[/-][A-C][12])?/)?.[0] ?? lv.level
+                const fullName = lv.level
+                return (
+                  <div key={lv.id} className="group flex flex-col overflow-hidden rounded-2xl border border-white/40 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                    {/* Accent bar */}
+                    <div className="h-[3px] w-full bg-[#130080]" />
+                    <div className="flex flex-1 flex-col p-4">
+                      {/* Level badge + full name */}
+                      <div className="mb-3">
+                        <span className="inline-flex items-center rounded-md bg-[#130080] px-2.5 py-0.5 text-base font-black tracking-widest text-white leading-tight">
                           {levelCode}
                         </span>
                         {levelCode !== fullName && fullName && (
-                          <p className="mt-1.5 text-xs font-medium text-[#130080]/55">{fullName}</p>
+                          <p className="mt-1 text-[10px] font-medium text-[#130080]/40 leading-tight">{fullName}</p>
                         )}
                       </div>
-                      {/* Description */}
-                      <p className="mb-4 text-sm leading-snug text-[#130080]/65">{levelDesc(lv.level, l)}</p>
+                      {/* Description — flex-1 forces equal height across row */}
+                      <p className="mb-4 flex-1 text-[11px] leading-relaxed text-[#130080]/55">
+                        {levelDesc(lv.level, l)}
+                      </p>
                       {/* Price */}
-                      <div className="mb-5 mt-auto pt-2">
-                        <p className="mb-0.5 text-xs font-semibold uppercase tracking-wide text-[#130080]/40">{t.currency}</p>
-                        <p className="text-3xl font-extrabold text-[#130080]">{Number(lv.price).toLocaleString()}</p>
+                      <div className="mb-3 border-t border-[#130080]/8 pt-3">
+                        <p className="mb-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#130080]/35">{t.currency}</p>
+                        <p className="text-2xl font-extrabold leading-none text-[#130080]">
+                          {Number(lv.price).toLocaleString()}
+                        </p>
                       </div>
-                      {/* CTA */}
+                      {/* Full-width CTA */}
                       <Link
                         href={`/telc/${l}/register`}
-                        className="block rounded-xl bg-[#130080] px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#130080]/85"
-                        style={{ color: "#ffffff" }}
+                        className="block w-full rounded-xl bg-[#130080] py-2 text-center text-xs font-bold text-white transition-colors hover:bg-[#130080]/85"
                       >
                         {t.registerLevel} →
                       </Link>
                     </div>
-                  )
-                })}
-              </div>
-            )
-          })()}
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -454,21 +458,6 @@ export default async function TelcBookingPage({ params }: PageProps) {
                 <span className="text-sm text-[#130080]/80">{r}</span>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About TELC */}
-      <section className="px-4 py-10">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex flex-col items-center gap-6 rounded-2xl border border-white/40 bg-white/60 p-7 shadow-md backdrop-blur-md sm:flex-row">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-[#130080]/10 bg-white/80 shadow">
-              <Image src="/images/logos/telc.svg" alt="TELC" width={54} height={21} />
-            </div>
-            <div>
-              <h2 className="mb-2 text-2xl font-bold text-[#130080]">{t.aboutTitle}</h2>
-              <p className="leading-relaxed text-[#130080]/75">{t.aboutText}</p>
-            </div>
           </div>
         </div>
       </section>

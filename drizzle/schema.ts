@@ -125,6 +125,27 @@ export const otpVerifications = pgTable("otp_verifications", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 })
 
+export const telcAdmins = pgTable("telc_admins", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  name: text("name").notNull(),
+  role: text("role").notNull().default("admin"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+})
+
+export const telcAdminSessions = pgTable("telc_admin_sessions", {
+  id: serial("id").primaryKey(),
+  adminId: integer("admin_id").notNull(),
+  token: text("token").notNull().unique(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("idx_admin_sessions_token").on(table.token),
+  index("idx_admin_sessions_admin_id").on(table.adminId),
+])
+
 // Relations
 export const examsRelations = relations(exams, ({ one }) => ({
   level: one(examLevels, { fields: [exams.levelId], references: [examLevels.id] }),
@@ -138,6 +159,10 @@ export const paymentsRelations = relations(payments, ({ one }) => ({
   registration: one(registrations, { fields: [payments.registrationId], references: [registrations.id] }),
 }))
 
+export const telcAdminSessionsRelations = relations(telcAdminSessions, ({ one }) => ({
+  admin: one(telcAdmins, { fields: [telcAdminSessions.adminId], references: [telcAdmins.id] }),
+}))
+
 // Types
 export type ExamLevel = typeof examLevels.$inferSelect
 export type InsertExamLevel = typeof examLevels.$inferInsert
@@ -148,3 +173,5 @@ export type InsertRegistration = typeof registrations.$inferInsert
 export type Payment = typeof payments.$inferSelect
 export type InsertPayment = typeof payments.$inferInsert
 export type OtpVerification = typeof otpVerifications.$inferSelect
+export type TelcAdmin = typeof telcAdmins.$inferSelect
+export type TelcAdminSession = typeof telcAdminSessions.$inferSelect

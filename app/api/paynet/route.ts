@@ -89,22 +89,33 @@ export async function POST(req: NextRequest) {
       const clientId = (params?.fields as Record<string, string>)?.client_id
       if (!clientId) return err(id, -32602, 'Missing client_id in fields')
 
-      const { data: booking } = await db
-        .from('bookings')
-        .select('id, exam_fee, candidates(full_name)')
+      const { data: registration } = await db
+        .from('registrations')
+        .select('id, exam_id, first_name, last_name, status')
         .eq('id', clientId)
-        .in('status', ['pending_payment', 'confirmed'])
+        .in('status', ['pending', 'verified'])
         .single()
 
-      if (!booking) return err(id, 302, 'Client not found')
+      if (!registration) return err(id, 302, 'Client not found')
 
-      const candidate = (booking.candidates as unknown) as { full_name: string } | null
+      const { data: exam } = await db
+        .from('exams')
+        .select('level_id')
+        .eq('id', registration.exam_id)
+        .single()
+
+      const { data: level } = exam
+        ? await db.from('exam_levels').select('price').eq('id', exam.level_id).single()
+        : { data: null }
+
+      if (!level) return err(id, 302, 'Client not found')
+
       return ok(id, {
         status: 0,
         timestamp: tashkentNow(),
         fields: {
-          balance: booking.exam_fee,
-          name: candidate?.full_name ?? '',
+          balance: Number(level.price),
+          name: `${registration.first_name} ${registration.last_name}`,
         },
       })
     }
@@ -129,22 +140,29 @@ export async function POST(req: NextRequest) {
 
       if (existing) return err(id, 201, 'Transaction already exists')
 
-      const { data: booking } = await db
-        .from('bookings')
-        .select('id, exam_fee, status')
+      const { data: registration } = await db
+        .from('registrations')
+        .select('id, exam_id, status')
         .eq('id', fields.client_id)
         .single()
 
-      if (!booking) return err(id, 302, 'Client not found')
-      if (booking.status !== 'pending_payment') return err(id, 201, 'Transaction already exists')
-      if (booking.exam_fee !== amount) return err(id, 413, 'Invalid amount')
+      if (!registration) return err(id, 302, 'Client not found')
+      if (!['pending', 'verified'].includes(registration.status)) return err(id, 201, 'Transaction already exists')
+
+      // Verify amount matches exam price
+      const { data: exam } = await db.from('exams').select('level_id').eq('id', registration.exam_id).single()
+      const { data: level } = exam
+        ? await db.from('exam_levels').select('price').eq('id', exam.level_id).single()
+        : { data: null }
+      if (!level || Number(level.price) !== amount) return err(id, 413, 'Invalid amount')
 
       const { data: payment, error: payErr } = await db
         .from('payments')
         .insert({
-          booking_id: fields.client_id,
+          registration_id: Number(fields.client_id),
           paynet_transaction_id: String(transactionId),
           amount,
+          payment_method: 'paynet',
           status: 'completed',
           gateway: 'paynet',
           paid_at: new Date().toISOString(),
@@ -155,8 +173,8 @@ export async function POST(req: NextRequest) {
       if (payErr || !payment) return err(id, -32603, 'System error')
 
       await db
-        .from('bookings')
-        .update({ status: 'confirmed', payment_status: 'paid' })
+        .from('registrations')
+        .update({ status: 'paid', payment_verified: true, updated_at: new Date().toISOString() })
         .eq('id', fields.client_id)
 
       return ok(id, {
@@ -190,18 +208,18 @@ export async function POST(req: NextRequest) {
 
       const { data: payment } = await db
         .from('payments')
-        .select('provider_trn_id, booking_id, status')
+        .select('provider_trn_id, registration_id, status')
         .eq('paynet_transaction_id', String(transactionId))
         .maybeSingle()
 
       if (!payment) return err(id, 203, 'Transaction not found')
       if (payment.status === 'cancelled') return err(id, 202, 'Transaction already cancelled')
 
-      await db.from('payments').update({ status: 'cancelled' }).eq('provider_trn_id', payment.provider_trn_id)
+      await db.from('payments').update({ status: 'cancelled', updated_at: new Date().toISOString() }).eq('provider_trn_id', payment.provider_trn_id)
       await db
-        .from('bookings')
-        .update({ status: 'pending_payment', payment_status: 'unpaid' })
-        .eq('id', payment.booking_id)
+        .from('registrations')
+        .update({ status: 'pending', payment_verified: false, updated_at: new Date().toISOString() })
+        .eq('id', payment.registration_id)
 
       return ok(id, {
         providerTrnId: payment.provider_trn_id,

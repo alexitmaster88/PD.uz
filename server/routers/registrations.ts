@@ -35,6 +35,28 @@ export const registrationsRouter = router({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create registration" })
       }
 
+      // Fire-and-forget confirmation email — don't let email failure break registration
+      void (async () => {
+        try {
+          const exam = await db.getExamById(input.examId)
+          if (exam) {
+            const levels = await db.getExamLevels()
+            const level = levels.find(l => l.id === exam.levelId)
+            await sendRegistrationConfirmation(input.email, {
+              registrationId: registration.id,
+              firstName: input.firstName,
+              lastName: input.lastName,
+              passportNumber: input.passportNumber,
+              level: level?.level ?? '',
+              region: exam.region,
+              examDate: exam.examDate,
+              startTime: exam.startTime,
+              examAddress: exam.address ?? undefined,
+            })
+          }
+        } catch {}
+      })()
+
       return registration
     }),
 

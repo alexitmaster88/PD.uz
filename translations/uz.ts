@@ -147,6 +147,12 @@ const uz = {
   telc_booking_faq_link_followup: "sizni bizning telc FAQ sahifamizga olib boradi. Bu yerda tez-tez beriladigan savollarga javoblar topasiz.",
   telc_booking_faq_support_text: "Agar qo‘shimcha savollaringiz bo‘lsa, bizga yozing. Biz sizga yordam berishdan mamnunmiz!",
 
+  // Language Selection
+  language_german_course: "Nemis A1-A2",
+  language_uzbek_course: "Nemis B1-B2",
+  language_english_course: "TELC Sertifikat",
+  language_russian_course: "Ausbildung-Training",
+
   // Course Types
   course_type_german: "Til darajasi",
   course_type_uzbek: "TELC imtihoni",

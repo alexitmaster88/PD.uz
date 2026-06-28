@@ -154,6 +154,12 @@ const en = {
   language_english: "English",
   language_russian: "Russian",
 
+  // Language Selection
+  language_german_course: "German A1-A2",
+  language_uzbek_course: "German B1-B2",
+  language_english_course: "TELC Certificate",
+  language_russian_course: "Ausbildung-Training",
+
   // Course Types
   course_type_german: "Language level",
   course_type_uzbek: "TELC exam",
