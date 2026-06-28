@@ -13,9 +13,9 @@ const regionNames: Record<string, Record<string, string>> = {
 
 const emailStrings: Record<string, Record<string, string>> = {
   en: {
-    subject: "TELC Exam Registration Confirmation",
+    subject: "telc Exam Registration Confirmation",
     greeting: "Dear",
-    intro: "Your TELC exam registration has been received. Below are your confirmation details:",
+    intro: "Your telc exam registration has been received. Below are your confirmation details:",
     regId: "Registration ID", name: "Full Name", passport: "Passport / ID",
     level: "Exam Level", region: "Region", date: "Exam Date", time: "Start Time",
     address: "Venue Address",
@@ -29,9 +29,9 @@ const emailStrings: Record<string, Record<string, string>> = {
     contact: "profi-deutsch.uz · info@profi-deutsch.uz · +998 77 178 06 66",
   },
   de: {
-    subject: "TELC-Prüfungsanmeldung Bestätigung",
+    subject: "telc-Prüfungsanmeldung Bestätigung",
     greeting: "Sehr geehrte(r)",
-    intro: "Ihre TELC-Prüfungsanmeldung ist eingegangen. Unten finden Sie Ihre Bestätigungsdetails:",
+    intro: "Ihre telc-Prüfungsanmeldung ist eingegangen. Unten finden Sie Ihre Bestätigungsdetails:",
     regId: "Anmelde-ID", name: "Vollständiger Name", passport: "Reisepass / Ausweis",
     level: "Prüfungsstufe", region: "Region", date: "Prüfungsdatum", time: "Startzeit",
     address: "Prüfungsort",
@@ -45,9 +45,9 @@ const emailStrings: Record<string, Record<string, string>> = {
     contact: "profi-deutsch.uz · info@profi-deutsch.uz · +998 77 178 06 66",
   },
   ru: {
-    subject: "Подтверждение регистрации на экзамен TELC",
+    subject: "Подтверждение регистрации на экзамен telc",
     greeting: "Уважаемый(ая)",
-    intro: "Ваша регистрация на экзамен TELC принята. Ниже приведены данные подтверждения:",
+    intro: "Ваша регистрация на экзамен telc принята. Ниже приведены данные подтверждения:",
     regId: "ID регистрации", name: "Полное имя", passport: "Паспорт / ID",
     level: "Уровень экзамена", region: "Регион", date: "Дата экзамена", time: "Время начала",
     address: "Адрес места проведения",
@@ -61,9 +61,9 @@ const emailStrings: Record<string, Record<string, string>> = {
     contact: "profi-deutsch.uz · info@profi-deutsch.uz · +998 77 178 06 66",
   },
   uz: {
-    subject: "TELC imtihoniga ro'yxatdan o'tish tasdiqi",
+    subject: "telc imtihoniga ro'yxatdan o'tish tasdiqi",
     greeting: "Hurmatli",
-    intro: "TELC imtihoniga ro'yxatdan o'tishingiz qabul qilindi. Quyida tasdiqlash ma'lumotlari keltirilgan:",
+    intro: "telc imtihoniga ro'yxatdan o'tishingiz qabul qilindi. Quyida tasdiqlash ma'lumotlari keltirilgan:",
     regId: "Ro'yxat ID", name: "To'liq ism", passport: "Pasport / ID",
     level: "Imtihon darajasi", region: "Hudud", date: "Imtihon sanasi", time: "Boshlanish vaqti",
     address: "Imtihon manzili",
@@ -87,11 +87,11 @@ export async function sendOtpEmail(email: string, otp: string): Promise<void> {
   const { error } = await resend.emails.send({
     from: FROM,
     to: email,
-    subject: 'Your TELC exam verification code',
+    subject: 'Your telc exam verification code',
     html: `
       <div style="font-family:Arial,sans-serif;max-width:480px;margin:auto;padding:32px;background:#f8fafc;border-radius:12px">
         <h2 style="color:#130080;margin-top:0">Email Verification</h2>
-        <p style="color:#475569">Use the code below to verify your email address for TELC exam registration:</p>
+        <p style="color:#475569">Use the code below to verify your email address for telc exam registration:</p>
         <div style="background:#fff;border:2px solid #e2e8f0;border-radius:8px;padding:24px;text-align:center;margin:24px 0">
           <span style="font-size:36px;font-weight:700;letter-spacing:8px;color:#130080">${otp}</span>
         </div>

@@ -19,7 +19,7 @@ export default function PartnersSection() {
   const { t } = useLanguage();
 
   const partners: Partner[] = [
-    { id: "telc", name: "TELC gGmbH", logo: "/images/logos/telc.svg", website: "https://www.telc.net/en/", descriptionKey: "partner_telc_desc" },
+    { id: "telc", name: "telc gGmbH", logo: "/images/logos/telc.svg", website: "https://www.telc.net/en/", descriptionKey: "partner_telc_desc" },
     { id: "duwk", name: "DUWK Büro", logo: "/images/logos/duwk.svg", website: "https://duwk.de/en/main-page/", descriptionKey: "partner_duwk_desc" },
     { id: "ssp", name: "SSP", logo: "/images/logos/ssp.svg", website: "https://chamber.uz/oz", descriptionKey: "partner_ssp_desc" },
     { id: "tashvil", name: "Toshkent viloyat hokimligi", logo: "/images/logos/tashvil.svg", website: "https://toshkentviloyati.uz/ru", descriptionKey: "partner_tavi_desc" },

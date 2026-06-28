@@ -126,8 +126,8 @@ export default function AdminRegistrations({ lang }: Props) {
   const handleBatchAction = async (action: "approve" | "cancel" | "deny" | "delete") => {
     const ids = Array.from(selectedIds)
     if (!ids.length) return
-    const verb = action === "delete" ? "delete" : action
-    if (!confirm(`${verb.charAt(0).toUpperCase() + verb.slice(1)} ${ids.length} selected registration(s)?`)) return
+    const confirmKey = action === "approve" ? "batch_confirm_approve" : action === "cancel" ? "batch_confirm_cancel" : action === "deny" ? "batch_confirm_deny" : "batch_confirm_delete"
+    if (!confirm(adminT(lang, confirmKey, { count: ids.length }))) return
     setBatchBusy(true)
     try {
       await Promise.all(ids.map(id => {
@@ -458,26 +458,26 @@ export default function AdminRegistrations({ lang }: Props) {
             {/* Batch action bar */}
             {selectedIds.size > 0 && (
               <div className="flex flex-wrap items-center gap-2 border-b border-primary/20 bg-primary/5 px-4 py-2.5">
-                <span className="text-sm font-semibold text-primary mr-1">{selectedIds.size} selected</span>
+                <span className="text-sm font-semibold text-primary mr-1">{selectedIds.size} {t("batch_selected")}</span>
                 <button onClick={() => handleBatchAction("approve")} disabled={batchBusy}
                   className="flex items-center gap-1.5 rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-green-700 disabled:opacity-50 transition">
-                  {batchBusy ? <Loader2 size={12} className="animate-spin" /> : <CheckCircle size={12} />} Approve all
+                  {batchBusy ? <Loader2 size={12} className="animate-spin" /> : <CheckCircle size={12} />} {t("batch_approve")}
                 </button>
                 <button onClick={() => handleBatchAction("cancel")} disabled={batchBusy}
                   className="flex items-center gap-1.5 rounded-lg bg-slate-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-600 disabled:opacity-50 transition">
-                  <XCircle size={12} /> Cancel all
+                  <XCircle size={12} /> {t("batch_cancel")}
                 </button>
                 <button onClick={() => handleBatchAction("deny")} disabled={batchBusy}
                   className="flex items-center gap-1.5 rounded-lg bg-orange-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-orange-700 disabled:opacity-50 transition">
-                  <Ban size={12} /> Deny all
+                  <Ban size={12} /> {t("batch_deny")}
                 </button>
                 <button onClick={() => handleBatchAction("delete")} disabled={batchBusy}
                   className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-50 transition">
-                  <Trash2 size={12} /> Delete all
+                  <Trash2 size={12} /> {t("batch_delete")}
                 </button>
                 <button onClick={() => setSelectedIds(new Set())}
                   className="ml-auto flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 transition">
-                  <X size={12} /> Clear
+                  <X size={12} /> {t("batch_clear")}
                 </button>
               </div>
             )}

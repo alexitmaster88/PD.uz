@@ -76,7 +76,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/TELCexam.png",
+        image: "/images/telcexam.png",
       },
       {
         level: t("telc_a2_b1_level"),
@@ -84,7 +84,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/TELCexam.png",
+        image: "/images/telcexam.png",
       },
       {
         level: t("telc_b1_level"),
@@ -92,7 +92,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/TELCexam.png",
+        image: "/images/telcexam.png",
       },
       {
         level: t("telc_b2_level"),
@@ -100,7 +100,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/TELCexam.png",
+        image: "/images/telcexam.png",
       },
     ],
   }
@@ -184,7 +184,7 @@ const LanguageSpecificCourses = () => {
                             {(course.level as string)?.match(/[A-C][12](?:[/-][A-C][12])?/)?.[0] ?? course.level}
                           </span>
                           <span className="rounded-lg bg-[#130080] px-2.5 py-1 text-xs font-semibold shadow-sm" style={{ color: "#ffffff" }}>
-                            {lang === "usbekisch" ? "TELC" : t("course_type_german")}
+                            {lang === "usbekisch" ? "telc" : t("course_type_german")}
                           </span>
                         </div>
                       </div>

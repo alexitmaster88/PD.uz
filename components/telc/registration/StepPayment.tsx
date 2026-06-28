@@ -171,7 +171,7 @@ export default function StepPayment({ registrationId, amount, lang, onPaymentCom
           <input type="hidden" name="amount" value={paymeAmountTiyin} />
           <input type="hidden" name="account[order_id]" value={String(registrationId)} />
           <input type="hidden" name="lang" value={paymeLang} />
-          <input type="hidden" name="description" value={`TELC exam registration #${registrationId}`} />
+          <input type="hidden" name="description" value={`telc exam registration #${registrationId}`} />
         </form>
       )}
 

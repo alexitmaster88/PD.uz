@@ -101,7 +101,7 @@ const ContactSection = () => {
                         <SelectItem value="deutsch-a2">Deutsch A2</SelectItem>
                         <SelectItem value="deutsch-b1">Deutsch B1</SelectItem>
                         <SelectItem value="deutsch-b2">Deutsch B2</SelectItem>
-                        <SelectItem value="telc-exam">TELC Exam</SelectItem>
+                        <SelectItem value="telc-exam">telc Exam</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

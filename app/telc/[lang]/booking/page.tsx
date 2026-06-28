@@ -12,19 +12,19 @@ type Lang = "en" | "de" | "ru" | "uz"
 
 const T: Record<Lang, Record<string, string>> = {
   en: {
-    navTelc: "TELC Exam",
+    navTelc: "telc Exam",
     navHome: "Home",
-    heroEyebrow: "Official TELC Exam Center in Uzbekistan",
+    heroEyebrow: "Official telc Exam Center in Uzbekistan",
     heroTitle: "German Language Exam",
-    heroAccent: "TELC Certificate",
-    heroSub: "Register for the internationally recognized TELC German language exam at Profi Deutsch — Uzbekistan's official TELC partner.",
+    heroAccent: "telc Certificate",
+    heroSub: "Register for the internationally recognized telc German language exam at Profi Deutsch — Uzbekistan's official telc partner.",
     registerNow: "Register Now",
     viewSchedule: "View Schedule ↓",
     badge1: "Internationally recognized",
     badge2: "Accepted by European universities",
     badge3: "Required for German visa & residence",
-    aboutTitle: "What is TELC?",
-    aboutText: "TELC (The European Language Certificates) is a globally recognized language examination body. A TELC certificate is accepted by universities, employers, and immigration authorities across Europe and beyond.",
+    aboutTitle: "What is telc?",
+    aboutText: "telc (The European Language Certificates) is a globally recognized language examination body. A telc certificate is accepted by universities, employers, and immigration authorities across Europe and beyond.",
     howTitle: "How It Works",
     step1T: "Register Online", step1D: "Fill out the 3-step form with your details, choose an exam date and pay online.",
     step2T: "Get Confirmation", step2D: "Receive your registration confirmation by email with all details.",
@@ -48,23 +48,23 @@ const T: Record<Lang, Record<string, string>> = {
     telegram: "Message on Telegram",
     call: "Call Us",
     ctaTitle: "Ready to Get Certified?",
-    ctaDesc: "Spots are limited. Secure your place for the next TELC exam today.",
+    ctaDesc: "Spots are limited. Secure your place for the next telc exam today.",
     ctaBtn: "Start Registration →",
   },
   de: {
-    navTelc: "TELC-Prüfung",
+    navTelc: "telc-Prüfung",
     navHome: "Startseite",
-    heroEyebrow: "Offizielles TELC-Prüfungszentrum in Usbekistan",
+    heroEyebrow: "Offizielles telc-Prüfungszentrum in Usbekistan",
     heroTitle: "Deutschprüfung",
-    heroAccent: "TELC-Zertifikat",
-    heroSub: "Melden Sie sich für die international anerkannte TELC-Deutschprüfung bei Profi Deutsch an — dem offiziellen TELC-Partner in Usbekistan.",
+    heroAccent: "telc-Zertifikat",
+    heroSub: "Melden Sie sich für die international anerkannte telc-Deutschprüfung bei Profi Deutsch an — dem offiziellen telc-Partner in Usbekistan.",
     registerNow: "Jetzt anmelden",
     viewSchedule: "Termine ansehen ↓",
     badge1: "International anerkannt",
     badge2: "Akzeptiert von europäischen Universitäten",
     badge3: "Erforderlich für deutsches Visum",
-    aboutTitle: "Was ist TELC?",
-    aboutText: "TELC (The European Language Certificates) ist ein international anerkanntes Sprachprüfungsinstitut. Ein TELC-Zertifikat wird von Universitäten, Arbeitgebern und Einwanderungsbehörden in ganz Europa akzeptiert.",
+    aboutTitle: "Was ist telc?",
+    aboutText: "telc (The European Language Certificates) ist ein international anerkanntes Sprachprüfungsinstitut. Ein telc-Zertifikat wird von Universitäten, Arbeitgebern und Einwanderungsbehörden in ganz Europa akzeptiert.",
     howTitle: "So funktioniert es",
     step1T: "Online anmelden", step1D: "Füllen Sie das 3-stufige Formular aus, wählen Sie einen Termin und zahlen Sie online.",
     step2T: "Bestätigung erhalten", step2D: "Erhalten Sie Ihre Anmeldebestätigung per E-Mail mit allen Details.",
@@ -92,19 +92,19 @@ const T: Record<Lang, Record<string, string>> = {
     ctaBtn: "Anmeldung starten →",
   },
   ru: {
-    navTelc: "Экзамен TELC",
+    navTelc: "Экзамен telc",
     navHome: "Главная",
-    heroEyebrow: "Официальный центр TELC в Узбекистане",
+    heroEyebrow: "Официальный центр telc в Узбекистане",
     heroTitle: "Экзамен по немецкому языку",
-    heroAccent: "Сертификат TELC",
-    heroSub: "Зарегистрируйтесь на международно признанный экзамен TELC по немецкому языку в Profi Deutsch — официальном партнёре TELC в Узбекистане.",
+    heroAccent: "Сертификат telc",
+    heroSub: "Зарегистрируйтесь на международно признанный экзамен telc по немецкому языку в Profi Deutsch — официальном партнёре telc в Узбекистане.",
     registerNow: "Зарегистрироваться",
     viewSchedule: "Расписание ↓",
     badge1: "Международно признан",
     badge2: "Принимается европейскими университетами",
     badge3: "Требуется для немецкой визы",
-    aboutTitle: "Что такое TELC?",
-    aboutText: "TELC (The European Language Certificates) — это международно признанный орган по проведению языковых экзаменов. Сертификат TELC принимается университетами, работодателями и иммиграционными органами по всей Европе.",
+    aboutTitle: "Что такое telc?",
+    aboutText: "telc (The European Language Certificates) — это международно признанный орган по проведению языковых экзаменов. Сертификат telc принимается университетами, работодателями и иммиграционными органами по всей Европе.",
     howTitle: "Как это работает",
     step1T: "Регистрация онлайн", step1D: "Заполните 3-шаговую форму, выберите дату экзамена и оплатите онлайн.",
     step2T: "Получите подтверждение", step2D: "Получите подтверждение регистрации по электронной почте со всеми деталями.",
@@ -128,23 +128,23 @@ const T: Record<Lang, Record<string, string>> = {
     telegram: "Написать в Telegram",
     call: "Позвонить",
     ctaTitle: "Готовы получить сертификат?",
-    ctaDesc: "Мест мало. Забронируйте место на следующий экзамен TELC сегодня.",
+    ctaDesc: "Мест мало. Забронируйте место на следующий экзамен telc сегодня.",
     ctaBtn: "Начать регистрацию →",
   },
   uz: {
-    navTelc: "TELC imtihoni",
+    navTelc: "telc imtihoni",
     navHome: "Bosh sahifa",
-    heroEyebrow: "Rasmiy TELC imtihon markazi O'zbekistonda",
+    heroEyebrow: "Rasmiy telc imtihon markazi O'zbekistonda",
     heroTitle: "Nemis tili imtihoni",
-    heroAccent: "TELC sertifikati",
-    heroSub: "Profi Deutsch — O'zbekistondagi rasmiy TELC hamkorida xalqaro tan olingan TELC nemis tili imtihoniga ro'yxatdan o'ting.",
+    heroAccent: "telc sertifikati",
+    heroSub: "Profi Deutsch — O'zbekistondagi rasmiy telc hamkorida xalqaro tan olingan telc nemis tili imtihoniga ro'yxatdan o'ting.",
     registerNow: "Ro'yxatdan o'tish",
     viewSchedule: "Jadvalga qarang ↓",
     badge1: "Xalqaro tan olingan",
     badge2: "Yevropa universitetlari qabul qiladi",
     badge3: "Nemis vizasi uchun zarur",
-    aboutTitle: "TELC nima?",
-    aboutText: "TELC (The European Language Certificates) — bu xalqaro tan olingan til imtihoni tashkiloti. TELC sertifikati butun Yevropa bo'ylab universitetlar, ish beruvchilar va immigratsiya idoralari tomonidan qabul qilinadi.",
+    aboutTitle: "telc nima?",
+    aboutText: "telc (The European Language Certificates) — bu xalqaro tan olingan til imtihoni tashkiloti. telc sertifikati butun Yevropa bo'ylab universitetlar, ish beruvchilar va immigratsiya idoralari tomonidan qabul qilinadi.",
     howTitle: "Qanday ishlaydi",
     step1T: "Onlayn ro'yxatdan o'ting", step1D: "Ma'lumotlaringizni 3 bosqichli forma orqali to'ldiring, sanani tanlang va onlayn to'lang.",
     step2T: "Tasdiqlash oling", step2D: "Barcha tafsilotlar bilan elektron pochta orqali ro'yxatdan o'tish tasdiqlashingizni oling.",
@@ -168,15 +168,22 @@ const T: Record<Lang, Record<string, string>> = {
     telegram: "Telegram orqali yozish",
     call: "Qo'ng'iroq qilish",
     ctaTitle: "Sertifikat olishga tayyormisiz?",
-    ctaDesc: "Joylar cheklangan. Bugun keyingi TELC imtihoni uchun o'rningizni band qiling.",
+    ctaDesc: "Joylar cheklangan. Bugun keyingi telc imtihoni uchun o'rningizni band qiling.",
     ctaBtn: "Ro'yxatdan o'tishni boshlash →",
   },
 }
 
+const LEVEL_ORDER = ["A1", "A2", "A2/B1", "B1", "B1/B2", "B2", "C1", "C1/C2", "C2"]
+
 const LEVEL_DESC: Record<string, Record<Lang, string>> = {
-  B1: { en: "Everyday communication & basic professional use", de: "Alltägliche Kommunikation & einfache berufliche Situationen", ru: "Повседневное общение и простые профессиональные ситуации", uz: "Kundalik muloqot va oddiy kasbiy vaziyatlar" },
+  A1: { en: "Beginner · greetings, simple phrases & basic self-introduction", de: "Anfänger · Begrüßungen, einfache Phrasen & Vorstellung", ru: "Начальный · приветствия, простые фразы и базовое общение", uz: "Boshlang'ich · salomlashish, oddiy iboralar va o'zini tanishtirish" },
+  A2: { en: "Elementary · daily survival language, short texts & familiar conversations", de: "Elementar · Alltagssprache, kurze Texte & vertraute Gespräche", ru: "Элементарный · язык для базового общения, короткие тексты и простые разговоры", uz: "Boshlang'ich · kundalik qisqa matnlar, tanish suhbatlar va oddiy so'rovlar" },
+  "A2/B1": { en: "Pre-intermediate · growing independence in routine tasks & familiar topics", de: "Untere Mittelstufe · wachsende Selbstständigkeit in Routinesituationen", ru: "Ниже среднего · растущая самостоятельность в повседневных ситуациях", uz: "O'rta pastki daraja · kundalik vaziyatlarda ortib borayotgan mustaqillik" },
+  B1: { en: "Intermediate · everyday communication & basic professional use", de: "Mittelstufe · Alltägliche Kommunikation & einfache berufliche Situationen", ru: "Средний · повседневное общение и простые профессиональные ситуации", uz: "O'rta daraja · kundalik muloqot va oddiy kasbiy vaziyatlar" },
+  "B1/B2": { en: "Transition level · between intermediate and upper-intermediate", de: "Übergangsebene · zwischen Mittel- und Obermittelstufe", ru: "Переходный уровень · между B1 и B2", uz: "O'tish darajasi · B1 va B2 o'rtasida" },
   B2: { en: "Upper intermediate · required for many university programmes", de: "Gehobene Mittelstufe · für viele Universitätszulassungen", ru: "Выше среднего · требуется для многих университетских программ", uz: "O'rta yuqori · ko'plab universitet dasturlari uchun" },
-  C1: { en: "Advanced · required for professional work & top universities", de: "Fortgeschritten · für professionelle Arbeit & Spitzenuniversitäten", ru: "Продвинутый · для профессиональной работы", uz: "Ilg'or · kasbiy ish va eng yaxshi universitetlar uchun" },
+  C1: { en: "Advanced · required for professional work & top universities", de: "Fortgeschritten · für professionelle Arbeit & Spitzenuniversitäten", ru: "Продвинутый · для профессиональной работы и ведущих университетов", uz: "Ilg'or · kasbiy ish va eng yaxshi universitetlar uchun" },
+  C2: { en: "Mastery · full professional and academic command of German", de: "Meisterniveau · volle Beherrschung für Beruf und Studium", ru: "Мастерство · полное профессиональное владение немецким языком", uz: "Mukammal daraja · kasbiy va akademik nemis tilida to'liq bilim" },
 }
 
 const REGION_LABELS: Record<string, string> = {
@@ -185,6 +192,7 @@ const REGION_LABELS: Record<string, string> = {
 }
 
 function levelDesc(level: string, lang: Lang): string {
+  if (LEVEL_DESC[level]) return LEVEL_DESC[level][lang] ?? ""
   const key = Object.keys(LEVEL_DESC).find(k => level.includes(k))
   return key ? (LEVEL_DESC[key]?.[lang] ?? "") : ""
 }
@@ -204,7 +212,14 @@ export default async function TelcBookingPage({ params }: PageProps) {
     .limit(20)
 
   const rawExams = upcomingExams ?? []
-  const safeLevels = levels ?? []
+  const safeLevels = (levels ?? []).slice().sort((a: any, b: any) => {
+    const ia = LEVEL_ORDER.indexOf(a.level)
+    const ib = LEVEL_ORDER.indexOf(b.level)
+    if (ia === -1 && ib === -1) return String(a.level).localeCompare(String(b.level))
+    if (ia === -1) return 1
+    if (ib === -1) return -1
+    return ia - ib
+  })
 
   // Compute live registered_count from approved registrations
   let safeExams: any[] = rawExams
@@ -517,7 +532,7 @@ export default async function TelcBookingPage({ params }: PageProps) {
 
       {/* Footer */}
       <footer className="border-t border-[#130080]/10 bg-white/40 px-4 py-7 text-center text-xs text-[#130080]/50 backdrop-blur-sm">
-        <p className="mb-1 font-semibold text-[#130080]/70">Profi Deutsch — TELC Exam Center</p>
+        <p className="mb-1 font-semibold text-[#130080]/70">Profi Deutsch — telc Exam Center</p>
         <p>{CONTACT.email} · {CONTACT.phone1}</p>
       </footer>
     </div>
