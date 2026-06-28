@@ -304,7 +304,7 @@ export default function StepExamSelection({
             <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
               <Users size={18} className="shrink-0 text-primary" />
               <span className="text-sm text-slate-600">{l.spotsAvailable}:</span>
-              <span className="ml-auto inline-flex items-center rounded-lg bg-primary px-3 py-1 text-sm font-bold text-white">
+              <span className="ml-auto inline-flex items-center rounded-lg bg-primary px-3 py-1 text-sm font-bold" style={{ color: '#ffffff' }}>
                 {totalSpots} {l.spots}
               </span>
             </div>

@@ -26,6 +26,14 @@ export const registrationsRouter = router({
         })
       }
 
+      const exam = await db.getExamById(input.examId)
+      if (!exam) throw new TRPCError({ code: "NOT_FOUND", message: "Exam not found" })
+
+      const occupied = await db.getOccupiedSeatCount(input.examId)
+      if (occupied >= exam.capacity) {
+        throw new TRPCError({ code: "CONFLICT", message: "This exam is fully booked" })
+      }
+
       const registration = await db.createRegistration({
         userId: ctx.user?.id ?? null,
         ...input,

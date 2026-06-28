@@ -1,4 +1,4 @@
-import { eq, and } from "drizzle-orm"
+import { eq, and, count, inArray } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/postgres-js"
 import postgres from "postgres"
 import {
@@ -142,6 +142,22 @@ export async function checkDuplicatePassportExam(passportNumber: string, examId:
     )
     .limit(1)
   return result.length > 0
+}
+
+// Counts seats currently occupied: pending/verified/paid/completed all hold a seat.
+// Only cancelled and denied release a seat.
+export async function getOccupiedSeatCount(examId: number): Promise<number> {
+  const db = getDb()
+  const result = await db
+    .select({ count: count() })
+    .from(registrations)
+    .where(
+      and(
+        eq(registrations.examId, examId),
+        inArray(registrations.status, ["pending", "verified", "paid", "completed"])
+      )
+    )
+  return Number(result[0]?.count ?? 0)
 }
 
 // ─── Payment queries ──────────────────────────────────────────────────────────

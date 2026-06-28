@@ -14,7 +14,7 @@ const T: Record<Lang, Record<string, string>> = {
   en: {
     navTelc: "TELC Exam",
     navHome: "Home",
-    heroEyebrow: "Official TELC Exam Center · Samarkand, Uzbekistan",
+    heroEyebrow: "Official TELC Exam Center in Uzbekistan",
     heroTitle: "German Language Exam",
     heroAccent: "TELC Certificate",
     heroSub: "Register for the internationally recognized TELC German language exam at Profi Deutsch — Uzbekistan's official TELC partner.",
@@ -54,7 +54,7 @@ const T: Record<Lang, Record<string, string>> = {
   de: {
     navTelc: "TELC-Prüfung",
     navHome: "Startseite",
-    heroEyebrow: "Offizielles TELC-Prüfungszentrum · Samarkand, Usbekistan",
+    heroEyebrow: "Offizielles TELC-Prüfungszentrum in Usbekistan",
     heroTitle: "Deutschprüfung",
     heroAccent: "TELC-Zertifikat",
     heroSub: "Melden Sie sich für die international anerkannte TELC-Deutschprüfung bei Profi Deutsch an — dem offiziellen TELC-Partner in Usbekistan.",
@@ -94,7 +94,7 @@ const T: Record<Lang, Record<string, string>> = {
   ru: {
     navTelc: "Экзамен TELC",
     navHome: "Главная",
-    heroEyebrow: "Официальный экзаменационный центр TELC · Самарканд, Узбекистан",
+    heroEyebrow: "Официальный центр TELC в Узбекистане",
     heroTitle: "Экзамен по немецкому языку",
     heroAccent: "Сертификат TELC",
     heroSub: "Зарегистрируйтесь на международно признанный экзамен TELC по немецкому языку в Profi Deutsch — официальном партнёре TELC в Узбекистане.",
@@ -134,7 +134,7 @@ const T: Record<Lang, Record<string, string>> = {
   uz: {
     navTelc: "TELC imtihoni",
     navHome: "Bosh sahifa",
-    heroEyebrow: "Rasmiy TELC imtihon markazi · Samarqand, O'zbekiston",
+    heroEyebrow: "Rasmiy TELC imtihon markazi O'zbekistonda",
     heroTitle: "Nemis tili imtihoni",
     heroAccent: "TELC sertifikati",
     heroSub: "Profi Deutsch — O'zbekistondagi rasmiy TELC hamkorida xalqaro tan olingan TELC nemis tili imtihoniga ro'yxatdan o'ting.",
@@ -214,7 +214,7 @@ export default async function TelcBookingPage({ params }: PageProps) {
       .from("registrations")
       .select("exam_id")
       .in("exam_id", examIds)
-      .in("status", ["paid", "completed"])
+      .in("status", ["pending", "verified", "paid", "completed"])
     const countMap: Record<number, number> = {}
     regs?.forEach((r: any) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })
     safeExams = rawExams.map((e: any) => ({ ...e, registered_count: countMap[e.id] ?? 0 }))
@@ -314,45 +314,51 @@ export default async function TelcBookingPage({ params }: PageProps) {
           {safeLevels.length === 0 ? (
             <p className="text-center text-[#130080]/50">{t.noExams}</p>
           ) : (
-            <div className={[
-              "grid gap-4",
-              safeLevels.length === 1 ? "grid-cols-1 max-w-[220px] mx-auto" :
-              safeLevels.length === 2 ? "grid-cols-2 max-w-sm mx-auto" :
-              safeLevels.length === 4 ? "grid-cols-2 sm:grid-cols-4 max-w-3xl mx-auto" :
-              "grid-cols-2 lg:grid-cols-3",
-            ].join(" ")}>
+            /* flex + justify-center: any partial last row is always centered */
+            <div className="flex flex-wrap justify-center gap-4">
               {safeLevels.map((lv: any) => {
+                const n = safeLevels.length
                 const levelCode = (lv.level as string)?.match(/[A-C][12](?:[/-][A-C][12])?/)?.[0] ?? lv.level
                 const fullName = lv.level
+                // Width per card: shrinks gracefully, last row centers via justify-center
+                const widthClass =
+                  n === 1 ? "w-full max-w-[220px]" :
+                  n === 2 ? "w-[calc(50%-8px)] max-w-[260px]" :
+                  n === 4 ? "w-[calc(50%-8px)] sm:w-[calc(25%-12px)]" :
+                            "w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)]"
                 return (
-                  <div key={lv.id} className="group flex flex-col overflow-hidden rounded-2xl border border-white/40 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                  <div key={lv.id} className={`${widthClass} group flex flex-col overflow-hidden rounded-2xl border border-white/40 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg`}>
                     {/* Accent bar */}
                     <div className="h-[3px] w-full bg-[#130080]" />
                     <div className="flex flex-1 flex-col p-4">
-                      {/* Level badge + full name */}
+                      {/* Level badge — inline style forces white regardless of parent color cascade */}
                       <div className="mb-3">
-                        <span className="inline-flex items-center rounded-md bg-[#130080] px-2.5 py-0.5 text-base font-black tracking-widest text-white leading-tight">
+                        <span
+                          className="inline-flex items-center rounded-md bg-[#130080] px-3 py-1 text-base font-black tracking-widest leading-tight"
+                          style={{ color: '#ffffff' }}
+                        >
                           {levelCode}
                         </span>
                         {levelCode !== fullName && fullName && (
-                          <p className="mt-1 text-[10px] font-medium text-[#130080]/40 leading-tight">{fullName}</p>
+                          <p className="mt-1 text-[10px] font-medium leading-tight" style={{ color: 'rgba(19,0,128,0.4)' }}>{fullName}</p>
                         )}
                       </div>
-                      {/* Description — flex-1 forces equal height across row */}
-                      <p className="mb-4 flex-1 text-[11px] leading-relaxed text-[#130080]/55">
+                      {/* Description — flex-1 equalises card heights within each row */}
+                      <p className="mb-4 flex-1 text-[11px] leading-relaxed" style={{ color: 'rgba(19,0,128,0.55)' }}>
                         {levelDesc(lv.level, l)}
                       </p>
                       {/* Price */}
-                      <div className="mb-3 border-t border-[#130080]/8 pt-3">
-                        <p className="mb-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#130080]/35">{t.currency}</p>
-                        <p className="text-2xl font-extrabold leading-none text-[#130080]">
+                      <div className="mb-3 border-t pt-3" style={{ borderColor: 'rgba(19,0,128,0.08)' }}>
+                        <p className="mb-0.5 text-[9px] font-bold uppercase tracking-[0.15em]" style={{ color: 'rgba(19,0,128,0.35)' }}>{t.currency}</p>
+                        <p className="text-2xl font-extrabold leading-none" style={{ color: '#130080' }}>
                           {Number(lv.price).toLocaleString()}
                         </p>
                       </div>
                       {/* Full-width CTA */}
                       <Link
                         href={`/telc/${l}/register`}
-                        className="block w-full rounded-xl bg-[#130080] py-2 text-center text-xs font-bold text-white transition-colors hover:bg-[#130080]/85"
+                        className="block w-full rounded-xl py-2 text-center text-xs font-bold transition-colors hover:opacity-90"
+                        style={{ backgroundColor: '#130080', color: '#ffffff' }}
                       >
                         {t.registerLevel} →
                       </Link>
@@ -451,11 +457,11 @@ export default async function TelcBookingPage({ params }: PageProps) {
       <section className="px-4 py-10">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-7 text-center text-3xl font-bold text-[#130080]">{t.reqTitle}</h2>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="flex flex-wrap justify-center gap-3">
             {[t.req1, t.req2, t.req3, t.req4, t.req5].map(r => (
-              <div key={r} className="flex items-start gap-3 rounded-xl border border-white/40 bg-white/60 px-4 py-3 shadow-sm backdrop-blur-md">
-                <CheckCircle size={17} className="mt-0.5 shrink-0 text-[#130080]" />
-                <span className="text-sm text-[#130080]/80">{r}</span>
+              <div key={r} className="flex w-full items-start gap-3 rounded-xl border border-white/40 bg-white/60 px-4 py-3 shadow-sm backdrop-blur-md sm:w-[calc(50%-6px)]">
+                <CheckCircle size={17} className="mt-0.5 shrink-0" style={{ color: '#130080' }} />
+                <span className="text-sm" style={{ color: 'rgba(19,0,128,0.8)' }}>{r}</span>
               </div>
             ))}
           </div>
