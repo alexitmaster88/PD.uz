@@ -17,10 +17,10 @@ const emptyForm: ExamForm = { levelId: "1", region: "tashkent", address: "", exa
 
 type SortField = "level" | "region" | "date" | "time" | "capacity" | "active"
 type SortDir = "asc" | "desc"
-type ColKey = "level" | "region" | "date" | "time" | "capacity" | "active" | "actions"
+type ColKey = "no" | "level" | "region" | "date" | "time" | "capacity" | "active" | "actions"
 
 const DEFAULT_WIDTHS: Record<ColKey, number> = {
-  level: 100, region: 110, date: 105, time: 130, capacity: 190, active: 150, actions: 170,
+  no: 48, level: 100, region: 110, date: 105, time: 130, capacity: 190, active: 150, actions: 170,
 }
 const PAGE_SIZE = 10
 const btnCls = "inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
@@ -302,6 +302,7 @@ export default function AdminExams({ lang }: Props) {
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
+                    <Th col="no" label="№" />
                     <Th col="level"    sortKey="level"    label={t("label_level")} />
                     <Th col="region"   sortKey="region"   label={t("label_region")} />
                     <Th col="date"     sortKey="date"     label={t("col_date")} />
@@ -312,7 +313,7 @@ export default function AdminExams({ lang }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {paginated.map((ex: any) => {
+                  {paginated.map((ex: any, idx: number) => {
                     const pct = ex.capacity > 0 ? Math.min(100, Math.round((ex.registered_count / ex.capacity) * 100)) : 0
                     const isFull = ex.registered_count >= ex.capacity
                     const barColor = isFull ? "bg-red-500" : pct >= 75 ? "bg-amber-400" : "bg-green-500"
@@ -321,6 +322,7 @@ export default function AdminExams({ lang }: Props) {
                     return (
                       <React.Fragment key={ex.id}>
                         <tr className={`hover:bg-slate-50 ${isEditing ? "bg-amber-50" : ""} ${!isActive ? "opacity-50" : ""}`}>
+                          <td className="px-4 py-3 text-xs font-medium text-slate-400 text-center tabular-nums">{(safePage - 1) * PAGE_SIZE + idx + 1}</td>
                           <td className="px-4 py-3 font-medium">{ex.exam_levels?.level ?? `Level ${ex.level_id}`}</td>
                           <td className="px-4 py-3 text-slate-600 capitalize">{REGION_LABELS[ex.region] ?? ex.region}</td>
                           <td className="px-4 py-3 text-slate-600">{new Date(ex.exam_date).toLocaleDateString()}</td>
@@ -369,7 +371,7 @@ export default function AdminExams({ lang }: Props) {
                         </tr>
                         {isEditing && (
                           <tr key={`edit-${ex.id}`}>
-                            <td colSpan={7} className="px-4 py-4 bg-amber-50 border-t border-amber-100">
+                            <td colSpan={8} className="px-4 py-4 bg-amber-50 border-t border-amber-100">
                               <p className="text-xs font-semibold text-amber-800 mb-3 uppercase tracking-wide">{t("edit_exam")}</p>
                               <div className="grid sm:grid-cols-3 gap-3">
                                 <div>

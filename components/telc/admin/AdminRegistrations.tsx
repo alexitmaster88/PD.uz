@@ -26,13 +26,14 @@ const labelCls = "mb-1 block text-xs font-medium text-slate-600"
 
 type SortField = "name" | "email" | "passport" | "level" | "exam_type" | "region" | "exam_date" | "status" | "created_at"
 type SortDir = "asc" | "desc"
-type ColKey = "name" | "email" | "passport" | "level" | "exam_type" | "region" | "exam_date" | "created_at" | "status" | "actions"
+type ColKey = "no" | "name" | "email" | "passport" | "level" | "exam_type" | "region" | "exam_date" | "created_at" | "status" | "actions"
 
 const DEFAULT_WIDTHS: Record<ColKey, number> = {
-  name: 160, email: 170, passport: 110, level: 70, exam_type: 90,
+  no: 48, name: 160, email: 170, passport: 110, level: 70, exam_type: 90,
   region: 90, exam_date: 95, created_at: 130, status: 90, actions: 180,
 }
-const PAGE_SIZE = 20
+const pageSizeS = [50, 100, 150, 250, 400, 500, 1000]
+const PAGE_SIZES = [50, 100, 150, 250, 400, 500, 1000]
 const btnCls = "inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
 
 interface Props { lang: AdminLang }
@@ -51,6 +52,7 @@ export default function AdminRegistrations({ lang }: Props) {
   const [filterStatus, setFilterStatus] = useState("")
   const [filterRegion, setFilterRegion] = useState("")
   const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(50)
   const [colWidths, setColWidths] = useState<Record<ColKey, number>>(DEFAULT_WIDTHS)
 
   const load = async () => {
@@ -90,9 +92,9 @@ export default function AdminRegistrations({ lang }: Props) {
     return list
   }, [registrations, filterStatus, filterRegion, sortField, sortDir])
 
-  const totalPages = Math.max(1, Math.ceil(displayed.length / PAGE_SIZE))
+  const totalPages = Math.max(1, Math.ceil(displayed.length / pageSize))
   const safePage = Math.min(page, totalPages)
-  const paginated = displayed.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+  const paginated = displayed.slice((safePage - 1) * pageSize, safePage * pageSize)
 
   const toggleSort = (field: SortField) => {
     if (sortField === field) setSortDir(d => d === "asc" ? "desc" : "asc")
@@ -288,6 +290,15 @@ export default function AdminRegistrations({ lang }: Props) {
               <option key={r} value={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</option>
             ))}
           </select>
+          <select
+            value={pageSize}
+            onChange={e => { setPageSize(Number(e.target.value)); setPage(1) }}
+            className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 outline-none focus:border-primary"
+          >
+            {PAGE_SIZES.map(n => (
+              <option key={n} value={n}>{n} / page</option>
+            ))}
+          </select>
           <button
             onClick={exportExcel}
             disabled={displayed.length === 0}
@@ -431,6 +442,7 @@ export default function AdminRegistrations({ lang }: Props) {
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
+                    <Th col="no" label="№" />
                     <Th col="name"       sortKey="name"       label={t("col_name")} />
                     <Th col="email"      sortKey="email"      label={t("col_email")} />
                     <Th col="passport"   sortKey="passport"   label={t("col_passport")} />
@@ -444,8 +456,9 @@ export default function AdminRegistrations({ lang }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {paginated.map((reg: any) => (
+                  {paginated.map((reg: any, idx: number) => (
                     <tr key={reg.id} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 text-xs font-medium text-slate-400 text-center tabular-nums">{(safePage - 1) * pageSize + idx + 1}</td>
                       <td className="px-4 py-3 font-medium text-slate-900 whitespace-nowrap">{reg.first_name} {reg.last_name}</td>
                       <td className="px-4 py-3 text-slate-600 text-xs">{reg.email}</td>
                       <td className="px-4 py-3 text-slate-600 font-mono text-xs">{reg.passport_number ?? "—"}</td>
@@ -526,7 +539,7 @@ export default function AdminRegistrations({ lang }: Props) {
             {totalPages > 1 && (
               <div className="flex items-center justify-between border-t border-slate-200 px-4 py-3 bg-slate-50/60">
                 <p className="text-xs text-slate-500">
-                  {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, displayed.length)} / {displayed.length}
+                  {(safePage - 1) * pageSize + 1}–{Math.min(safePage * pageSize, displayed.length)} / {displayed.length}
                 </p>
                 <div className="flex items-center gap-1">
                   <button className={btnCls} disabled={safePage === 1} onClick={() => setPage(1)}><ChevronsLeft size={14} /></button>
