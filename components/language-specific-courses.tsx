@@ -76,7 +76,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/telcexam.png",
+        image: "/images/TELCexam.png",
       },
       {
         level: t("telc_a2_b1_level"),
@@ -84,7 +84,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/telcexam.png",
+        image: "/images/TELCexam.png",
       },
       {
         level: t("telc_b1_level"),
@@ -92,7 +92,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/telcexam.png",
+        image: "/images/TELCexam.png",
       },
       {
         level: t("telc_b2_level"),
@@ -100,7 +100,7 @@ const LanguageSpecificCourses = () => {
         description: "",
         features: [t("telc_prep_duration"), t("telc_prep_lesson_time"), t("telc_prep_small_groups"), t("telc_prep_practice"), t("telc_prep_materials")],
         price: "",
-        image: "/images/telcexam.png",
+        image: "/images/TELCexam.png",
       },
     ],
   }

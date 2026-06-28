@@ -124,7 +124,7 @@ const HeroSection = () => {
             <Button size="lg" variant="ghost" asChild className="h-auto min-h-0 p-0 hover:bg-transparent focus:bg-transparent active:bg-transparent transition-all duration-200 hover:scale-[1.03] hover:shadow-lg hover:opacity-90 rounded-xl overflow-hidden">
               <LangLink href="/telc/booking" className="inline-flex items-center justify-center p-0">
                 <Image
-                  src="/images/telcnew06.png"
+                  src="/images/TELCnew06.png"
                   alt="telc Prüfungszentrum"
                   width={352}
                   height={110}
