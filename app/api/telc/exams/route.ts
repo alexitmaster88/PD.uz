@@ -34,7 +34,7 @@ export async function GET(req: Request) {
       .from('registrations')
       .select('exam_id')
       .in('exam_id', examIds)
-      .in('status', ['paid', 'completed'])
+      .in('status', ['pending', 'verified', 'paid', 'completed'])
 
     const countMap: Record<number, number> = {}
     regs?.forEach((r: any) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })

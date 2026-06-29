@@ -53,13 +53,15 @@ const ui: Record<string, Record<string, string>> = {
     examType: "Exam type",
     oralWritten: "Oral + Written", oral: "Oral", written: "Written",
     examDate: "Exam date", time: "Time",
+    selectTime: "Select time slot",
     noExams: "No exams available for selected region and level",
     confirmInfo: "I confirm the above information is correct",
     next: "Next step", previous: "← Back",
     loading: "Loading exam data...",
     full: "Full", spotsLeft: "spots left",
     errRegion: "Select a region", errLevel: "Select a level",
-    errDate: "Select a date", errExamType: "Select exam type",
+    errDate: "Select a date", errTime: "Select a time slot",
+    errExamType: "Select exam type",
     errConfirm: "Please confirm the information",
     labelAddress: "Venue Address", labelContact: "Contact",
     docReminderTitle: "Bring with you 30 min before the exam:",
@@ -74,13 +76,15 @@ const ui: Record<string, Record<string, string>> = {
     examType: "Prüfungstyp",
     oralWritten: "Mündlich + Schriftlich", oral: "Mündlich", written: "Schriftlich",
     examDate: "Prüfungsdatum", time: "Zeit",
+    selectTime: "Uhrzeit wählen",
     noExams: "Keine Prüfungen verfügbar",
     confirmInfo: "Ich bestätige die Richtigkeit der obigen Angaben",
     next: "Nächster Schritt", previous: "← Zurück",
     loading: "Prüfungsdaten werden geladen...",
     full: "Voll", spotsLeft: "Plätze frei",
     errRegion: "Region wählen", errLevel: "Stufe wählen",
-    errDate: "Datum wählen", errExamType: "Prüfungstyp wählen",
+    errDate: "Datum wählen", errTime: "Uhrzeit wählen",
+    errExamType: "Prüfungstyp wählen",
     errConfirm: "Bitte bestätigen",
     labelAddress: "Prüfungsort", labelContact: "Kontakt",
     docReminderTitle: "30 Min. vor der Prüfung mitbringen:",
@@ -95,13 +99,15 @@ const ui: Record<string, Record<string, string>> = {
     examType: "Тип экзамена",
     oralWritten: "Устный + Письменный", oral: "Устный", written: "Письменный",
     examDate: "Дата экзамена", time: "Время",
+    selectTime: "Выберите время",
     noExams: "Нет доступных экзаменов",
     confirmInfo: "Я подтверждаю правильность указанных данных",
     next: "Следующий шаг", previous: "← Назад",
     loading: "Загрузка данных...",
     full: "Занято", spotsLeft: "мест осталось",
     errRegion: "Выберите регион", errLevel: "Выберите уровень",
-    errDate: "Выберите дату", errExamType: "Выберите тип экзамена",
+    errDate: "Выберите дату", errTime: "Выберите время",
+    errExamType: "Выберите тип экзамена",
     errConfirm: "Подтвердите данные",
     labelAddress: "Адрес", labelContact: "Контакт",
     docReminderTitle: "Принести за 30 мин до экзамена:",
@@ -116,13 +122,15 @@ const ui: Record<string, Record<string, string>> = {
     examType: "Imtihon turi",
     oralWritten: "Og'zaki + Yozma", oral: "Og'zaki", written: "Yozma",
     examDate: "Imtihon kuni", time: "Vaqt",
+    selectTime: "Vaqtni tanlang",
     noExams: "Tanlangan hudud va darajada imtihon yo'q",
     confirmInfo: "Yuqoridagi ma'lumotlar to'g'ri ekanligiga ishonch hosil qildim",
     next: "Keyingi qadam", previous: "← Orqaga",
     loading: "Ma'lumotlar yuklanmoqda...",
     full: "To'liq", spotsLeft: "o'rin qoldi",
     errRegion: "Hududni tanlang", errLevel: "Darajani tanlang",
-    errDate: "Sanani tanlang", errExamType: "Imtihon turini tanlang",
+    errDate: "Sanani tanlang", errTime: "Vaqtni tanlang",
+    errExamType: "Imtihon turini tanlang",
     errConfirm: "Ma'lumotlarni tasdiqlang",
     labelAddress: "Imtihon manzili", labelContact: "Aloqa",
     docReminderTitle: "Imtihon kuni 30 daqiqa oldin olib keling:",
@@ -155,6 +163,7 @@ export default function StepExamSelection({
   const rl = regionLabels[lang] ?? regionLabels.en
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [selectedDate, setSelectedDate] = useState(data.selectedDate ?? "")
+  const [selectedTime, setSelectedTime] = useState(data.selectedTime ?? "")
   const [confirmed, setConfirmed] = useState(false)
 
   const [localExams, setLocalExams] = useState<any[] | null>(null)
@@ -208,9 +217,21 @@ export default function StepExamSelection({
     return Array.from(dates).sort()
   }, [exams])
 
-  const selectedExam = useMemo(() =>
-    exams.find(e => e.exam_date.split("T")[0] === selectedDate),
+  // All exams on the currently selected date
+  const examsOnSelectedDate = useMemo(() =>
+    selectedDate ? exams.filter(e => e.exam_date.split("T")[0] === selectedDate) : [],
     [exams, selectedDate])
+
+  // Single slot → auto-pick it; multiple slots → wait for explicit user choice
+  const effectiveTime = examsOnSelectedDate.length === 1
+    ? examsOnSelectedDate[0].start_time
+    : selectedTime
+
+  const selectedExam = useMemo(() =>
+    exams.find(e =>
+      e.exam_date.split("T")[0] === selectedDate && e.start_time === effectiveTime
+    ),
+    [exams, selectedDate, effectiveTime])
 
   const spotsForDate = (d: string) => {
     const dayExams = exams.filter(e => e.exam_date.split("T")[0] === d)
@@ -228,6 +249,7 @@ export default function StepExamSelection({
     if (!data.region)    e.region    = l.errRegion
     if (!data.levelId)   e.level     = l.errLevel
     if (!selectedDate)   e.date      = l.errDate
+    if (examsOnSelectedDate.length > 1 && !selectedTime) e.time = l.errTime
     if (!data.examType)  e.examType  = l.errExamType
     if (!confirmed)      e.confirmed = l.errConfirm
     setErrors(e)
@@ -271,6 +293,7 @@ export default function StepExamSelection({
               <select className={selectCls} value={data.region ?? ""} onChange={e => {
                 onDataChange({ region: e.target.value, levelId: "", selectedDate: "", selectedTime: "", examType: "" })
                 setSelectedDate("")
+                setSelectedTime("")
               }}>
                 <option value="">{l.selectRegion}</option>
                 {activeRegions.map(r => <option key={r} value={r}>{rl[r] ?? r}</option>)}
@@ -290,6 +313,7 @@ export default function StepExamSelection({
                 onChange={e => {
                   onDataChange({ levelId: e.target.value, selectedDate: "", selectedTime: "", examType: "" })
                   setSelectedDate("")
+                  setSelectedTime("")
                 }}>
                 <option value="">{l.selectLevel}</option>
                 {activeLevelsForRegion.map(lv => <option key={lv.id} value={lv.id}>{lv.level}</option>)}
@@ -353,22 +377,31 @@ export default function StepExamSelection({
                   {availableDates.map(d => {
                     const spots = spotsForDate(d)
                     const full = spots <= 0
+                    const isSelected = selectedDate === d
                     return (
                       <button
                         key={d}
                         type="button"
                         disabled={full}
-                        onClick={() => { setSelectedDate(d); onDataChange({ selectedDate: d }) }}
+                        onClick={() => {
+                          setSelectedDate(d)
+                          setSelectedTime("")
+                          onDataChange({ selectedDate: d, selectedTime: "" })
+                        }}
                         className={`flex flex-col items-center rounded-xl border-2 px-5 py-3 text-sm font-medium transition-all ${
-                          selectedDate === d
-                            ? "border-primary bg-primary text-white shadow-md"
+                          isSelected
+                            ? "border-primary bg-primary shadow-md"
                             : full
                               ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
                               : "border-slate-200 bg-white text-slate-800 hover:border-primary/60 hover:shadow-sm"
                         }`}
+                        style={isSelected ? { color: '#ffffff' } : undefined}
                       >
                         <span className="font-bold">{formatDate(d, lang)}</span>
-                        <span className={`mt-0.5 text-xs ${selectedDate === d ? "text-white/80" : full ? "text-slate-300" : "text-slate-400"}`}>
+                        <span
+                          className={`mt-0.5 text-xs ${full ? "text-slate-300" : !isSelected ? "text-slate-400" : ""}`}
+                          style={isSelected ? { color: 'rgba(255,255,255,0.8)' } : undefined}
+                        >
                           {full ? l.full : `${spots} ${l.spotsLeft}`}
                         </span>
                       </button>
@@ -380,8 +413,52 @@ export default function StepExamSelection({
             </div>
           )}
 
-          {/* Time info */}
-          {selectedExam && (
+          {/* Time slot selection — only when multiple exams exist on the chosen date */}
+          {selectedDate && examsOnSelectedDate.length > 1 && (
+            <div>
+              <label className="mb-2 flex items-center gap-1.5 text-sm font-medium text-slate-700">
+                <Clock size={15} className="text-slate-400" /> {l.selectTime} <span className="text-red-500">*</span>
+              </label>
+              <div className="flex flex-wrap gap-3">
+                {examsOnSelectedDate.map(exam => {
+                  const slotSpots = Math.max(0, exam.capacity - exam.registered_count)
+                  const slotFull = slotSpots <= 0
+                  const isSelected = selectedTime === exam.start_time
+                  return (
+                    <button
+                      key={exam.id}
+                      type="button"
+                      disabled={slotFull}
+                      onClick={() => {
+                        setSelectedTime(exam.start_time)
+                        onDataChange({ selectedTime: exam.start_time })
+                      }}
+                      className={`flex flex-col items-center rounded-xl border-2 px-5 py-3 text-sm font-medium transition-all ${
+                        isSelected
+                          ? "border-primary bg-primary shadow-md"
+                          : slotFull
+                            ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
+                            : "border-slate-200 bg-white text-slate-800 hover:border-primary/60 hover:shadow-sm"
+                      }`}
+                      style={isSelected ? { color: '#ffffff' } : undefined}
+                    >
+                      <span className="font-bold">{exam.start_time} – {exam.end_time}</span>
+                      <span
+                        className={`mt-0.5 text-xs ${slotFull ? "text-slate-300" : !isSelected ? "text-slate-400" : ""}`}
+                        style={isSelected ? { color: 'rgba(255,255,255,0.8)' } : undefined}
+                      >
+                        {slotFull ? l.full : `${slotSpots} ${l.spotsLeft}`}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+              {errors.time && <p className="mt-1 text-xs text-red-600">{errors.time}</p>}
+            </div>
+          )}
+
+          {/* Confirmed time info (auto-selected single slot) */}
+          {selectedExam && examsOnSelectedDate.length === 1 && (
             <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
               <Clock size={17} className="shrink-0 text-slate-400" />
               <span className="text-sm text-slate-600">{l.time}:</span>
