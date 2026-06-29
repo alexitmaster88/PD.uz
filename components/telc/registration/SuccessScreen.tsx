@@ -299,7 +299,7 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
             <p className="font-semibold text-blue-900 mb-1">{l.tgReminderTitle}</p>
             <p className="text-sm text-blue-800 mb-3">{l.tgReminderMsg}</p>
             <a
-              href={CONTACT.telegramChannel}
+              href={CONTACT.telegramTelcAdmin}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"

@@ -197,9 +197,20 @@ export default function AdminRegistrations({ lang }: Props) {
     </th>
   )
 
-  const exportExcel = () => {
+  const exportExcel = async () => {
+    // Fetch payments separately (no DB-level FK so can't join via Supabase)
+    const allPayments: any[] = await fetch("/api/telc/payments")
+      .then(r => r.json()).catch(() => [])
+    const paymentByReg: Record<number, any> = {}
+    if (Array.isArray(allPayments)) {
+      allPayments.forEach(p => {
+        // Keep the most recent payment per registration
+        if (!paymentByReg[p.registration_id]) paymentByReg[p.registration_id] = p
+      })
+    }
+
     const rows = displayed.map(r => {
-      const payment = Array.isArray(r.payments) ? r.payments[0] ?? null : r.payments ?? null
+      const payment = paymentByReg[r.id] ?? null
       return {
         "ID": r.id,
         // ── Step 2: Personal Info ──
@@ -226,7 +237,7 @@ export default function AdminRegistrations({ lang }: Props) {
         "Exam Address": r.exams?.address ?? "",
         "Price (UZS)": r.exams?.exam_levels?.price ?? "",
         // ── Step 3: Payment ──
-        "Payment Method": payment?.provider ?? "",
+        "Payment Method": payment?.payment_method ?? "",
         "Payment Amount": payment?.amount ?? "",
         "Payment Status": payment?.status ?? "",
         "Payment Date": payment?.created_at ? new Date(payment.created_at).toLocaleString() : "",

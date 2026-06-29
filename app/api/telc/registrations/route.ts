@@ -4,7 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 export async function GET() {
   const { data, error } = await supabaseAdmin
     .from('registrations')
-    .select('*, exams(region, address, exam_date, start_time, end_time, level_id, exam_levels(level, price)), payments(provider, amount, status, created_at)')
+    .select('*, exams(region, address, exam_date, start_time, end_time, level_id, exam_levels(level, price))')
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

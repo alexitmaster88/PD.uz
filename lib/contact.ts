@@ -5,6 +5,7 @@ export const CONTACT = {
   website: "profi-deutsch.uz",
   telegramMain: "https://t.me/UZ_profideutsch",
   telegramChannel: "https://t.me/profi_deutsch_uz",
+  telegramTelcAdmin: "https://t.me/telcuzbekistanadmin",
   samarkand: {
     address: "Samarqand shahri, O'zbekiston ko'chasi, 63 uy, 140105\n(Yoshlar kreativ shaharchasi)",
     phone: "+998 77 178 06 66",
