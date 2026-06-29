@@ -67,6 +67,9 @@ export async function POST(req: Request) {
     await sendOtpEmail(email, otp)
   } catch (emailErr) {
     console.error('[OTP] Email send error:', emailErr)
+    // Clean up the OTP record so the user can retry immediately
+    await supabaseAdmin.from('otp_verifications').delete().eq('email', email).eq('verified', false)
+    return NextResponse.json({ error: 'Failed to send OTP email. Please try again.' }, { status: 500 })
   }
 
   return NextResponse.json({ success: true, message: 'OTP sent to your email' })

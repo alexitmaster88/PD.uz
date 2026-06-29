@@ -24,20 +24,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Check exam capacity using live count of approved registrations
+    // Check exam capacity
     const { data: exam } = await supabaseAdmin
       .from('exams')
       .select('capacity')
       .eq('id', examId)
       .maybeSingle()
 
-    const { count: approvedCount } = await supabaseAdmin
+    if (!exam) {
+      return NextResponse.json({ error: 'Exam not found' }, { status: 404 })
+    }
+
+    const { count: registeredCount } = await supabaseAdmin
       .from('registrations')
       .select('*', { count: 'exact', head: true })
       .eq('exam_id', examId)
-      .in('status', ['paid', 'completed'])
+      .in('status', ['pending', 'verified', 'paid', 'completed'])
 
-    if (exam && (approvedCount ?? 0) >= exam.capacity) {
+    if ((registeredCount ?? 0) >= exam.capacity) {
       return NextResponse.json(
         { error: 'This exam is fully booked. Please choose a different date.' },
         { status: 409 }
@@ -84,6 +88,25 @@ export async function POST(req: Request) {
       .single()
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+    // If OTP was already verified for this email, mark email_verified and advance status
+    const { data: verifiedOtp } = await supabaseAdmin
+      .from('otp_verifications')
+      .select('id')
+      .eq('email', email)
+      .eq('verified', true)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    if (verifiedOtp) {
+      await supabaseAdmin
+        .from('registrations')
+        .update({ email_verified: true, status: 'verified' })
+        .eq('id', data.id)
+      data.email_verified = true
+      data.status = 'verified'
+    }
 
     return NextResponse.json(data, { status: 201 })
   } catch (err: any) {
