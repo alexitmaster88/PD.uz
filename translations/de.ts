@@ -1,6 +1,6 @@
 const de = {
   // Hero Section
-  welcome: "Willkommen im „PROFI DEUTSCH“ Bildungs-und Prüfungzentrum in Usbekistan",
+  welcome: "Willkommen im „PROFI DEUTSCH“ Bildungs-und Prüfungszentrum in Usbekistan",
   hero_tagline: "Profi Deutsch – die richtige Wahl, das exakte Ergebnis.",
   discover:
     "Lernen Sie Deutsch strukturiert und effizient nach der modernen telc-Methode und sichern Sie sich die Chance auf ein anerkanntes internationales telc-Zertifikat. Darüber hinaus bieten wir Ihnen gemeinsam mit unseren deutschen Partnern praxisnahe Unterstützung rund um Ausbildung und Beruf.",
