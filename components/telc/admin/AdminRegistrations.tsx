@@ -26,11 +26,11 @@ const labelCls = "mb-1 block text-xs font-medium text-slate-600"
 
 type SortField = "name" | "email" | "passport" | "level" | "exam_type" | "region" | "exam_date" | "status" | "created_at"
 type SortDir = "asc" | "desc"
-type ColKey = "check" | "no" | "name" | "email" | "passport" | "level" | "exam_type" | "region" | "exam_date" | "created_at" | "status" | "actions"
+type ColKey = "check" | "no" | "name" | "email" | "passport" | "level" | "exam_type" | "region" | "exam_date" | "exam_time" | "created_at" | "status" | "actions"
 
 const DEFAULT_WIDTHS: Record<ColKey, number> = {
   check: 40, no: 48, name: 160, email: 170, passport: 110, level: 70, exam_type: 90,
-  region: 90, exam_date: 95, created_at: 130, status: 90, actions: 180,
+  region: 90, exam_date: 95, exam_time: 90, created_at: 130, status: 90, actions: 180,
 }
 const PAGE_SIZES = [50, 100, 150, 250, 400, 500, 1000]
 const btnCls = "inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
@@ -542,6 +542,7 @@ export default function AdminRegistrations({ lang }: Props) {
                     <Th col="exam_type"  sortKey="exam_type"  label={t("col_exam_type")} />
                     <Th col="region"     sortKey="region"     label={t("label_region")} />
                     <Th col="exam_date"  sortKey="exam_date"  label={t("label_exam_date")} />
+                    <Th col="exam_time"  label={t("col_time")} />
                     <Th col="created_at" sortKey="created_at" label={t("col_registered_at")} />
                     <Th col="status"     sortKey="status"     label={t("col_status")} />
                     <Th col="actions"    label={t("col_actions")} />
@@ -575,6 +576,11 @@ export default function AdminRegistrations({ lang }: Props) {
                         <td className="px-4 py-3 text-slate-600 text-xs capitalize">{reg.exams?.region ?? "—"}</td>
                         <td className="px-4 py-3 text-slate-600 text-xs whitespace-nowrap">
                           {reg.exams?.exam_date ? fmtDate(reg.exams.exam_date) : "—"}
+                        </td>
+                        <td className="px-4 py-3 text-slate-600 text-xs whitespace-nowrap">
+                          {reg.exams?.start_time && reg.exams?.end_time
+                            ? `${reg.exams.start_time} – ${reg.exams.end_time}`
+                            : reg.exams?.start_time ?? "—"}
                         </td>
                         <td className="px-4 py-3 text-slate-600 text-xs whitespace-nowrap">
                           {reg.created_at ? fmtDateTime(reg.created_at) : "—"}
