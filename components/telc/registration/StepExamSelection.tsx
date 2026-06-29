@@ -329,10 +329,15 @@ export default function StepExamSelection({
               <Users size={18} className="shrink-0 text-primary" />
               <span className="text-sm text-slate-600">{l.spotsAvailable}:</span>
               <span
-                className="ml-auto inline-flex items-center rounded-lg bg-primary px-3 py-1 text-sm font-bold"
-                style={{ color: '#ffffff' }}
+                className="ml-auto inline-flex items-center rounded-lg px-3 py-1 text-sm font-bold"
+                style={{ backgroundColor: '#130080', color: '#ffffff' }}
               >
-                {selectedDate ? spotsForDate(selectedDate) : totalSpots} {l.spots}
+                {selectedExam
+                  ? Math.max(0, selectedExam.capacity - selectedExam.registered_count)
+                  : selectedDate
+                    ? spotsForDate(selectedDate)
+                    : totalSpots
+                } {l.spots}
               </span>
             </div>
           )}
@@ -393,17 +398,20 @@ export default function StepExamSelection({
                         }}
                         className={`flex flex-col items-center rounded-xl border-2 px-5 py-3 text-sm font-medium transition-all ${
                           isSelected
-                            ? "border-primary bg-primary shadow-md"
+                            ? "shadow-md"
                             : full
                               ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
                               : "border-slate-200 bg-white text-slate-800 hover:border-primary/60 hover:shadow-sm"
                         }`}
-                        style={isSelected ? { color: '#ffffff' } : undefined}
+                        style={isSelected ? { backgroundColor: '#130080', borderColor: '#130080' } : undefined}
                       >
-                        <span className="font-bold">{formatDate(d, lang)}</span>
+                        <span
+                          className="font-bold"
+                          style={isSelected ? { color: '#ffffff' } : undefined}
+                        >{formatDate(d, lang)}</span>
                         <span
                           className={`mt-0.5 text-xs ${full ? "text-slate-300" : !isSelected ? "text-slate-400" : ""}`}
-                          style={isSelected ? { color: 'rgba(255,255,255,0.8)' } : undefined}
+                          style={isSelected ? { color: 'rgba(255,255,255,0.85)' } : undefined}
                         >
                           {full ? l.full : `${spots} ${l.spotsLeft}`}
                         </span>
@@ -438,17 +446,20 @@ export default function StepExamSelection({
                       }}
                       className={`flex flex-col items-center rounded-xl border-2 px-5 py-3 text-sm font-medium transition-all ${
                         isSelected
-                          ? "border-primary bg-primary shadow-md"
+                          ? "shadow-md"
                           : slotFull
                             ? "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-300"
                             : "border-slate-200 bg-white text-slate-800 hover:border-primary/60 hover:shadow-sm"
                       }`}
-                      style={isSelected ? { color: '#ffffff' } : undefined}
+                      style={isSelected ? { backgroundColor: '#130080', borderColor: '#130080' } : undefined}
                     >
-                      <span className="font-bold">{exam.start_time} – {exam.end_time}</span>
+                      <span
+                        className="font-bold"
+                        style={isSelected ? { color: '#ffffff' } : undefined}
+                      >{exam.start_time} – {exam.end_time}</span>
                       <span
                         className={`mt-0.5 text-xs ${slotFull ? "text-slate-300" : !isSelected ? "text-slate-400" : ""}`}
-                        style={isSelected ? { color: 'rgba(255,255,255,0.8)' } : undefined}
+                        style={isSelected ? { color: 'rgba(255,255,255,0.85)' } : undefined}
                       >
                         {slotFull ? l.full : `${slotSpots} ${l.spotsLeft}`}
                       </span>
