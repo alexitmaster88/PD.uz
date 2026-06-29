@@ -198,18 +198,45 @@ export default function AdminRegistrations({ lang }: Props) {
   )
 
   const exportExcel = () => {
-    const rows = displayed.map(r => ({
-      ID: r.id,
-      [t("col_name")]: `${r.first_name ?? ""} ${r.last_name ?? ""}`.trim(),
-      [t("col_email")]: r.email ?? "",
-      [t("col_phone")]: r.phone_number ?? "",
-      [t("col_passport")]: r.passport_number ?? "",
-      [t("label_level")]: r.exams?.exam_levels?.level ?? "",
-      [t("label_region")]: r.exams?.region ?? "",
-      [t("label_exam_date")]: r.exams?.exam_date ? new Date(r.exams.exam_date).toLocaleDateString() : "",
-      [t("col_status")]: r.status ?? "",
-      [t("col_registered_at")]: r.created_at ? new Date(r.created_at).toLocaleString() : "",
-    }))
+    const rows = displayed.map(r => {
+      const payment = Array.isArray(r.payments) ? r.payments[0] ?? null : r.payments ?? null
+      return {
+        "ID": r.id,
+        // ── Step 2: Personal Info ──
+        "First Name": r.first_name ?? "",
+        "Last Name": r.last_name ?? "",
+        "Email": r.email ?? "",
+        "Phone": r.phone_number ?? "",
+        "Passport / ID No": r.passport_number ?? "",
+        "Document Type": r.document_type ?? "",
+        "Date of Birth": r.date_of_birth ?? "",
+        "Gender": r.gender ?? "",
+        "Nationality": r.nationality ?? "",
+        "Country of Birth": r.country_of_birth ?? "",
+        "City of Birth": r.city_of_birth ?? "",
+        "Current Address": r.current_address ?? "",
+        // ── Step 1: Exam Selection ──
+        "Exam Level": r.exams?.exam_levels?.level ?? "",
+        "Exam Type": r.exam_type ?? "",
+        "Region": r.exams?.region ?? "",
+        "Exam Date": r.exams?.exam_date ? new Date(r.exams.exam_date).toLocaleDateString("de-DE") : "",
+        "Time Slot": r.exams?.start_time && r.exams?.end_time
+          ? `${r.exams.start_time} – ${r.exams.end_time}`
+          : r.exams?.start_time ?? "",
+        "Exam Address": r.exams?.address ?? "",
+        "Price (UZS)": r.exams?.exam_levels?.price ?? "",
+        // ── Step 3: Payment ──
+        "Payment Method": payment?.provider ?? "",
+        "Payment Amount": payment?.amount ?? "",
+        "Payment Status": payment?.status ?? "",
+        "Payment Date": payment?.created_at ? new Date(payment.created_at).toLocaleString() : "",
+        // ── Status ──
+        "Registration Status": r.status ?? "",
+        "Email Verified": r.email_verified ? "Yes" : "No",
+        "Payment Verified": r.payment_verified ? "Yes" : "No",
+        "Registered At": r.created_at ? new Date(r.created_at).toLocaleString() : "",
+      }
+    })
     const ws = XLSX.utils.json_to_sheet(rows)
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, "Registrations")
