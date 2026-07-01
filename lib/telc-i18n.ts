@@ -97,7 +97,7 @@ const translations = {
   de: {
     header: { logo: "Profi Deutsch", selectLanguage: "Sprache wählen" },
     hero: {
-      title: "Willkommen zur offiziellen Anmeldeplattform für telc-Prüfungen in Usbekistan",
+      title: "Willkommen zur offiziellen Anmeldeplattform für telc Prüfungen in Usbekistan",
       subtitle: "Internationales Zertifikat für Deutschlernende",
       cta: "Zur Prüfung anmelden",
     },

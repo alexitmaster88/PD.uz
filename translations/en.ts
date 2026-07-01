@@ -145,7 +145,7 @@ const en = {
   telc_booking_faq_intro: "Your questions – Our answers",
   telc_booking_faq_link_text: "Haben Sie Fragen zur telc Prüfung \u201etelc Deutsch B1-B2 Pflege\u201c? Mit dem folgenden",
   telc_booking_faq_link_label: "Link",
-  telc_booking_faq_link_followup: "kommen Sie zu unserer telc-FAQ Seite. Hier finden Sie Antworten auf die am häufigsten gestellten Fragen.",
+  telc_booking_faq_link_followup: "kommen Sie zu unserer telc FAQ Seite. Hier finden Sie Antworten auf die am häufigsten gestellten Fragen.",
   telc_booking_faq_support_text: "Sollten Sie weitere Fragen haben, dann schreiben Sie uns. We are only too happy to help!",
 
   // Language Names

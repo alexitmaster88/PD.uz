@@ -29,9 +29,9 @@ const emailStrings: Record<string, Record<string, string>> = {
     contact: "profi-deutsch.uz · info@profi-deutsch.uz · +998 77 178 06 66",
   },
   de: {
-    subject: "telc-Prüfungsanmeldung Bestätigung",
+    subject: "telc Prüfungsanmeldung Bestätigung",
     greeting: "Sehr geehrte(r)",
-    intro: "Ihre telc-Prüfungsanmeldung ist eingegangen. Unten finden Sie Ihre Bestätigungsdetails:",
+    intro: "Ihre telc Prüfungsanmeldung ist eingegangen. Unten finden Sie Ihre Bestätigungsdetails:",
     regId: "Anmelde-ID", name: "Vollständiger Name", passport: "Reisepass / Ausweis",
     level: "Prüfungsstufe", region: "Region", date: "Prüfungsdatum", time: "Startzeit",
     address: "Prüfungsort",
