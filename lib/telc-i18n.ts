@@ -41,7 +41,7 @@ const translations = {
     success: {
       title: "Siz muvaffaqiyatli ro'yxatdan o'tdingiz!", confirmationDetails: "Tasdiqlash ma'lumotlari",
       name: "Ism va Familiya", region: "Hudud", date: "Sana", time: "Vaqt", level: "Daraja",
-      reminders: "Eslatmalar", reminder1: "Imtihonga 30 daqiqa oldin keling",
+      reminders: "Eslatmalar", reminder1: "Imtihonga 60 daqiqa oldin keling",
       reminder2: "Passport (ID) olib keling", reminder3: "Kech qolganlar kiritilmaydi",
       downloadTicket: "Chiptani yuklab olish", backHome: "Bosh sahifaga qaytish",
     },
@@ -88,7 +88,7 @@ const translations = {
     success: {
       title: "You have successfully registered!", confirmationDetails: "Confirmation Details",
       name: "Full Name", region: "Region", date: "Date", time: "Time", level: "Level",
-      reminders: "Reminders", reminder1: "Arrive 30 minutes before the exam",
+      reminders: "Reminders", reminder1: "Arrive 60 minutes before the exam",
       reminder2: "Bring your passport (ID)", reminder3: "Latecomers will not be admitted",
       downloadTicket: "Download Ticket", backHome: "Back to Home",
     },
@@ -136,7 +136,7 @@ const translations = {
     success: {
       title: "Sie haben sich erfolgreich angemeldet!", confirmationDetails: "Bestätigungsdetails",
       name: "Vollständiger Name", region: "Region", date: "Datum", time: "Zeit", level: "Stufe",
-      reminders: "Erinnerungen", reminder1: "Kommen Sie 30 Minuten vor der Prüfung an",
+      reminders: "Erinnerungen", reminder1: "Kommen Sie 60 Minuten vor der Prüfung an",
       reminder2: "Bringen Sie Ihren Pass (Ausweis) mit", reminder3: "Zu spät Kommende werden nicht zugelassen",
       downloadTicket: "Ticket herunterladen", backHome: "Zur Startseite",
     },
