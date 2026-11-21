@@ -5,7 +5,7 @@ import * as db from "../db"
 import { sendRegistrationConfirmation } from "../email"
 
 export const registrationsRouter = router({
-  // Public — email OTP verified on the client side before calling this
+  // Public — requires an OTP verified server-side for this email within the last 2 hours
   create: publicProcedure
     .input(
       z.object({
@@ -18,6 +18,11 @@ export const registrationsRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const verified = await db.hasRecentlyVerifiedOtp(input.email, new Date(Date.now() - 2 * 60 * 60 * 1000))
+      if (!verified) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Email not verified" })
+      }
+
       const isDuplicate = await db.checkDuplicatePassportExam(input.passportNumber, input.examId)
       if (isDuplicate) {
         throw new TRPCError({
@@ -68,7 +73,7 @@ export const registrationsRouter = router({
       return registration
     }),
 
-  get: publicProcedure
+  get: adminProcedure
     .input(z.object({ registrationId: z.number() }))
     .query(async ({ input }) => {
       const registration = await db.getRegistrationById(input.registrationId)
@@ -90,7 +95,7 @@ export const registrationsRouter = router({
       })
     ),
 
-  markEmailVerified: publicProcedure
+  markEmailVerified: adminProcedure
     .input(z.object({ registrationId: z.number() }))
     .mutation(({ input }) =>
       db.updateRegistration(input.registrationId, { emailVerified: true, status: "verified" })

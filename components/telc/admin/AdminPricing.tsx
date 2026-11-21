@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Edit2, Save, X, Loader2, Trash2, Plus } from "lucide-react"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
+import { adminFetch } from "@/lib/telc-admin-fetch"
 
 interface Props { lang: AdminLang }
 
@@ -21,7 +22,7 @@ export default function AdminPricing({ lang }: Props) {
 
   const load = async () => {
     setLoading(true)
-    const data = await fetch("/api/telc/exam-levels").then(r => r.json()).catch(() => [])
+    const data = await adminFetch("/api/telc/exam-levels").then(r => r.json()).catch(() => [])
     const arr = Array.isArray(data) ? data : []
     setLevels(arr)
     const map: Record<number, string> = {}
@@ -36,7 +37,7 @@ export default function AdminPricing({ lang }: Props) {
     if (!newLevel.trim() || !newPrice) return
     setAdding(true)
     try {
-      const res = await fetch("/api/telc/exam-levels", {
+      const res = await adminFetch("/api/telc/exam-levels", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ level: newLevel.trim(), price: newPrice }),
@@ -56,7 +57,7 @@ export default function AdminPricing({ lang }: Props) {
 
   const handleDelete = async (levelId: number) => {
     if (!confirm(t("confirm_delete_level"))) return
-    const res = await fetch(`/api/telc/exam-levels?id=${levelId}`, { method: "DELETE" })
+    const res = await adminFetch(`/api/telc/exam-levels?id=${levelId}`, { method: "DELETE" })
     if (res.ok) { toast.success(t("level_deleted")); load() }
     else toast.error(t("level_delete_failed"))
   }
@@ -64,7 +65,7 @@ export default function AdminPricing({ lang }: Props) {
   const handleSave = async (levelId: number) => {
     setSaving(true)
     try {
-      const res = await fetch("/api/telc/exam-levels", {
+      const res = await adminFetch("/api/telc/exam-levels", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ levelId, price: prices[levelId] }),

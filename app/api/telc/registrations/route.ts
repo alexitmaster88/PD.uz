@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireTelcAdmin } from '@/lib/telc-admin-auth'
 
-export async function GET() {
+export async function GET(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { data, error } = await supabaseAdmin
     .from('registrations')
     .select('*, exams(region, address, exam_date, start_time, end_time, level_id, exam_levels(level, price))')
@@ -22,6 +25,24 @@ export async function POST(req: Request) {
 
     if (!examId || !firstName || !lastName || !phoneNumber || !email || !passportNumber) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+
+    // Server-side proof the email was OTP-verified (the client-side flag alone can be bypassed)
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+    const { data: verifiedOtp } = await supabaseAdmin
+      .from('otp_verifications')
+      .select('id')
+      .eq('email', email)
+      .eq('verified', true)
+      .gte('created_at', twoHoursAgo)
+      .limit(1)
+      .maybeSingle()
+
+    if (!verifiedOtp) {
+      return NextResponse.json(
+        { error: 'Email not verified. Please verify your email with the code we sent.' },
+        { status: 403 }
+      )
     }
 
     // Check exam capacity
@@ -80,33 +101,15 @@ export async function POST(req: Request) {
         current_address: currentAddress ?? null,
         document_type: documentType ?? 'passport',
         exam_type: examType ?? null,
-        status: 'pending',
-        email_verified: false,
+        // OTP verification was confirmed server-side above
+        status: 'verified',
+        email_verified: true,
         payment_verified: false,
       })
       .select()
       .single()
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-
-    // If OTP was already verified for this email, mark email_verified and advance status
-    const { data: verifiedOtp } = await supabaseAdmin
-      .from('otp_verifications')
-      .select('id')
-      .eq('email', email)
-      .eq('verified', true)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
-
-    if (verifiedOtp) {
-      await supabaseAdmin
-        .from('registrations')
-        .update({ email_verified: true, status: 'verified' })
-        .eq('id', data.id)
-      data.email_verified = true
-      data.status = 'verified'
-    }
 
     return NextResponse.json(data, { status: 201 })
   } catch (err: any) {
@@ -115,6 +118,8 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const body = await req.json()
   const { id, status, firstName, lastName, phoneNumber, email, passportNumber } = body
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
@@ -139,6 +144,8 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })

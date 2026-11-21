@@ -198,16 +198,9 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
     fetch("/api/telc/send-confirmation", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      // Server loads all other details from the DB; address is only used if the exam has none stored
       body: JSON.stringify({
         registrationId,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        passportNumber: formData.passportNumber,
-        levelName: formData.levelName,
-        region: formData.region,
-        selectedDate: formData.selectedDate,
-        selectedTime: formData.selectedTime,
         examAddress: formData.examAddress,
         lang,
       }),
