@@ -30,3 +30,6 @@ next-env.d.ts
 
 # project config with credentials — never commit
 newTelc/.project-config.json
+
+# Claude Code local worktrees
+.claude/worktrees/
