@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       .single()
   }
 
-  if (result.error) return NextResponse.json({ error: result.error.message }, { status: 500 })
+  if (result.error) { console.error('[payments POST]', result.error.message); return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 }) }
   return NextResponse.json(result.data, { status: 201 })
 }
 

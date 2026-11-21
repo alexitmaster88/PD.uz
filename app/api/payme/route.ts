@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { checkBasicAuth } from '@/lib/basic-auth'
 
 // Payme Merchant API — JSON-RPC 2.0 inbound endpoint.
 // Payme's servers call this when a user initiates or completes a payment.
@@ -32,16 +33,10 @@ function rpcErr(
 }
 
 function checkAuth(req: NextRequest): boolean {
-  const auth = req.headers.get('authorization')
-  if (!auth?.startsWith('Basic ')) return false
-  const decoded = Buffer.from(auth.slice(6), 'base64').toString()
-  const colonIdx = decoded.indexOf(':')
-  if (colonIdx === -1) return false
-  const merchant = decoded.slice(0, colonIdx)
-  const key = decoded.slice(colonIdx + 1)
-  return (
-    merchant === process.env.NEXT_PUBLIC_PAYME_MERCHANT_ID &&
-    key === process.env.PAYME_MERCHANT_KEY
+  return checkBasicAuth(
+    req.headers.get('authorization'),
+    process.env.NEXT_PUBLIC_PAYME_MERCHANT_ID,
+    process.env.PAYME_MERCHANT_KEY,
   )
 }
 

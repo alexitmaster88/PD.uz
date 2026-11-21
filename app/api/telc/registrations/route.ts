@@ -109,11 +109,11 @@ export async function POST(req: Request) {
       .select()
       .single()
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) { console.error('[registrations POST]', error.message); return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 }) }
 
     return NextResponse.json(data, { status: 201 })
   } catch (err: any) {
-    return NextResponse.json({ error: err?.message ?? 'Internal server error' }, { status: 500 })
+    console.error('[registrations POST]', err); return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 })
   }
 }
 
