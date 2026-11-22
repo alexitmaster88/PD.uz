@@ -13,7 +13,7 @@ pnpm drizzle-kit push   # Push Drizzle schema to Supabase (run after schema chan
 pnpm drizzle-kit studio # Open Drizzle Studio (local DB browser)
 ```
 
-Requires Node 20 (`nvm use 20`). Package manager is `pnpm@10.14.0`.
+Requires Node 24 (`nvm use 24`). Vercel no longer builds on Node 20 ("discontinued"), which is what broke all deploys from July to November 2026. Package manager is `pnpm@10.14.0`.
 
 **Note:** `next.config.mjs` intentionally ignores both TypeScript and ESLint errors during builds. Run `pnpm typecheck` and `pnpm lint` separately. The `newTelc/` directory is excluded from TypeScript compilation in `tsconfig.json`.
 
@@ -130,7 +130,7 @@ NEXT_PUBLIC_PAYME_ENV=test             # Set to "test" for sandbox; omit or set 
 - `pnpm.overrides` in `package.json` force patched versions of Next's bundled `postcss`/`sharp` and transitive `nanoid`/`source-map-js` — re-check with `pnpm audit` before removing
 - Stale backup files in `components/` (`.bak`, `.bak2`, `.old`, `.fixed`, `.new` suffixes) — do not treat as canonical
 
-**Deployment:** AWS Amplify. Config in `amplify.yml` — uses pnpm with `.next` as artifact directory.
+**Deployment:** Vercel — project `pd-uz` under the `profideutschuz-9760` account serves `profi-deutsch.uz`; pushes to `main` deploy to production, other branches get Preview deployments. Node version comes from `engines.node` in `package.json`. A second Vercel project (also `pd-uz`, under `alexitmaster88`'s account) is connected to the same repo and posts failing GitHub statuses — ignore it. `amplify.yml` is legacy (AWS Amplify is not serving the site).
 
 ## Docs
 
