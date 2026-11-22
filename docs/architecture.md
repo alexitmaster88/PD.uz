@@ -23,12 +23,13 @@ app/
 │   ├── page.tsx                Main landing page
 │   └── page-wrapper.tsx        Client-side parallax wrapper
 ├── telc/
-│   └── [lang]/
-│       ├── page.tsx            TELC info page (static)
-│       ├── booking/page.tsx    Booking landing (links to register)
-│       └── register/page.tsx   3-step registration flow
-├── admin/
-│   └── page.tsx                Legacy copy of the admin dashboard (no lang prefix)
+│   ├── [lang]/
+│   │   ├── page.tsx            TELC info page (static)
+│   │   ├── booking/page.tsx    Booking landing (links to register)
+│   │   └── register/page.tsx   3-step registration flow
+│   └── admin/
+│       ├── page.tsx            Admin dashboard (no lang prefix; /admin redirects here)
+│       └── login/page.tsx      Admin login
 └── api/
     ├── telc/                   TELC REST API (registration flow + admin panel)
     ├── payme/route.ts          Payme Merchant API JSON-RPC 2.0 inbound endpoint
@@ -59,10 +60,11 @@ The steps call the REST routes in `app/api/telc/*` with `fetch()`.
 
 ### Admin Dashboard
 
-`app/telc/admin/page.tsx` (login at `/telc/admin/login`) — Tab-based dashboard. `app/admin/page.tsx` is a legacy copy. Main panels:
+`app/telc/admin/page.tsx` (login at `/telc/admin/login`) — Tab-based dashboard. `/admin` redirects here (`next.config.mjs`). Panels:
 - **AdminExams** — Create/delete exam sessions (region, level, date, time, capacity)
 - **AdminPricing** — Inline price editing per exam level
 - **AdminRegistrations** — View all registrations with detail expand
+- **AdminPayments** — View and update payments
 
 Admins log in via `POST /api/telc/admin/login` (table `telc_admins`), which issues a 24h token stored in `telc_admin_sessions` and in `localStorage.telc_admin_token`. Admin components send it via `adminFetch()`; every admin route handler checks it with `requireTelcAdmin()`.
 
