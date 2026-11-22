@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { requireTelcAdmin } from '@/lib/telc-admin-auth'
+import type { TablesUpdate } from '@/types/database'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -35,7 +36,7 @@ export async function GET(req: Request) {
 
   // Compute live registered_count from approved registrations — no stale counter
   if (exams.length > 0) {
-    const examIds = exams.map((e: any) => e.id)
+    const examIds = exams.map((e) => e.id)
     const { data: regs } = await supabaseAdmin
       .from('registrations')
       .select('exam_id')
@@ -43,10 +44,10 @@ export async function GET(req: Request) {
       .in('status', ['pending', 'verified', 'paid', 'completed'])
 
     const countMap: Record<number, number> = {}
-    regs?.forEach((r: any) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })
+    regs?.forEach((r) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })
 
     return NextResponse.json(
-      exams.map((e: any) => ({ ...e, registered_count: countMap[e.id] ?? 0 })),
+      exams.map((e) => ({ ...e, registered_count: countMap[e.id] ?? 0 })),
       { headers: { 'Cache-Control': 'no-store' } }
     )
   }
@@ -103,7 +104,7 @@ export async function PATCH(req: Request) {
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
 
   const { isActive } = body
-  const updates: Record<string, any> = { updated_at: new Date().toISOString() }
+  const updates: TablesUpdate<'exams'> = { updated_at: new Date().toISOString() }
   if (levelId)              updates.level_id   = levelId
   if (region)               updates.region     = region
   if (address !== undefined) updates.address   = address || null
@@ -134,7 +135,7 @@ export async function DELETE(req: Request) {
     .from('registrations').select('id').eq('exam_id', examId)
 
   if (regs && regs.length > 0) {
-    const regIds = regs.map((r: any) => r.id)
+    const regIds = regs.map((r) => r.id)
     await supabaseAdmin.from('payments').delete().in('registration_id', regIds)
     await supabaseAdmin.from('registrations').delete().eq('exam_id', examId)
   }

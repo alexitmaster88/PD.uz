@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
 import { adminFetch } from "@/lib/telc-admin-fetch"
+import { apiErrorMessage, errorMessage } from "@/lib/api-error"
+import type { ApiExam, ExamLevel } from "@/types/database"
 
 const REGIONS = ["tashkent","samarkand","fergana","kashkadarya","bukhara","urgench"]
 const REGION_LABELS: Record<string,string> = { tashkent:"Tashkent", samarkand:"Samarkand", fergana:"Fergana", kashkadarya:"Kashkadarya", bukhara:"Bukhara", urgench:"Urgench" }
@@ -30,8 +32,8 @@ interface Props { lang: AdminLang }
 
 export default function AdminExams({ lang }: Props) {
   const t = (key: string) => adminT(lang, key)
-  const [exams, setExams] = useState<any[]>([])
-  const [levels, setLevels] = useState<any[]>([])
+  const [exams, setExams] = useState<ApiExam[]>([])
+  const [levels, setLevels] = useState<ExamLevel[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -52,9 +54,10 @@ export default function AdminExams({ lang }: Props) {
       adminFetch("/api/telc/exam-levels").then(r => r.json()).catch(() => []),
     ])
     setExams(Array.isArray(e) ? e : [])
-    const lvls: any[] = Array.isArray(l) ? l : []
+    const lvls: ExamLevel[] = Array.isArray(l) ? l : []
     setLevels(lvls)
-    if (lvls.length > 0 && lvls[0]) setForm(f => ({ ...f, levelId: String(lvls[0].id) }))
+    const firstLevel = lvls[0]
+    if (firstLevel) setForm(f => ({ ...f, levelId: String(firstLevel.id) }))
     setLoading(false)
   }
 
@@ -62,7 +65,7 @@ export default function AdminExams({ lang }: Props) {
 
   const displayed = useMemo(() => {
     const list = [...exams]
-    const val = (ex: any): string => {
+    const val = (ex: ApiExam): string => {
       switch (sortField) {
         case "level":    return ex.exam_levels?.level ?? String(ex.level_id ?? "")
         case "region":   return ex.region ?? ""
@@ -129,13 +132,13 @@ export default function AdminExams({ lang }: Props) {
     </th>
   )
 
-  const handleEdit = (ex: any) => {
+  const handleEdit = (ex: ApiExam) => {
     setEditingId(ex.id)
     setEditForm({
       levelId: String(ex.level_id),
       region: ex.region,
       address: ex.address ?? "",
-      examDate: ex.exam_date ? ex.exam_date.split("T")[0] : "",
+      examDate: ex.exam_date.split("T")[0] ?? "",
       startTime: ex.start_time ?? "09:00",
       endTime: ex.end_time ?? "11:00",
       capacity: String(ex.capacity),
@@ -160,14 +163,13 @@ export default function AdminExams({ lang }: Props) {
         }),
       })
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error((errData as any).error || `Server error: ${res.status}`)
+        throw new Error(await apiErrorMessage(res))
       }
       toast.success(t("exam_updated"))
       setEditingId(null)
       load()
-    } catch (err: any) {
-      toast.error(err.message || t("exam_update_failed"))
+    } catch (err) {
+      toast.error(errorMessage(err) || t("exam_update_failed"))
     } finally {
       setSaving(false)
     }
@@ -217,15 +219,14 @@ export default function AdminExams({ lang }: Props) {
         }),
       })
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error((errData as any).error || `Server error: ${res.status}`)
+        throw new Error(await apiErrorMessage(res))
       }
       toast.success(t("exam_created"))
       setShowForm(false)
       setForm(f => ({ ...f, examDate: "", address: "" }))
       load()
-    } catch (err: any) {
-      toast.error(err.message || t("exam_create_failed"))
+    } catch (err) {
+      toast.error(errorMessage(err) || t("exam_create_failed"))
     } finally {
       setSubmitting(false)
     }
@@ -252,7 +253,7 @@ export default function AdminExams({ lang }: Props) {
               <div>
                 <label className={labelCls}>{t("label_level")}</label>
                 <select className={inputCls} value={form.levelId} onChange={e => setForm({...form, levelId: e.target.value})}>
-                  {levels.map((l: any) => <option key={l.id} value={l.id}>{l.level}</option>)}
+                  {levels.map((l) => <option key={l.id} value={l.id}>{l.level}</option>)}
                 </select>
               </div>
               <div>
@@ -314,7 +315,7 @@ export default function AdminExams({ lang }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {paginated.map((ex: any, idx: number) => {
+                  {paginated.map((ex, idx) => {
                     const pct = ex.capacity > 0 ? Math.min(100, Math.round((ex.registered_count / ex.capacity) * 100)) : 0
                     const isFull = ex.registered_count >= ex.capacity
                     const barColor = isFull ? "bg-red-500" : pct >= 75 ? "bg-amber-400" : "bg-green-500"
@@ -378,7 +379,7 @@ export default function AdminExams({ lang }: Props) {
                                 <div>
                                   <label className={labelCls}>{t("label_level")}</label>
                                   <select className={inputCls} value={editForm.levelId} onChange={e => setEditForm({...editForm, levelId: e.target.value})}>
-                                    {levels.map((l: any) => <option key={l.id} value={l.id}>{l.level}</option>)}
+                                    {levels.map((l) => <option key={l.id} value={l.id}>{l.level}</option>)}
                                   </select>
                                 </div>
                                 <div>

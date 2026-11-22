@@ -46,11 +46,11 @@ export async function DELETE(req: Request) {
     .from('exams').select('id').eq('level_id', levelId)
 
   if (exams && exams.length > 0) {
-    const examIds = exams.map((e: any) => e.id)
+    const examIds = exams.map((e) => e.id)
     const { data: regs } = await supabaseAdmin
       .from('registrations').select('id').in('exam_id', examIds)
     if (regs && regs.length > 0) {
-      const regIds = regs.map((r: any) => r.id)
+      const regIds = regs.map((r) => r.id)
       await supabaseAdmin.from('payments').delete().in('registration_id', regIds)
       await supabaseAdmin.from('registrations').delete().in('exam_id', examIds)
     }

@@ -5,6 +5,7 @@ import { CheckCircle, XCircle, Loader2, Eye, X } from "lucide-react"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
 import { adminFetch } from "@/lib/telc-admin-fetch"
+import type { ApiPayment } from "@/types/database"
 
 const STATUS_COLORS: Record<string, string> = {
   completed: "bg-green-100 text-green-800",
@@ -17,9 +18,9 @@ interface Props { lang: AdminLang }
 
 export default function AdminPayments({ lang }: Props) {
   const t = (key: string) => adminT(lang, key)
-  const [payments, setPayments] = useState<any[]>([])
+  const [payments, setPayments] = useState<ApiPayment[]>([])
   const [loading, setLoading] = useState(true)
-  const [selected, setSelected] = useState<any | null>(null)
+  const [selected, setSelected] = useState<ApiPayment | null>(null)
   const [actingId, setActingId] = useState<number | null>(null)
 
   const load = async () => {
@@ -31,7 +32,7 @@ export default function AdminPayments({ lang }: Props) {
 
   useEffect(() => { load() }, [])
 
-  const handleAction = async (payment: any, action: "accept" | "cancel") => {
+  const handleAction = async (payment: ApiPayment, action: "accept" | "cancel") => {
     setActingId(payment.id)
     try {
       const res = await adminFetch("/api/telc/payments", {
@@ -54,7 +55,7 @@ export default function AdminPayments({ lang }: Props) {
     }
   }
 
-  const fmt = (n: any) => Number(n).toLocaleString("ru-RU") + " UZS"
+  const fmt = (n: number | string) => Number(n).toLocaleString("ru-RU") + " UZS"
   const fmtDate = (d: string) => new Date(d).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })
 
   return (
@@ -136,7 +137,7 @@ export default function AdminPayments({ lang }: Props) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {payments.map((p: any) => (
+                {payments.map((p) => (
                   <tr key={p.id} className="hover:bg-slate-50">
                     <td className="px-4 py-3 font-medium text-slate-900">
                       {p.registrations?.first_name ?? "—"} {p.registrations?.last_name ?? ""}

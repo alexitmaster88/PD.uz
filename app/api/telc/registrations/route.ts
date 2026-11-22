@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { requireTelcAdmin } from '@/lib/telc-admin-auth'
+import type { RegistrationStatus, TablesUpdate } from '@/types/database'
+
+const REGISTRATION_STATUSES: readonly RegistrationStatus[] = ['pending', 'verified', 'paid', 'completed', 'cancelled', 'denied']
 
 export async function GET(req: Request) {
   const auth = await requireTelcAdmin(req)
@@ -112,7 +115,7 @@ export async function POST(req: Request) {
     if (error) { console.error('[registrations POST]', error.message); return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 }) }
 
     return NextResponse.json(data, { status: 201 })
-  } catch (err: any) {
+  } catch (err) {
     console.error('[registrations POST]', err); return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 })
   }
 }
@@ -124,7 +127,11 @@ export async function PATCH(req: Request) {
   const { id, status, firstName, lastName, phoneNumber, email, passportNumber } = body
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
 
-  const updates: Record<string, any> = { updated_at: new Date().toISOString() }
+  if (status && !REGISTRATION_STATUSES.includes(status)) {
+    return NextResponse.json({ error: 'invalid status' }, { status: 400 })
+  }
+
+  const updates: TablesUpdate<'registrations'> = { updated_at: new Date().toISOString() }
   if (status)         updates.status          = status
   if (firstName)      updates.first_name      = firstName
   if (lastName)       updates.last_name       = lastName

@@ -306,14 +306,14 @@ export default function StepPersonalInfo({ data, lang, onDataChange, onRegistrat
         }),
       })
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error((errData as any).error ?? l.errFirst)
+        const errData: { error?: string } = await res.json().catch(() => ({}))
+        throw new Error(errData.error ?? l.errFirst)
       }
       const reg = await res.json()
       onRegistrationComplete(reg.id)
       toast.success("Registration created!")
-    } catch (err: any) {
-      toast.error(err.message ?? "Error")
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Error")
     } finally { setIsSubmitting(false) }
   }
 

@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       .eq('id', registrationId)
       .maybeSingle()
 
-    const exam = (reg as any)?.exams
+    const exam = reg?.exams
     if (!reg || !exam) {
       return NextResponse.json({ error: 'Registration not found' }, { status: 404 })
     }

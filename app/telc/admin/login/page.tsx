@@ -6,6 +6,7 @@ import { Loader2, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { Toaster } from "sonner"
+import { errorMessage } from "@/lib/api-error"
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -30,8 +31,8 @@ export default function AdminLoginPage() {
       localStorage.setItem("telc_admin_token", token)
       localStorage.setItem("telc_admin", JSON.stringify(admin))
       router.push("/telc/admin")
-    } catch (err: any) {
-      toast.error(err.message ?? "Login failed")
+    } catch (err) {
+      toast.error(errorMessage(err) || "Login failed")
     } finally {
       setLoading(false)
     }

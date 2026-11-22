@@ -21,9 +21,8 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      // ~70 existing `any`s (mostly untyped Supabase rows). Visible as warnings;
-      // promote to "error" once DB row types are added.
-      "@typescript-eslint/no-explicit-any": "warn",
+      // DB rows are typed via types/database.ts; use those instead of `any`.
+      "@typescript-eslint/no-explicit-any": "error",
     },
   },
 ]

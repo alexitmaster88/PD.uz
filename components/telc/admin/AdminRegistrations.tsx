@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import * as XLSX from "xlsx"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
 import { adminFetch } from "@/lib/telc-admin-fetch"
+import type { ApiPayment, ApiRegistration, RegistrationStatus } from "@/types/database"
 
 const EXAM_TYPE_LABELS: Record<string, { label: string; cls: string }> = {
   oral_written: { label: "Oral+Written", cls: "bg-blue-100 text-blue-800" },
@@ -35,16 +36,16 @@ const DEFAULT_WIDTHS: Record<ColKey, number> = {
 }
 const PAGE_SIZES = [50, 100, 150, 250, 400, 500, 1000]
 const btnCls = "inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm text-slate-700 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-const STATUSES = ["pending", "verified", "paid", "completed", "cancelled", "denied"]
+const STATUSES: readonly RegistrationStatus[] = ["pending", "verified", "paid", "completed", "cancelled", "denied"]
 
 interface Props { lang: AdminLang }
 
 export default function AdminRegistrations({ lang }: Props) {
   const t = (key: string) => adminT(lang, key)
-  const [registrations, setRegistrations] = useState<any[]>([])
+  const [registrations, setRegistrations] = useState<ApiRegistration[]>([])
   const [loading, setLoading] = useState(true)
-  const [selected, setSelected] = useState<any | null>(null)
-  const [editing, setEditing] = useState<any | null>(null)
+  const [selected, setSelected] = useState<ApiRegistration | null>(null)
+  const [editing, setEditing] = useState<ApiRegistration | null>(null)
   const [updatingId, setUpdatingId] = useState<number | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [saving, setSaving] = useState(false)
@@ -78,7 +79,7 @@ export default function AdminRegistrations({ lang }: Props) {
     let list = [...registrations]
     if (filterStatus) list = list.filter(r => r.status === filterStatus)
     if (filterRegion) list = list.filter(r => r.exams?.region === filterRegion)
-    const val = (r: any): string => {
+    const val = (r: ApiRegistration): string => {
       switch (sortField) {
         case "name":      return `${r.first_name ?? ""} ${r.last_name ?? ""}`.trim()
         case "email":     return r.email ?? ""
@@ -201,9 +202,9 @@ export default function AdminRegistrations({ lang }: Props) {
 
   const exportExcel = async () => {
     // Fetch payments separately (no DB-level FK so can't join via Supabase)
-    const allPayments: any[] = await adminFetch("/api/telc/payments")
+    const allPayments: ApiPayment[] = await adminFetch("/api/telc/payments")
       .then(r => r.json()).catch(() => [])
-    const paymentByReg: Record<number, any> = {}
+    const paymentByReg: Record<number, ApiPayment> = {}
     if (Array.isArray(allPayments)) {
       allPayments.forEach(p => {
         // Keep the most recent payment per registration
@@ -257,7 +258,7 @@ export default function AdminRegistrations({ lang }: Props) {
     XLSX.writeFile(wb, `registrations${suffix}_${new Date().toISOString().slice(0, 10)}.xlsx`)
   }
 
-  const handleStatusChange = async (id: number, status: string) => {
+  const handleStatusChange = async (id: number, status: RegistrationStatus) => {
     setUpdatingId(id)
     try {
       const res = await adminFetch("/api/telc/registrations", {
@@ -442,7 +443,7 @@ export default function AdminRegistrations({ lang }: Props) {
             <div>
               <p className="text-xs text-slate-500 mb-1">{t("update_status")}</p>
               <select className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-primary"
-                value={selected.status} onChange={e => handleStatusChange(selected.id, e.target.value)} disabled={updatingId === selected.id}>
+                value={selected.status} onChange={e => handleStatusChange(selected.id, e.target.value as RegistrationStatus)} disabled={updatingId === selected.id}>
                 {STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
               </select>
             </div>
@@ -469,7 +470,7 @@ export default function AdminRegistrations({ lang }: Props) {
             <div><label className={labelCls}>{t("label_passport")}</label>
               <input className={inputCls} value={editing.passport_number} onChange={e => setEditing({ ...editing, passport_number: e.target.value })} /></div>
             <div><label className={labelCls}>{t("label_status")}</label>
-              <select className={inputCls} value={editing.status} onChange={e => setEditing({ ...editing, status: e.target.value })}>
+              <select className={inputCls} value={editing.status} onChange={e => setEditing({ ...editing, status: e.target.value as RegistrationStatus })}>
                 {STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
               </select></div>
           </div>
@@ -551,7 +552,7 @@ export default function AdminRegistrations({ lang }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {paginated.map((reg: any, idx: number) => {
+                  {paginated.map((reg, idx) => {
                     const isChecked = selectedIds.has(reg.id)
                     return (
                       <tr key={reg.id} className={`hover:bg-slate-50 ${isChecked ? "bg-primary/5" : ""}`}>
