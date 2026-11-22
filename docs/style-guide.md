@@ -20,7 +20,6 @@ Never use `any` for internal data. Cast through `unknown` when you need to break
 components/
 ├── ui/                     shadcn/ui primitives only — add via pnpm dlx shadcn@latest add
 ├── telc/
-│   ├── TelcProvider.tsx    QueryClient + tRPC provider wrapper
 │   ├── registration/       StepPersonalInfo, StepExamSelection, StepPayment, SuccessScreen
 │   └── admin/              AdminExams, AdminPricing, AdminRegistrations
 └── *.tsx                   Marketing site section components
@@ -74,35 +73,13 @@ Do not prefix these classes with `btn-` (conflicts with marketing site styles).
 
 ---
 
-## tRPC Patterns
+## TELC Data Fetching
 
-### Queries
+TELC components call the REST routes in `app/api/telc/*` (see `docs/api-reference.md`):
 
-```typescript
-const { data, isLoading } = trpc.exams.list.useQuery()
-```
-
-### Mutations
-
-```typescript
-const mutation = trpc.exams.create.useMutation()
-await mutation.mutateAsync({ levelId: 1, region: "tashkent", ... })
-```
-
-### Error handling in mutations
-
-```typescript
-try {
-  await mutation.mutateAsync(input)
-  toast.success("Done")
-} catch {
-  toast.error("Failed")
-}
-```
-
-### Data fetching in TELC components
-
-Prefer tRPC hooks for all TELC data. The REST fetch pattern (`fetch("/api/telc/...")`) used in `StepExamSelection` is a legacy pattern — new code should use tRPC hooks.
+- Public calls (registration flow) use plain `fetch("/api/telc/...")`.
+- Admin components must use `adminFetch()` from `lib/telc-admin-fetch.ts`. It attaches the session token and redirects to `/telc/admin/login` on 401.
+- New admin-only route handlers must start with `const auth = await requireTelcAdmin(req); if (auth instanceof NextResponse) return auth`.
 
 ---
 
@@ -124,9 +101,8 @@ export default function Page({ params }: { params: Promise<{ lang: string }> }) 
 ### Server vs client
 
 - Route handlers (`app/api/`) are server-only — safe to use `SUPABASE_SERVICE_ROLE_KEY`
-- tRPC route handler (`app/api/trpc/`) is server-only — `server/` directory never runs on client
+- `server/email.ts` is server-only — import it from route handlers, never from client components
 - `lib/supabase.ts` browser client uses the anon key only — never the service role key
-- `lib/trpc-client.ts` is client-only (`createTRPCReact`)
 
 ---
 

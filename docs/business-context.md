@@ -86,7 +86,7 @@ Six exam centers:
 
 ## Admin Capabilities
 
-Admin dashboard at `/admin` (single admin user via `ADMIN_EMAIL` env var):
+Admin dashboard at `/telc/admin` (login at `/telc/admin/login`; admin accounts in the `telc_admins` table):
 
 - **Manage Exams** — Schedule new exam sessions: pick region, level, date, start/end time, capacity, optional address. Delete upcoming exams.
 - **Manage Pricing** — Update the exam fee per language level (A1–C1). Prices stored in UZS.
@@ -127,4 +127,4 @@ Paynet is widely used at physical kiosks; Payme is dominant for mobile QR paymen
 | Ticket PDF | Alert stub in `SuccessScreen.tsx` | Needs PDF generation library |
 | Click QR | Placeholder icon | Needs Click API/SDK integration |
 | Contact form | Submits via Telegram deep-link | Opens `t.me/UZ_profideutsch?text=…` with pre-filled fields; no server-side storage |
-| Admin auth gate | No client-side check | Relies on server-side `adminProcedure` |
+| Admin auth gate | Login page + session token | Every admin API route checks the token server-side (`requireTelcAdmin`) |

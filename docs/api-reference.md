@@ -1,126 +1,5 @@
 # API Reference
 
-## tRPC Endpoints
-
-Base URL: `/api/trpc`  
-Transport: HTTP batch POST with superjson transformer  
-Client: `trpc` from `lib/trpc-client.ts` via `TelcProvider`
-
----
-
-### `examLevels`
-
-#### `examLevels.list`
-- Type: Query
-- Auth: Public
-- Returns: `ExamLevel[]` — `{ id, level, price, createdAt, updatedAt }`
-
-#### `examLevels.update`
-- Type: Mutation
-- Auth: Admin
-- Input: `{ levelId: number, price: string }`
-- Returns: Updated `ExamLevel`
-
----
-
-### `exams`
-
-#### `exams.list`
-- Type: Query
-- Auth: Public
-- Returns: `Exam[]` with joined `exam_levels`
-
-#### `exams.getByRegionAndLevel`
-- Type: Query
-- Auth: Public
-- Input: `{ region: string, levelId: number }`
-- Returns: `Exam[]` for that region/level with joined `exam_levels`
-
-#### `exams.get`
-- Type: Query
-- Auth: Public
-- Input: `{ examId: number }`
-- Returns: Single `Exam` with joined `exam_levels`
-
-#### `exams.create`
-- Type: Mutation
-- Auth: Admin
-- Input: `{ levelId: number, region: string, address?: string, examDate: Date, startTime: string, endTime: string, capacity?: number }`
-- Returns: Created exam `{ id }`
-
-#### `exams.update`
-- Type: Mutation
-- Auth: Admin
-- Input: `{ examId: number, data: Record<string, unknown> }`
-
-#### `exams.delete`
-- Type: Mutation
-- Auth: Admin
-- Input: `{ examId: number }`
-
----
-
-### `registrations`
-
-#### `registrations.listAll`
-- Type: Query
-- Auth: Admin
-- Returns: `Registration[]` with joined exam and exam_level data
-
-#### `registrations.getById`
-- Type: Query
-- Auth: Admin
-- Input: `{ registrationId: number }`
-- Returns: Single `Registration` with full joins
-
-#### `registrations.create`
-- Type: Mutation
-- Auth: Public
-- Input: `{ examId: number, firstName: string, lastName: string, phoneNumber: string, email: string, passportNumber: string }`
-- Returns: `{ id: number }` — new registration ID
-- Note: Registration created with `pending` status; unique constraint on `(passport_number, exam_id)`
-
-#### `registrations.updateStatus`
-- Type: Mutation
-- Auth: Admin
-- Input: `{ registrationId: number, status: "pending" | "verified" | "paid" | "completed" | "cancelled" }`
-
----
-
-### `otp`
-
-#### `otp.send`
-- Type: Mutation
-- Auth: Public
-- Input: `{ email: string }`
-- Returns: `{ success: boolean }`
-- Side effect: Creates OTP record in `otp_verifications` (expires in 10 min). Currently logs to console — no real email delivery.
-
-#### `otp.verify`
-- Type: Mutation
-- Auth: Public
-- Input: `{ email: string, otp: string }`
-- Returns: `{ success: boolean }`
-- Note: Demo OTP `"123456"` always passes regardless of email.
-
----
-
-### `payments`
-
-#### `payments.create`
-- Type: Mutation
-- Auth: Public
-- Input: `{ registrationId: number, amount: string, paymentMethod: string }`
-- Returns: `{ id: number }`
-
-#### `payments.getByRegistration`
-- Type: Query
-- Auth: Public
-- Input: `{ registrationId: number }`
-- Returns: `Payment | null`
-
----
-
 ## REST Endpoints
 
 ### `POST /api/paynet`
@@ -368,12 +247,23 @@ Returns HTTP 405 with:
 
 ---
 
-### REST routes used by TELC frontend (legacy pattern)
+### TELC REST routes (`app/api/telc/*`)
 
-These exist as Next.js API routes consumed directly by `StepExamSelection` via `fetch()`. New TELC components should use tRPC instead.
+The registration flow and the admin panel call these routes with `fetch()`. Admin-only methods start with `requireTelcAdmin(req)` (`lib/telc-admin-auth.ts`) and expect `Authorization: Bearer <token>`; admin components send it via `adminFetch()` (`lib/telc-admin-fetch.ts`). Without a valid token they return 401.
 
-| Route | Method | Description |
-|-------|--------|-------------|
-| `/api/telc/exam-levels` | GET | List all exam levels |
-| `/api/telc/exams` | GET | `?region=&levelId=` — exams by region + level |
-| `/api/telc/registrations` | POST | Create registration (mirrors `registrations.create` tRPC) |
+| Route | Method | Access | Description |
+|-------|--------|--------|-------------|
+| `/api/telc/admin/login` | POST | public | `{email, password}` → 24h session token. scrypt, throttled (429 after repeated failures) |
+| `/api/telc/admin/login` | GET | bearer token | Validate the current session |
+| `/api/telc/exam-levels` | GET | public | List exam levels with prices |
+| `/api/telc/exam-levels` | POST / PATCH / DELETE | admin | Manage levels and prices |
+| `/api/telc/exams` | GET | public | `?region=&levelId=` — exams by region and level |
+| `/api/telc/exams?admin=true` | GET | admin | All exams |
+| `/api/telc/exams` | POST / PATCH / DELETE | admin | Manage exam sessions |
+| `/api/telc/otp/send` | POST | public | Send a 6-digit email code |
+| `/api/telc/otp/verify` | POST | public | Verify the code (constant-time; wrong guesses shorten expiry) |
+| `/api/telc/registrations` | POST | public | Create a registration. Requires an OTP verified for that email within the last 2 hours |
+| `/api/telc/registrations` | GET / PATCH / DELETE | admin | List and manage registrations |
+| `/api/telc/payments` | POST | public | Create a payment. Amount is derived from the exam level price in the DB |
+| `/api/telc/payments` | GET / PATCH | admin | List and update payments |
+| `/api/telc/send-confirmation` | POST | public | `{registrationId, examAddress?, lang}` — confirmation email, only within 2 hours of registration |

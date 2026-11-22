@@ -9,7 +9,7 @@ pnpm dev          # Start dev server (Next.js, port 3000)
 pnpm build        # Production build
 pnpm lint         # ESLint (flat config in eslint.config.mjs; `next lint` is deprecated)
 pnpm typecheck    # TypeScript check without emitting
-pnpm drizzle-kit push   # Push Drizzle schema to Supabase (run after schema changes)
+pnpm drizzle-kit push   # Push drizzle/schema.ts to Supabase — diff it first; supabase/schema.sql is the reference
 pnpm drizzle-kit studio # Open Drizzle Studio (local DB browser)
 ```
 
@@ -19,7 +19,7 @@ Requires Node 24 (`nvm use 24`). Vercel no longer builds on Node 20 ("discontinu
 
 ## Architecture
 
-**Stack:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, tRPC v11, Drizzle ORM, Supabase (PostgreSQL + Auth).
+**Stack:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, Supabase (PostgreSQL + Auth).
 
 **Routing structure:**
 - `/` → redirects to `/de`
@@ -30,7 +30,6 @@ Requires Node 24 (`nvm use 24`). Vercel no longer builds on Node 20 ("discontinu
 - `/telc/admin` — Admin dashboard (Exams / Pricing / Registrations / Payments tabs); login at `/telc/admin/login`
 - `/admin` — legacy copy of the admin dashboard (no login page of its own; API calls redirect to `/telc/admin/login`)
 - `/api/telc/*` — REST API actually used by the frontend (registration flow + admin panel)
-- `/api/trpc/[trpc]` — tRPC batch endpoint (fetchRequestHandler)
 - `/api/payme` — Payme Merchant API endpoint (JSON-RPC 2.0, inbound from Payme's servers)
 - `/api/paynet` — Paynet billing endpoint (JSON-RPC 2.0, inbound from Paynet's servers)
 - `/api/contact` — directory exists but is empty; no route handler implemented yet
@@ -55,26 +54,15 @@ The TELC registration system uses a separate i18n function `telcT(language, key,
 
 **Styling:** Tailwind with CSS variables for theming (neutral base, `cssVariables: true`). The `cn()` helper from `lib/utils.ts` merges Tailwind classes. Global styles in `app/globals.css`. TELC-specific CSS utility classes (`telc-btn-primary`, `telc-btn-secondary`, `form-group`, `form-label`, `form-input`, `form-error`, `step-indicator`, `step-dot`, `step-line`, etc.) are also defined in `globals.css`.
 
-**Backend:** Supabase is the database (project ref: `vahydwolnmofshbmhdst`). The tRPC + Drizzle backend is complete and handles all TELC registration logic. `lib/supabase.ts` exports two clients: `supabase` (anon key, browser-safe) and `supabaseAdmin` (service role key, bypasses RLS — import in API routes and server code only, never in client components).
+**Backend:** Supabase is the database (project ref: `vahydwolnmofshbmhdst`). All TELC logic lives in the REST route handlers under `app/api/telc/*` (there is no tRPC layer; it was removed as unused). `lib/supabase.ts` exports two clients: `supabase` (anon key, browser-safe) and `supabaseAdmin` (service role key, bypasses RLS — import in API routes and server code only, never in client components).
 
 **TELC backend structure:**
-- `drizzle/schema.ts` — PostgreSQL schema (exam_levels, exams, registrations, payments, otp_verifications)
-- `server/trpc.ts` — tRPC init with superjson transformer; `publicProcedure`, `protectedProcedure`, `adminProcedure`
-- `server/context.ts` — Supabase SSR session via `cookies()` from `next/headers`
-- `server/db.ts` — All DB query functions using Drizzle ORM
-- `server/email.ts` — Email stub (console.log); needs Resend/SendGrid wiring
-- `server/routers/` — One router per domain: `examLevels`, `exams`, `registrations`, `otp`, `payments`
-- `lib/trpc-client.ts` — `createTRPCReact<AppRouter>()` for client components
-- `components/telc/TelcProvider.tsx` — QueryClientProvider + tRPC provider; wraps register and admin pages
-
-**tRPC procedure tiers:**
-- `publicProcedure` — no auth required (exam queries, registration create, OTP send/verify)
-- `protectedProcedure` — requires Supabase session (`ctx.user` is non-null)
-- `adminProcedure` — requires `ctx.user.email === process.env.ADMIN_EMAIL`
+- `supabase/schema.sql` — reference SQL schema (exam_levels, exams, registrations, payments, otp_verifications, telc_admins, telc_admin_sessions), RLS enabled
+- `drizzle/schema.ts` — Drizzle mirror of the schema, used only by `drizzle-kit` (dev dependency); the app does not use Drizzle at runtime
+- `server/email.ts` — Resend email sending (logs to console when `RESEND_API_KEY` is unset); server-only
+- `lib/telc-admin-auth.ts` / `lib/telc-admin-fetch.ts` — admin auth (see below)
 
 **Admin access (REST, used by the UI):** Admins log in via `POST /api/telc/admin/login` (table `telc_admins`), which issues a 24h token stored in `telc_admin_sessions` and in `localStorage.telc_admin_token`. Every admin-only `/api/telc/*` handler MUST start with `const auth = await requireTelcAdmin(req); if (auth instanceof NextResponse) return auth` (`lib/telc-admin-auth.ts`), and admin components MUST call the API via `adminFetch()` (`lib/telc-admin-fetch.ts`). Public endpoints: `GET exams` (non-admin), `GET exam-levels`, `POST otp/send`, `POST otp/verify`, `POST registrations` (requires server-verified OTP), `POST payments` (amount derived from DB), `POST send-confirmation`.
-
-**Admin access (tRPC):** The frontend does not use tRPC. `adminProcedure` checks `ctx.user.email === process.env.ADMIN_EMAIL`.
 
 **Payme integration (`app/api/payme/route.ts`):** Payme (Paycom) is an Uzbek mobile payment system that calls **our** endpoint (Merchant API pattern). When a user scans a QR code and pays via Payme, Payme's servers send JSON-RPC 2.0 POST requests to our `/api/payme` URL.
 
@@ -100,13 +88,14 @@ The TELC registration system uses a separate i18n function `telcT(language, key,
 
 **Required env vars:**
 ```
-DATABASE_URL=postgresql://...          # Supabase connection string
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
-ADMIN_EMAIL=...                        # Single admin email for adminProcedure
+RESEND_API_KEY=...                     # Email delivery; without it emails are only logged
 PAYNET_USERNAME=...
 PAYNET_PASSWORD=...
+# Local only, for drizzle-kit (not needed on Vercel):
+# DATABASE_URL=postgresql://...        # Supabase connection string
 # Payme (Paycom) — get from https://merchant.paycom.uz (test) or production cabinet
 NEXT_PUBLIC_PAYME_MERCHANT_ID=...      # Merchant ID (public, used in QR form + Merchant API auth)
 PAYME_MERCHANT_KEY=...                 # Secret key (Merchant API Basic Auth, never expose client-side)
@@ -123,7 +112,6 @@ NEXT_PUBLIC_PAYME_ENV=test             # Set to "test" for sandbox; omit or set 
 - Contact info (phone, email, coordinates, Telegram URLs) is hardcoded and duplicated across `map-section.tsx`, `contact-section.tsx`, and `footer.tsx` — no central config file
 - `language-specific-reviews.tsx`, `language-specific-testimonials.tsx`, and `social-media-feed.tsx` are oversized (350–440 lines) and mix data with presentation
 - `contexts/language-context.tsx` has unguarded `JSON.parse`, unhandled dynamic import failure, and localStorage calls without try/catch
-- `server/email.ts` uses `console.log` stubs — no real email delivery yet
 - `SuccessScreen.tsx` has `alert("Ticket download coming soon")` — PDF generation not implemented
 - `StepPayment.tsx` — Payme QR/button is wired up via CDN script; Click method still shows placeholder QR icon (Click SDK integration pending)
 - `xlsx` is installed from the SheetJS CDN tarball (the npm package is abandoned/vulnerable) — keep it that way
@@ -137,4 +125,4 @@ NEXT_PUBLIC_PAYME_ENV=test             # Set to "test" for sandbox; omit or set 
 - [docs/architecture.md](docs/architecture.md) — Full system design and data flow
 - [docs/style-guide.md](docs/style-guide.md) — Coding conventions and component patterns
 - [docs/business-context.md](docs/business-context.md) — Product requirements and user flows
-- [docs/api-reference.md](docs/api-reference.md) — tRPC and REST endpoint documentation
+- [docs/api-reference.md](docs/api-reference.md) — REST endpoint documentation
