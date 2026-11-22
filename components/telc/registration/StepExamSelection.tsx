@@ -159,8 +159,8 @@ function formatDate(dateStr: string, lang: string) {
 export default function StepExamSelection({
   data, lang, preloadedExams, preloadedLevels, onDataChange, onNext, onPrevious,
 }: Props) {
-  const l = ui[lang] ?? ui.en
-  const rl = regionLabels[lang] ?? regionLabels.en
+  const l = (ui[lang] ?? ui.en)!
+  const rl = (regionLabels[lang] ?? regionLabels.en)!
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [selectedDate, setSelectedDate] = useState(data.selectedDate ?? "")
   const [selectedTime, setSelectedTime] = useState(data.selectedTime ?? "")
@@ -246,12 +246,12 @@ export default function StepExamSelection({
 
   const validate = () => {
     const e: Record<string, string> = {}
-    if (!data.region)    e.region    = l.errRegion
-    if (!data.levelId)   e.level     = l.errLevel
-    if (!selectedDate)   e.date      = l.errDate
-    if (examsOnSelectedDate.length > 1 && !selectedTime) e.time = l.errTime
-    if (!data.examType)  e.examType  = l.errExamType
-    if (!confirmed)      e.confirmed = l.errConfirm
+    if (!data.region)    e.region    = l.errRegion ?? ""
+    if (!data.levelId)   e.level     = l.errLevel ?? ""
+    if (!selectedDate)   e.date      = l.errDate ?? ""
+    if (examsOnSelectedDate.length > 1 && !selectedTime) e.time = l.errTime ?? ""
+    if (!data.examType)  e.examType  = l.errExamType ?? ""
+    if (!confirmed)      e.confirmed = l.errConfirm ?? ""
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -485,11 +485,11 @@ export default function StepExamSelection({
             <div className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm space-y-1.5">
               <p className="flex items-start gap-2 text-blue-800">
                 <MapPin size={14} className="mt-0.5 shrink-0" />
-                <span><strong>{l.labelAddress}:</strong> {(selectedExam.address || regionInfo[data.region].address[lang] || regionInfo[data.region].address.uz).replace("\n", ", ")}</span>
+                <span><strong>{l.labelAddress}:</strong> {(selectedExam.address || regionInfo[data.region]!.address[lang] || regionInfo[data.region]!.address.uz || "").replace("\n", ", ")}</span>
               </p>
               <p className="flex items-center gap-2 text-blue-800">
                 <Phone size={14} className="shrink-0" />
-                <span><strong>{l.labelContact}:</strong> {regionInfo[data.region].phone}</span>
+                <span><strong>{l.labelContact}:</strong> {regionInfo[data.region]!.phone}</span>
               </p>
             </div>
           )}

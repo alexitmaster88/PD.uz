@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 pnpm dev          # Start dev server (Next.js, port 3000)
 pnpm build        # Production build
-pnpm lint         # ESLint
+pnpm lint         # ESLint (flat config in eslint.config.mjs; `next lint` is deprecated)
 pnpm typecheck    # TypeScript check without emitting
 pnpm drizzle-kit push   # Push Drizzle schema to Supabase (run after schema changes)
 pnpm drizzle-kit studio # Open Drizzle Studio (local DB browser)
@@ -15,7 +15,7 @@ pnpm drizzle-kit studio # Open Drizzle Studio (local DB browser)
 
 Requires Node 24 (`nvm use 24`). Vercel no longer builds on Node 20 ("discontinued"), which is what broke all deploys from July to November 2026. Package manager is `pnpm@10.14.0`.
 
-**Note:** `next.config.mjs` intentionally ignores both TypeScript and ESLint errors during builds. Run `pnpm typecheck` and `pnpm lint` separately. The `newTelc/` directory is excluded from TypeScript compilation in `tsconfig.json`.
+**Build gate:** `pnpm build` fails on any TypeScript error or ESLint error (both were previously ignored). Keep `pnpm typecheck` at 0 errors and `pnpm lint` at 0 errors before pushing — a failing build means Vercel won't deploy. `tsconfig.json` is extra-strict (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`): index lookups like `ui[lang]` are `T | undefined`, and optional props that may receive `undefined` must be typed `?: T | undefined`. `@typescript-eslint/no-explicit-any` is a warning for now (~70 untyped Supabase rows); promote to error once DB row types exist.
 
 ## Architecture
 
