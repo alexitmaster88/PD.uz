@@ -31,7 +31,7 @@ export const examsRouter = router({
     }),
 
   update: adminProcedure
-    .input(z.object({ examId: z.number(), data: z.record(z.unknown()) }))
+    .input(z.object({ examId: z.number(), data: z.record(z.string(), z.unknown()) }))
     .mutation(({ input }) =>
       db.updateExam(input.examId, input.data as Parameters<typeof db.updateExam>[1])
     ),

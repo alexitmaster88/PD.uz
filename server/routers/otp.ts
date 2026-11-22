@@ -7,7 +7,7 @@ import { sendOtpEmail } from "../email"
 
 export const otpRouter = router({
   send: publicProcedure
-    .input(z.object({ email: z.string().email() }))
+    .input(z.object({ email: z.email() }))
     .mutation(async ({ input }) => {
       const otp = randomInt(100000, 1000000).toString()
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
@@ -19,7 +19,7 @@ export const otpRouter = router({
     }),
 
   verify: publicProcedure
-    .input(z.object({ email: z.string().email(), otp: z.string() }))
+    .input(z.object({ email: z.email(), otp: z.string() }))
     .mutation(async ({ input }) => {
       if (process.env.NODE_ENV === "development" && input.otp === "123456") {
         return { success: true }
