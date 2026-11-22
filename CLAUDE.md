@@ -28,7 +28,7 @@ Requires Node 24 (`nvm use 24`). Vercel no longer builds on Node 20 ("discontinu
 - `/telc/[lang]/booking` — TELC exam info/booking landing (static, links to register)
 - `/telc/[lang]/register` — Full 3-step TELC exam registration flow
 - `/telc/admin` — Admin dashboard (Exams / Pricing / Registrations / Payments tabs); login at `/telc/admin/login`
-- `/admin` — legacy copy of the admin dashboard (no login page of its own; API calls redirect to `/telc/admin/login`)
+- `/admin` — redirects to `/telc/admin` (the old copy of the dashboard was removed)
 - `/api/telc/*` — REST API actually used by the frontend (registration flow + admin panel)
 - `/api/payme` — Payme Merchant API endpoint (JSON-RPC 2.0, inbound from Payme's servers)
 - `/api/paynet` — Paynet billing endpoint (JSON-RPC 2.0, inbound from Paynet's servers)
