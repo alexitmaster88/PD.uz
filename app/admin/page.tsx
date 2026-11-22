@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Calendar, DollarSign, Users, LogOut } from "lucide-react"
-import { TelcProvider } from "@/components/telc/TelcProvider"
 import AdminExams from "@/components/telc/admin/AdminExams"
 import AdminPricing from "@/components/telc/admin/AdminPricing"
 import AdminRegistrations from "@/components/telc/admin/AdminRegistrations"
@@ -69,9 +68,5 @@ function AdminDashboard() {
 }
 
 export default function AdminPage() {
-  return (
-    <TelcProvider>
-      <AdminDashboard />
-    </TelcProvider>
-  )
+  return <AdminDashboard />
 }

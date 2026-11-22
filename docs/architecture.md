@@ -5,7 +5,7 @@
 PD.uz is a Next.js 15 App Router application serving as the public website for ProfiDeutsch Uzbekistan — a German language school that also administers official TELC German exams. The project has two distinct layers:
 
 1. **Marketing site** — multilingual landing page (de/en/ru/uz) with hero, courses, testimonials, map, contact form
-2. **TELC exam registration system** — full booking flow with admin dashboard, Supabase database, tRPC backend, and Payme + Paynet payment gateway integrations
+2. **TELC exam registration system** — full booking flow with admin dashboard, Supabase database, REST API routes, and Payme + Paynet payment gateway integrations
 
 ---
 
@@ -26,11 +26,11 @@ app/
 │   └── [lang]/
 │       ├── page.tsx            TELC info page (static)
 │       ├── booking/page.tsx    Booking landing (links to register)
-│       └── register/page.tsx   3-step registration flow (TelcProvider)
+│       └── register/page.tsx   3-step registration flow
 ├── admin/
-│   └── page.tsx                Admin dashboard (TelcProvider, no lang prefix)
+│   └── page.tsx                Legacy copy of the admin dashboard (no lang prefix)
 └── api/
-    ├── trpc/[trpc]/route.ts    tRPC fetchRequestHandler
+    ├── telc/                   TELC REST API (registration flow + admin panel)
     ├── payme/route.ts          Payme Merchant API JSON-RPC 2.0 inbound endpoint
     ├── paynet/route.ts         Paynet JSON-RPC 2.0 inbound endpoint
     └── contact/                (empty — not yet implemented)
@@ -55,47 +55,41 @@ Step 3 — StepPayment         Payment method selection (Click / Payme / Other)
          SuccessScreen        Confirmation + ticket download stub
 ```
 
-All TELC pages are wrapped in `TelcProvider` (`components/telc/TelcProvider.tsx`), which mounts `QueryClientProvider` and the tRPC React provider with `httpBatchLink` pointing to `/api/trpc`.
+The steps call the REST routes in `app/api/telc/*` with `fetch()`.
 
 ### Admin Dashboard
 
-`app/admin/page.tsx` — Tab-based dashboard with three panels:
+`app/telc/admin/page.tsx` (login at `/telc/admin/login`) — Tab-based dashboard. `app/admin/page.tsx` is a legacy copy. Main panels:
 - **AdminExams** — Create/delete exam sessions (region, level, date, time, capacity)
 - **AdminPricing** — Inline price editing per exam level
 - **AdminRegistrations** — View all registrations with detail expand
 
-No client-side auth gate. Access control is enforced server-side via `adminProcedure` (checks `ctx.user.email === process.env.ADMIN_EMAIL`).
+Admins log in via `POST /api/telc/admin/login` (table `telc_admins`), which issues a 24h token stored in `telc_admin_sessions` and in `localStorage.telc_admin_token`. Admin components send it via `adminFetch()`; every admin route handler checks it with `requireTelcAdmin()`.
 
 ---
 
 ## Backend Architecture
 
-### tRPC + Drizzle Stack
+### TELC REST API
 
 ```
-server/
-├── trpc.ts          initTRPC with superjson transformer; procedure tiers
-├── context.ts       Reads Supabase session from cookies() for each request
-├── db.ts            All DB query functions (Drizzle ORM)
-├── email.ts         Email stub (console.log — needs Resend/SendGrid)
-└── routers/
-    ├── index.ts         Root appRouter (merges all sub-routers)
-    ├── examLevels.ts    list, update (price)
-    ├── exams.ts         list, getByRegionAndLevel, get, create, update, delete
-    ├── registrations.ts listAll, getById, create, updateStatus
-    ├── otp.ts           send, verify
-    └── payments.ts      create, getByRegistration
+app/api/telc/
+├── admin/login/route.ts       Admin login + session check
+├── exam-levels/route.ts       Levels and prices
+├── exams/route.ts             Exam sessions
+├── otp/send, otp/verify       Email OTP
+├── registrations/route.ts     Registrations
+├── payments/route.ts          Payments
+└── send-confirmation/route.ts Confirmation email
+lib/telc-admin-auth.ts         requireTelcAdmin() — bearer-token check for admin handlers
+lib/telc-admin-fetch.ts        adminFetch() — client helper that sends the token
+lib/supabase.ts                supabase (anon) / supabaseAdmin (service role, server only)
+server/email.ts                Resend email (logs to console when RESEND_API_KEY is unset)
 ```
 
-### Procedure Tiers
+Route handlers query Supabase through `supabaseAdmin`. See `docs/api-reference.md` for access rules per method.
 
-| Tier | Requirement | Used for |
-|------|-------------|----------|
-| `publicProcedure` | None | Exam queries, registration create, OTP send/verify |
-| `protectedProcedure` | Supabase session cookie | Future user-facing account features |
-| `adminProcedure` | `ctx.user.email === ADMIN_EMAIL` | All admin mutations and listAll queries |
-
-### Database Schema (Drizzle / PostgreSQL)
+### Database Schema (PostgreSQL)
 
 ```
 exam_levels        id, level (A1–C1), price (decimal)
@@ -113,7 +107,7 @@ Status enums:
 - `registration_status`: `pending | verified | paid | completed | cancelled`
 - `payment_status`: `pending | completed | failed | cancelled`
 
-Schema file: `drizzle/schema.ts`. SQL equivalent: `supabase/schema.sql`.
+SQL: `supabase/schema.sql`. Drizzle mirror for `drizzle-kit`: `drizzle/schema.ts`. The app does not use Drizzle at runtime.
 
 ---
 
@@ -193,18 +187,18 @@ Paynet PAK → POST /api/paynet (JSON-RPC 2.0)
 
 ## Infrastructure
 
-- **Hosting:** AWS Amplify (`amplify.yml`)
+- **Hosting:** Vercel (project `pd-uz`); `amplify.yml` is legacy
 - **Database:** Supabase PostgreSQL (project ref `vahydwolnmofshbmhdst`)
-- **Auth:** Supabase Auth (OTP for users; `ADMIN_EMAIL` env var for admin)
-- **Node:** 20.x (`engines` field in `package.json`)
+- **Auth:** email OTP for registrants; `telc_admins` + `telc_admin_sessions` tokens for admins
+- **Node:** 24.x (`engines` field in `package.json`)
 - **Package manager:** pnpm 10.14.0
 
 ### Key Config Files
 
 | File | Purpose |
 |------|---------|
-| `next.config.mjs` | Ignores TS/ESLint errors in builds (intentional) |
+| `next.config.mjs` | Builds fail on TypeScript or ESLint errors |
 | `tsconfig.json` | `exactOptionalPropertyTypes: true`, `noUncheckedIndexedAccess: true`; excludes `newTelc/` |
 | `drizzle.config.ts` | Points Drizzle Kit at `DATABASE_URL` |
 | `tailwind.config.ts` | CSS variables theme, shadcn/ui preset |
-| `amplify.yml` | CI/CD build steps for AWS Amplify |
+| `amplify.yml` | Legacy AWS Amplify build steps (not used) |

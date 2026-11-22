@@ -102,18 +102,6 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.119.2
         version: 2.119.2
-      '@tanstack/react-query':
-        specifier: ^5.108.2
-        version: 5.108.2(@types/react@19.3.0)(react@19.3.1)
-      '@trpc/client':
-        specifier: ^11.29.7
-        version: 11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(typescript@5.9.3)
-      '@trpc/react-query':
-        specifier: ^11.29.7
-        version: 11.29.7(@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react@19.3.1)(typescript@5.9.3)
-      '@trpc/server':
-        specifier: ^11.29.7
-        version: 11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -123,9 +111,6 @@ importers:
       cmdk:
         specifier: 1.1.1
         version: 1.1.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      drizzle-orm:
-        specifier: ^0.45.4
-        version: 0.45.4(postgres@3.4.9)
       embla-carousel-react:
         specifier: 8.6.0
         version: 8.6.0(react@19.3.1)
@@ -147,9 +132,6 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      postgres:
-        specifier: ^3.4.9
-        version: 3.4.9
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -174,9 +156,6 @@ importers:
       sonner:
         specifier: ^1.7.4
         version: 1.7.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      superjson:
-        specifier: ^2.2.7
-        version: 2.2.7
       tailwind-merge:
         specifier: ^2.6.2
         version: 2.6.2
@@ -189,9 +168,6 @@ importers:
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
-      zod:
-        specifier: ^4.6.7
-        version: 4.6.7
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.7
@@ -211,6 +187,9 @@ importers:
       drizzle-kit:
         specifier: ^0.31.11
         version: 0.31.11
+      drizzle-orm:
+        specifier: ^0.45.4
+        version: 0.45.4(postgres@3.4.9)
       eslint:
         specifier: ^9.39.5
         version: 9.39.5(jiti@1.21.7)
@@ -220,6 +199,9 @@ importers:
       postcss:
         specifier: ^8.5.33
         version: 8.5.33
+      postgres:
+        specifier: ^3.4.9
+        version: 3.4.9
       tailwindcss:
         specifier: ^3.4.19
         version: 3.4.19(tsx@4.23.15)
@@ -1674,55 +1656,6 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@tanstack/query-core@5.108.2':
-    resolution: {integrity: sha512-0l+0xDKqn71hfJBKaAvFP/X7WYM0TbscEk6nK1pHaWQUWUEA+WJD0VlT8wF+HIJANMV9B/DouPWwDnX3w/l9BA==}
-
-  '@tanstack/react-query@5.108.2':
-    resolution: {integrity: sha512-wV6hEjVGTfh9rvu3uREYW0hgBfS9klDejGelhPY575jD5jg6qbAb1nzT7hR1Q+wemR66ZjtE5p9pAGUwqK8zbg==}
-    peerDependencies:
-      '@types/react': ^18 || ^19
-      react: ^18 || ^19
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-
-  '@trpc/client@11.29.7':
-    resolution: {integrity: sha512-cW/8uDPDBEzSBdEoV0fLb6JL5U/YTOZRktLI7/bJJVsb9dz+qhYJST6YJEaI8yM6oz4MfnpCKf7Sk609zvjNxA==}
-    peerDependencies:
-      '@trpc/server': 11.29.7
-      typescript: '>=5.7.2'
-
-  '@trpc/react-query@11.29.7':
-    resolution: {integrity: sha512-PJTOKkfZhUesn0jYIiSC5wAu/Fix+acGQsgDwvPgqaA/3jb9LPySVJ8BiMAN3F3ZJ2tiyaX9Mycp8iLi4NZsUw==}
-    deprecated: '@trpc/react-query only gets bug fixes and will be removed in the next major version of tRPC. Use @trpc/tanstack-react-query instead: https://trpc.io/docs/client/tanstack-react-query/migrating'
-    peerDependencies:
-      '@tanstack/react-query': ^5.80.3
-      '@trpc/client': 11.29.7
-      '@trpc/server': 11.29.7
-      react: '>=18.2.0'
-      typescript: '>=5.7.2'
-
-  '@trpc/server@11.29.7':
-    resolution: {integrity: sha512-9chUuB0abOfVkCm87lFQ3PTUJzPlErlf5HOBzvwtiGl7B0YdPBul1O597NTzjUcF1XDTsRqdnQfrz7BeptzSXQ==}
-    peerDependencies:
-      '@types/aws-lambda': '*'
-      '@types/express': '*'
-      '@types/ws': '*'
-      fastify: '*'
-      next: '*'
-      typescript: '>=5.7.2'
-    peerDependenciesMeta:
-      '@types/aws-lambda':
-        optional: true
-      '@types/express':
-        optional: true
-      '@types/ws':
-        optional: true
-      fastify:
-        optional: true
-      next:
-        optional: true
-
   '@types/d3-array@3.2.2':
     resolution: {integrity: sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw==}
 
@@ -2115,10 +2048,6 @@ packages:
 
   cookie@1.1.1:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
-    engines: {node: '>=18'}
-
-  copy-anything@4.1.5:
-    resolution: {integrity: sha512-vePst2VLTSqPglW7Q98VwFpGiGpOHTyXIo81MO5VyLecA5zMbZw/P/V1vmwD1jksa2iJpn/YkDrJ3XhTfzUyhQ==}
     engines: {node: '>=18'}
 
   cross-spawn@7.0.6:
@@ -3451,10 +3380,6 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
-  superjson@2.2.7:
-    resolution: {integrity: sha512-QK/H+tosbovdRvIuGqcWn8g3IxPZY7B8ZPowCAmWsV8bPvCk+bGMlZt90C4AxZjnzMO2WBRDacr1+0i1AOy/5g==}
-    engines: {node: '>=16'}
-
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -3621,9 +3546,6 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  zod@4.6.7:
-    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
 snapshots:
 
@@ -4844,34 +4766,6 @@ snapshots:
     dependencies:
       tslib: 2.9.1
 
-  '@tanstack/query-core@5.108.2': {}
-
-  '@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.3.1)':
-    dependencies:
-      '@tanstack/query-core': 5.108.2
-      react: 19.3.1
-    optionalDependencies:
-      '@types/react': 19.3.0
-
-  '@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(typescript@5.9.3)':
-    dependencies:
-      '@trpc/server': 11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3)
-      typescript: 5.9.3
-
-  '@trpc/react-query@11.29.7(@tanstack/react-query@5.108.2(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(react@19.3.1)(typescript@5.9.3)':
-    dependencies:
-      '@tanstack/react-query': 5.108.2(@types/react@19.3.0)(react@19.3.1)
-      '@trpc/client': 11.29.7(@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3))(typescript@5.9.3)
-      '@trpc/server': 11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3)
-      react: 19.3.1
-      typescript: 5.9.3
-
-  '@trpc/server@11.29.7(next@15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3)':
-    dependencies:
-      typescript: 5.9.3
-    optionalDependencies:
-      next: 15.5.29(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-
   '@types/d3-array@3.2.2': {}
 
   '@types/d3-color@3.1.3': {}
@@ -5277,8 +5171,6 @@ snapshots:
   concat-map@0.0.1: {}
 
   cookie@1.1.1: {}
-
-  copy-anything@4.1.5: {}
 
   cross-spawn@7.0.6:
     dependencies:
@@ -6780,10 +6672,6 @@ snapshots:
       tinyglobby: 0.2.17
       ts-interface-checker: 0.1.13
 
-  superjson@2.2.7:
-    dependencies:
-      copy-anything: 4.1.5
-
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
@@ -7036,5 +6924,3 @@ snapshots:
   xlsx@https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz: {}
 
   yocto-queue@0.1.0: {}
-
-  zod@4.6.7: {}
