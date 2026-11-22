@@ -7,16 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 
-interface YT {
-  Player: new (elt: HTMLElement | string, opts: any) => any;
-  PlayerState: { PLAYING: number; PAUSED: number };
-}
-
-interface YT {
-  Player: new (elt: HTMLElement | string, opts: any) => any;
-  PlayerState: { PLAYING: number; PAUSED: number };
-}
-
 // --- Singleton loader so the API is added once and survives locale/route changes ---
 let ytReadyPromise: Promise<void> | null = null;
 function loadYouTubeAPI(): Promise<void> {
@@ -58,7 +48,7 @@ interface YouTubePlayerProps {
 const YouTubePlayer = ({ videoId, title, autoplay = false }: YouTubePlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [isMuted, setIsMuted] = useState(false);
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<YTPlayer | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { t } = useLanguage();
 
@@ -92,7 +82,7 @@ const YouTubePlayer = ({ videoId, title, autoplay = false }: YouTubePlayerProps)
               setIsPlaying(state === window.YT!.PlayerState.PLAYING);
             } catch {}
           },
-          onStateChange: (event: any) => {
+          onStateChange: (event) => {
             setIsPlaying(event.data === window.YT!.PlayerState.PLAYING);
             try {
               setIsMuted(!!playerRef.current?.isMuted?.());

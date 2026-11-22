@@ -9,13 +9,13 @@ pnpm dev          # Start dev server (Next.js, port 3000)
 pnpm build        # Production build
 pnpm lint         # ESLint (flat config in eslint.config.mjs; `next lint` is deprecated)
 pnpm typecheck    # TypeScript check without emitting
-pnpm drizzle-kit push   # Push drizzle/schema.ts to Supabase — diff it first; supabase/schema.sql is the reference
+pnpm drizzle-kit push   # Push drizzle/schema.ts to PRODUCTION Supabase. Matches live except table kv_store_6a79812e — never accept a drop it proposes
 pnpm drizzle-kit studio # Open Drizzle Studio (local DB browser)
 ```
 
 Requires Node 24 (`nvm use 24`). Vercel no longer builds on Node 20 ("discontinued"), which is what broke all deploys from July to November 2026. Package manager is `pnpm@10.14.0`.
 
-**Build gate:** `pnpm build` fails on any TypeScript error or ESLint error (both were previously ignored). Keep `pnpm typecheck` at 0 errors and `pnpm lint` at 0 errors before pushing — a failing build means Vercel won't deploy. `tsconfig.json` is extra-strict (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`): index lookups like `ui[lang]` are `T | undefined`, and optional props that may receive `undefined` must be typed `?: T | undefined`. `@typescript-eslint/no-explicit-any` is a warning for now (~70 untyped Supabase rows); promote to error once DB row types exist.
+**Build gate:** `pnpm build` fails on any TypeScript error or ESLint error (both were previously ignored). Keep `pnpm typecheck` at 0 errors and `pnpm lint` at 0 errors before pushing — a failing build means Vercel won't deploy. `tsconfig.json` is extra-strict (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`): index lookups like `ui[lang]` are `T | undefined`, and optional props that may receive `undefined` must be typed `?: T | undefined`. `@typescript-eslint/no-explicit-any` is an error.
 
 ## Architecture
 
@@ -57,7 +57,9 @@ The TELC registration system uses a separate i18n function `telcT(language, key,
 **Backend:** Supabase is the database (project ref: `vahydwolnmofshbmhdst`). All TELC logic lives in the REST route handlers under `app/api/telc/*` (there is no tRPC layer; it was removed as unused). `lib/supabase.ts` exports two clients: `supabase` (anon key, browser-safe) and `supabaseAdmin` (service role key, bypasses RLS — import in API routes and server code only, never in client components).
 
 **TELC backend structure:**
-- `supabase/schema.sql` — reference SQL schema (exam_levels, exams, registrations, payments, otp_verifications, telc_admins, telc_admin_sessions), RLS enabled
+- **Source of truth for the schema is the live database.** `supabase/schema.sql` is out of date (missing `exams.is_active`, the extended `registrations` columns, Paynet/Payme `payments` columns, the status enums; uses `timestamptz` where live uses `timestamp`) — don't run it against production. Schema changes go in `supabase/migrations/*.sql` and are applied manually in the Supabase SQL editor
+- `types/database.ts` — Supabase `Database` type (hand-written from the live schema) used by both clients in `lib/supabase.ts`, plus `ApiExam` / `ApiRegistration` / `ApiPayment` shapes returned by `/api/telc/*`. **When a DB column changes, update this file**; read the live schema read-only via `GET <SUPABASE_URL>/rest/v1/` with `Accept: application/openapi+json`
+- `types/telc-registration.ts` — `RegistrationFormData`, the state of the 3-step registration flow
 - `drizzle/schema.ts` — Drizzle mirror of the schema, used only by `drizzle-kit` (dev dependency); the app does not use Drizzle at runtime
 - `server/email.ts` — Resend email sending (logs to console when `RESEND_API_KEY` is unset); server-only
 - `lib/telc-admin-auth.ts` / `lib/telc-admin-fetch.ts` — admin auth (see below)

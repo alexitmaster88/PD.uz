@@ -5,12 +5,13 @@ import { Edit2, Save, X, Loader2, Trash2, Plus } from "lucide-react"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
 import { adminFetch } from "@/lib/telc-admin-fetch"
+import type { ExamLevel } from "@/types/database"
 
 interface Props { lang: AdminLang }
 
 export default function AdminPricing({ lang }: Props) {
   const t = (key: string) => adminT(lang, key)
-  const [levels, setLevels] = useState<any[]>([])
+  const [levels, setLevels] = useState<ExamLevel[]>([])
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [prices, setPrices] = useState<Record<number, string>>({})
@@ -26,7 +27,7 @@ export default function AdminPricing({ lang }: Props) {
     const arr = Array.isArray(data) ? data : []
     setLevels(arr)
     const map: Record<number, string> = {}
-    arr.forEach((l: any) => { map[l.id] = String(l.price) })
+    arr.forEach((l) => { map[l.id] = String(l.price) })
     setPrices(map)
     setLoading(false)
   }
@@ -152,7 +153,7 @@ export default function AdminPricing({ lang }: Props) {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {levels.map((level: any) => (
+            {levels.map((level) => (
               <tr key={level.id} className="hover:bg-slate-50">
                 <td className="px-6 py-4 font-semibold text-slate-900">{level.level}</td>
                 <td className="px-6 py-4 text-slate-600">

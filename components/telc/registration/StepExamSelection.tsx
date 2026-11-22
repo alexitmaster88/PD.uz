@@ -3,13 +3,15 @@
 import { useState, useMemo, useEffect } from "react"
 import { MapPin, Phone, Users, ChevronDown, Calendar, Clock } from "lucide-react"
 import { CONTACT } from "@/lib/contact"
+import type { ApiExam, ExamLevel } from "@/types/database"
+import type { RegistrationFormData } from "@/types/telc-registration"
 
 interface Props {
-  data: any
+  data: RegistrationFormData
   lang: string
-  preloadedExams: any[] | undefined
-  preloadedLevels: any[] | undefined
-  onDataChange: (data: any) => void
+  preloadedExams: ApiExam[] | undefined
+  preloadedLevels: ExamLevel[] | undefined
+  onDataChange: (data: Partial<RegistrationFormData>) => void
   onNext: () => void
   onPrevious: () => void
 }
@@ -166,8 +168,8 @@ export default function StepExamSelection({
   const [selectedTime, setSelectedTime] = useState(data.selectedTime ?? "")
   const [confirmed, setConfirmed] = useState(false)
 
-  const [localExams, setLocalExams] = useState<any[] | null>(null)
-  const [localLevels, setLocalLevels] = useState<any[] | null>(null)
+  const [localExams, setLocalExams] = useState<ApiExam[] | null>(null)
+  const [localLevels, setLocalLevels] = useState<ExamLevel[] | null>(null)
 
   useEffect(() => {
     if (preloadedExams !== undefined && preloadedLevels !== undefined) return
@@ -180,8 +182,8 @@ export default function StepExamSelection({
     })
   }, [preloadedExams, preloadedLevels])
 
-  const allExams: any[] = preloadedExams ?? localExams ?? []
-  const levels: any[] = preloadedLevels ?? localLevels ?? []
+  const allExams: ApiExam[] = preloadedExams ?? localExams ?? []
+  const levels: ExamLevel[] = preloadedLevels ?? localLevels ?? []
   const isLoading = preloadedExams === undefined && localExams === null
 
   const activeRegions = useMemo(() => {
@@ -213,7 +215,7 @@ export default function StepExamSelection({
 
   const availableDates = useMemo(() => {
     const dates = new Set<string>()
-    exams.forEach(e => dates.add(e.exam_date.split("T")[0]))
+    exams.forEach(e => dates.add(e.exam_date.split("T")[0]!))
     return Array.from(dates).sort()
   }, [exams])
 
@@ -224,7 +226,7 @@ export default function StepExamSelection({
 
   // Single slot → auto-pick it; multiple slots → wait for explicit user choice
   const effectiveTime = examsOnSelectedDate.length === 1
-    ? examsOnSelectedDate[0].start_time
+    ? examsOnSelectedDate[0]!.start_time
     : selectedTime
 
   const selectedExam = useMemo(() =>
@@ -263,8 +265,8 @@ export default function StepExamSelection({
       examId: selectedExam.id,
       selectedDate,
       selectedTime: selectedExam.start_time,
-      examAmount: selectedExam.exam_levels?.price,
-      levelName: selectedExam.exam_levels?.level,
+      examAmount: String(selectedExam.exam_levels?.price ?? ""),
+      levelName: selectedExam.exam_levels?.level ?? "",
       examAddress: selectedExam.address || regionInfo[data.region]?.address[lang] || regionInfo[data.region]?.address.uz || "",
     })
     onNext()

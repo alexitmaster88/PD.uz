@@ -212,7 +212,7 @@ export default async function TelcBookingPage({ params }: PageProps) {
     .limit(20)
 
   const rawExams = upcomingExams ?? []
-  const safeLevels = (levels ?? []).slice().sort((a: any, b: any) => {
+  const safeLevels = (levels ?? []).slice().sort((a, b) => {
     const ia = LEVEL_ORDER.indexOf(a.level)
     const ib = LEVEL_ORDER.indexOf(b.level)
     if (ia === -1 && ib === -1) return String(a.level).localeCompare(String(b.level))
@@ -222,17 +222,17 @@ export default async function TelcBookingPage({ params }: PageProps) {
   })
 
   // Compute live registered_count from approved registrations
-  let safeExams: any[] = rawExams
+  let safeExams = rawExams.map((e) => ({ ...e, registered_count: 0 }))
   if (rawExams.length > 0) {
-    const examIds = rawExams.map((e: any) => e.id)
+    const examIds = rawExams.map((e) => e.id)
     const { data: regs } = await supabaseAdmin
       .from("registrations")
       .select("exam_id")
       .in("exam_id", examIds)
       .in("status", ["pending", "verified", "paid", "completed"])
     const countMap: Record<number, number> = {}
-    regs?.forEach((r: any) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })
-    safeExams = rawExams.map((e: any) => ({ ...e, registered_count: countMap[e.id] ?? 0 }))
+    regs?.forEach((r) => { countMap[r.exam_id] = (countMap[r.exam_id] ?? 0) + 1 })
+    safeExams = rawExams.map((e) => ({ ...e, registered_count: countMap[e.id] ?? 0 }))
   }
 
   const dateStr = (d: string) => new Date(d).toLocaleDateString(
@@ -331,9 +331,9 @@ export default async function TelcBookingPage({ params }: PageProps) {
           ) : (
             /* flex + justify-center: any partial last row is always centered */
             <div className="flex flex-wrap justify-center gap-4">
-              {safeLevels.map((lv: any) => {
+              {safeLevels.map((lv) => {
                 const n = safeLevels.length
-                const levelCode = (lv.level as string)?.match(/[A-C][12](?:[/-][A-C][12])?/)?.[0] ?? lv.level
+                const levelCode = lv.level.match(/[A-C][12](?:[/-][A-C][12])?/)?.[0] ?? lv.level
                 const fullName = lv.level
                 // Width per card: shrinks gracefully, last row centers via justify-center
                 const widthClass =
@@ -409,7 +409,7 @@ export default async function TelcBookingPage({ params }: PageProps) {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#130080]/8">
-                    {safeExams.map((ex: any) => {
+                    {safeExams.map((ex) => {
                       const spots = ex.capacity - ex.registered_count
                       const isFull = spots <= 0
                       const isAlmostFull = spots <= 5 && spots > 0
@@ -417,7 +417,7 @@ export default async function TelcBookingPage({ params }: PageProps) {
                         <tr key={ex.id} className="transition-colors hover:bg-[#130080]/5">
                           <td className="px-5 py-3.5">
                             <span className="inline-flex items-center rounded-lg bg-[#130080]/10 px-2.5 py-1 text-xs font-bold text-[#130080]">
-                              {(ex.exam_levels as any)?.level ?? `#${ex.level_id}`}
+                              {ex.exam_levels?.level ?? `#${ex.level_id}`}
                             </span>
                           </td>
                           <td className="px-5 py-3.5">

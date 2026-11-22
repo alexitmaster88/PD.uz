@@ -9,6 +9,7 @@ import AdminRegistrations from "@/components/telc/admin/AdminRegistrations"
 import AdminPayments from "@/components/telc/admin/AdminPayments"
 import { Toaster } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
+import type { Tables } from "@/types/database"
 import Image from "next/image"
 
 type Tab = "exams" | "pricing" | "registrations" | "payments"
@@ -22,7 +23,7 @@ const LANG_OPTIONS: { code: AdminLang; label: string; flag: string }[] = [
 
 export default function AdminDashboardPage() {
   const router = useRouter()
-  const [admin, setAdmin] = useState<any>(null)
+  const [admin, setAdmin] = useState<Pick<Tables<"telc_admins">, "id" | "email" | "name" | "role"> | null>(null)
   const [checking, setChecking] = useState(true)
   const [tab, setTab] = useState<Tab>("exams")
   const [lang, setLang] = useState<AdminLang>("uz")

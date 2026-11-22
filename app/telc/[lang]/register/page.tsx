@@ -11,6 +11,8 @@ import StepExamSelection from "@/components/telc/registration/StepExamSelection"
 import StepPayment from "@/components/telc/registration/StepPayment"
 import SuccessScreen from "@/components/telc/registration/SuccessScreen"
 import { Toaster } from "sonner"
+import type { ApiExam, ExamLevel } from "@/types/database"
+import type { RegistrationFormData } from "@/types/telc-registration"
 
 interface PageProps { params: Promise<{ lang: string }> }
 
@@ -35,18 +37,7 @@ const headerLabels: Record<string, Record<string, string>> = {
   uz: { title: "Imtihonga ro'yxat", back: "Orqaga" },
 }
 
-interface FormData {
-  firstName: string; lastName: string; phoneNumber: string
-  email: string; passportNumber: string; agreeTerms: boolean
-  emailVerified: boolean; region: string; levelId: string
-  levelName: string; examId: number | null; selectedDate: string
-  selectedTime: string; examAmount: string; paymentMethod: string
-  registeredAt: string; examAddress: string
-  // Extended personal info
-  dateOfBirth: string; gender: string; nationality: string
-  countryOfBirth: string; cityOfBirth: string; currentAddress: string
-  documentType: string; examType: string
-}
+type FormData = RegistrationFormData
 
 export default function RegisterPage({ params }: PageProps) {
   const { lang } = use(params)
@@ -59,8 +50,8 @@ export default function RegisterPage({ params }: PageProps) {
   const [registrationId, setRegistrationId] = useState<number | null>(null)
 
   // Prefetch exam data immediately on page load so step 2 is instant
-  const [preloadedExams, setPreloadedExams] = useState<any[] | undefined>(undefined)
-  const [preloadedLevels, setPreloadedLevels] = useState<any[] | undefined>(undefined)
+  const [preloadedExams, setPreloadedExams] = useState<ApiExam[] | undefined>(undefined)
+  const [preloadedLevels, setPreloadedLevels] = useState<ExamLevel[] | undefined>(undefined)
   useEffect(() => {
     Promise.all([
       fetch("/api/telc/exams?future=true").then(r => r.json()).catch(() => []),

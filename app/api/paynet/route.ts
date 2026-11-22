@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { checkBasicAuth } from '@/lib/basic-auth'
+import type { Database } from '@/types/database'
 
 // Paynet's server IP ranges (CIDR) — only accept requests from these
 // Per contract: 213.230.106.112/28 and 213.230.65.80/28
@@ -59,7 +60,7 @@ function err(id: JsonRpcId, code: number, message: string) {
 }
 
 function serviceClient() {
-  return createClient(
+  return createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { persistSession: false } }
@@ -99,7 +100,7 @@ export async function POST(req: NextRequest) {
       const { data: registration } = await db
         .from('registrations')
         .select('id, exam_id, first_name, last_name, status')
-        .eq('id', clientId)
+        .eq('id', Number(clientId))
         .in('status', ['pending', 'verified'])
         .single()
 
@@ -150,7 +151,7 @@ export async function POST(req: NextRequest) {
       const { data: registration } = await db
         .from('registrations')
         .select('id, exam_id, status')
-        .eq('id', fields.client_id)
+        .eq('id', Number(fields.client_id))
         .single()
 
       if (!registration) return err(id, 302, 'Client not found')
@@ -182,7 +183,7 @@ export async function POST(req: NextRequest) {
       await db
         .from('registrations')
         .update({ status: 'paid', payment_verified: true, updated_at: new Date().toISOString() })
-        .eq('id', fields.client_id)
+        .eq('id', Number(fields.client_id))
 
       return ok(id, {
         providerTrnId: payment.provider_trn_id,
@@ -250,7 +251,8 @@ export async function POST(req: NextRequest) {
           amount: p.amount,
           transactionId: Number(p.paynet_transaction_id),
           providerTrnId: p.provider_trn_id,
-          timestamp: new Date(p.paid_at).toLocaleString('sv-SE', { timeZone: 'Asia/Tashkent' }).replace('T', ' '),
+          // paid_at is non-null here: the query filters on it
+          timestamp: new Date(p.paid_at!).toLocaleString('sv-SE', { timeZone: 'Asia/Tashkent' }).replace('T', ' '),
         })),
       })
     }

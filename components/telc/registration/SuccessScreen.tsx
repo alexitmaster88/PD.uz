@@ -5,10 +5,11 @@ import { CheckCircle, Download, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { CONTACT } from "@/lib/contact"
+import type { RegistrationFormData } from "@/types/telc-registration"
 
 interface Props {
   registrationId: number
-  formData: any
+  formData: RegistrationFormData
   lang: string
 }
 
@@ -119,7 +120,7 @@ function fmtDateTime(d: string, lang: string): string {
 
 // Opens the ticket in a new window and starts the print dialog ("Save as PDF").
 // Falls back to a hidden iframe when the popup is blocked.
-function printTicket(registrationId: number, formData: any, lang: string) {
+function printTicket(registrationId: number, formData: RegistrationFormData, lang: string) {
   const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
   const rl: Record<string, string> = regionLabels[lang] ?? regionLabels['en'] ?? {}
   const contact = regionContact[formData.region] ?? { phone: "", email: "" }
