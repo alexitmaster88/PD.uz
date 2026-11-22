@@ -13,7 +13,7 @@ export const registrationsRouter = router({
         firstName: z.string().min(1),
         lastName: z.string().min(1),
         phoneNumber: z.string().regex(/^\+998\d{9}$/, "Phone must be in format +998XXXXXXXXX"),
-        email: z.string().email(),
+        email: z.email(),
         passportNumber: z.string().min(1),
       })
     )
