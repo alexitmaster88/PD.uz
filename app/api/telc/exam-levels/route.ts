@@ -8,7 +8,7 @@ export async function GET() {
     .select('*')
     .order('id')
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) { console.error('[exam-levels GET]', error.message); return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 }) }
   return NextResponse.json(data, {
     headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=600' },
   })

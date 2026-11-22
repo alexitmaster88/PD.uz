@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { checkBasicAuth } from '@/lib/basic-auth'
 
 // Paynet's server IP ranges (CIDR) — only accept requests from these
 // Per contract: 213.230.106.112/28 and 213.230.65.80/28
@@ -22,20 +23,26 @@ function isPaynetIP(ip: string): boolean {
   })
 }
 
+// X-Forwarded-For is "client-supplied..., real-client, proxy1, proxy2". Entries on the LEFT can be
+// forged by the caller; only entries appended by our own infrastructure (on the RIGHT) are trustworthy.
+// PAYNET_TRUSTED_PROXY_HOPS = how many proxies (Amplify/CloudFront) append to the header after the
+// real client. Once set (e.g. "1"), the IP is read that many entries from the right, which cannot
+// be spoofed. When unset, the legacy leftmost entry is used (spoofable — Basic Auth still applies)
+// and the full chain is logged so the right value can be determined from a real Paynet request.
 function clientIP(req: NextRequest): string {
-  return (
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    req.headers.get('x-real-ip') ??
-    '0.0.0.0'
-  )
+  const chain = (req.headers.get('x-forwarded-for') ?? '')
+    .split(',').map(s => s.trim()).filter(Boolean)
+  const hops = Number.parseInt(process.env.PAYNET_TRUSTED_PROXY_HOPS ?? '', 10)
+
+  if (Number.isInteger(hops) && hops >= 0) {
+    return chain[chain.length - 1 - hops] ?? '0.0.0.0'
+  }
+
+  console.warn('[paynet] PAYNET_TRUSTED_PROXY_HOPS not set; x-forwarded-for chain:', JSON.stringify(chain),
+    'x-real-ip:', req.headers.get('x-real-ip'))
+  return chain[0] ?? req.headers.get('x-real-ip') ?? '0.0.0.0'
 }
 
-function checkBasicAuth(req: NextRequest): boolean {
-  const auth = req.headers.get('authorization')
-  if (!auth?.startsWith('Basic ')) return false
-  const [user, pass] = Buffer.from(auth.slice(6), 'base64').toString().split(':')
-  return user === process.env.PAYNET_USERNAME && pass === process.env.PAYNET_PASSWORD
-}
 
 function tashkentNow(): string {
   return new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Tashkent' }).replace('T', ' ')
@@ -65,7 +72,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse(null, { status: 403 })
   }
 
-  if (!checkBasicAuth(req)) {
+  if (!checkBasicAuth(req.headers.get('authorization'), process.env.PAYNET_USERNAME, process.env.PAYNET_PASSWORD)) {
     return new NextResponse(null, { status: 401, headers: { 'WWW-Authenticate': 'Basic' } })
   }
 

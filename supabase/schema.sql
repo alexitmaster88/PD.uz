@@ -98,21 +98,23 @@ INSERT INTO exam_levels (level, price) VALUES
 ON CONFLICT (level) DO NOTHING;
 
 -- ============================================================
--- Seed default superadmin
--- Password: Admin1234  (SHA-256 hashed below)
--- CHANGE THIS PASSWORD after first login via the admin panel
+-- Admin accounts
+-- No default admin is seeded (a known default password is a security risk).
+-- Create one with a scrypt hash generated locally:
+--   node scripts/hash-admin-password.mjs '<strong password>'
+--   INSERT INTO telc_admins (email, password_hash, role, name)
+--   VALUES ('you@example.com', '<output>', 'superadmin', 'Your Name');
 -- ============================================================
-INSERT INTO telc_admins (email, password_hash, role, name) VALUES
-  ('admin@profi-deutsch.uz', '3ac4f34e4f6809c57e5616a18e7e6ba44f8c4d90b18a9219aa48c3b1cd8d6c98', 'superadmin', 'Super Admin')
-ON CONFLICT (email) DO NOTHING;
 
 -- ============================================================
--- Row Level Security (disable for now — enable in production)
+-- Row Level Security: ENABLED, with no policies.
+-- The browser's anon key can therefore read/write nothing; all access goes through
+-- server routes using the service role key (which bypasses RLS). This matches production.
 -- ============================================================
-ALTER TABLE exam_levels DISABLE ROW LEVEL SECURITY;
-ALTER TABLE exams DISABLE ROW LEVEL SECURITY;
-ALTER TABLE registrations DISABLE ROW LEVEL SECURITY;
-ALTER TABLE payments DISABLE ROW LEVEL SECURITY;
-ALTER TABLE otp_verifications DISABLE ROW LEVEL SECURITY;
-ALTER TABLE telc_admins DISABLE ROW LEVEL SECURITY;
-ALTER TABLE telc_admin_sessions DISABLE ROW LEVEL SECURITY;
+ALTER TABLE exam_levels ENABLE ROW LEVEL SECURITY;
+ALTER TABLE exams ENABLE ROW LEVEL SECURITY;
+ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE otp_verifications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE telc_admins ENABLE ROW LEVEL SECURITY;
+ALTER TABLE telc_admin_sessions ENABLE ROW LEVEL SECURITY;
