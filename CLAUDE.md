@@ -27,7 +27,9 @@ Requires Node 20 (`nvm use 20`). Package manager is `pnpm@10.14.0`.
 - `/telc/[lang]` — TELC exam info page
 - `/telc/[lang]/booking` — TELC exam info/booking landing (static, links to register)
 - `/telc/[lang]/register` — Full 3-step TELC exam registration flow
-- `/admin` — Admin dashboard (Exams / Pricing / Registrations tabs)
+- `/telc/admin` — Admin dashboard (Exams / Pricing / Registrations / Payments tabs); login at `/telc/admin/login`
+- `/admin` — legacy copy of the admin dashboard (no login page of its own; API calls redirect to `/telc/admin/login`)
+- `/api/telc/*` — REST API actually used by the frontend (registration flow + admin panel)
 - `/api/trpc/[trpc]` — tRPC batch endpoint (fetchRequestHandler)
 - `/api/payme` — Payme Merchant API endpoint (JSON-RPC 2.0, inbound from Payme's servers)
 - `/api/paynet` — Paynet billing endpoint (JSON-RPC 2.0, inbound from Paynet's servers)
@@ -70,7 +72,9 @@ The TELC registration system uses a separate i18n function `telcT(language, key,
 - `protectedProcedure` — requires Supabase session (`ctx.user` is non-null)
 - `adminProcedure` — requires `ctx.user.email === process.env.ADMIN_EMAIL`
 
-**Admin access:** The `/admin` page has no client-side auth gate — it relies entirely on `adminProcedure` rejecting unauthorized calls server-side. Set `ADMIN_EMAIL` env var to control access.
+**Admin access (REST, used by the UI):** Admins log in via `POST /api/telc/admin/login` (table `telc_admins`), which issues a 24h token stored in `telc_admin_sessions` and in `localStorage.telc_admin_token`. Every admin-only `/api/telc/*` handler MUST start with `const auth = await requireTelcAdmin(req); if (auth instanceof NextResponse) return auth` (`lib/telc-admin-auth.ts`), and admin components MUST call the API via `adminFetch()` (`lib/telc-admin-fetch.ts`). Public endpoints: `GET exams` (non-admin), `GET exam-levels`, `POST otp/send`, `POST otp/verify`, `POST registrations` (requires server-verified OTP), `POST payments` (amount derived from DB), `POST send-confirmation`.
+
+**Admin access (tRPC):** The frontend does not use tRPC. `adminProcedure` checks `ctx.user.email === process.env.ADMIN_EMAIL`.
 
 **Payme integration (`app/api/payme/route.ts`):** Payme (Paycom) is an Uzbek mobile payment system that calls **our** endpoint (Merchant API pattern). When a user scans a QR code and pays via Payme, Payme's servers send JSON-RPC 2.0 POST requests to our `/api/payme` URL.
 
@@ -122,7 +126,8 @@ NEXT_PUBLIC_PAYME_ENV=test             # Set to "test" for sandbox; omit or set 
 - `server/email.ts` uses `console.log` stubs — no real email delivery yet
 - `SuccessScreen.tsx` has `alert("Ticket download coming soon")` — PDF generation not implemented
 - `StepPayment.tsx` — Payme QR/button is wired up via CDN script; Click method still shows placeholder QR icon (Click SDK integration pending)
-- Unused dependencies: `@emotion/is-prop-valid`, `@hookform/resolvers`, `date-fns`, `sharp`, `autoprefixer`
+- `xlsx` is installed from the SheetJS CDN tarball (the npm package is abandoned/vulnerable) — keep it that way
+- `pnpm.overrides` in `package.json` force patched versions of Next's bundled `postcss`/`sharp` and transitive `nanoid`/`source-map-js` — re-check with `pnpm audit` before removing
 - Stale backup files in `components/` (`.bak`, `.bak2`, `.old`, `.fixed`, `.new` suffixes) — do not treat as canonical
 
 **Deployment:** AWS Amplify. Config in `amplify.yml` — uses pnpm with `.next` as artifact directory.

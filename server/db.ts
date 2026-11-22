@@ -1,4 +1,4 @@
-import { eq, and, count, inArray } from "drizzle-orm"
+import { eq, and, count, inArray, gt, gte, desc } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/postgres-js"
 import postgres from "postgres"
 import {
@@ -211,4 +211,31 @@ export async function getOtpByEmailAndCode(email: string, otp: string) {
 export async function markOtpAsVerified(otpId: number) {
   const db = getDb()
   return db.update(otpVerifications).set({ verified: true }).where(eq(otpVerifications.id, otpId))
+}
+
+// Latest unexpired, unverified OTP for an email (not filtered by the guessed code)
+export async function getActiveOtpByEmail(email: string) {
+  const db = getDb()
+  const result = await db
+    .select()
+    .from(otpVerifications)
+    .where(and(eq(otpVerifications.email, email), eq(otpVerifications.verified, false), gt(otpVerifications.expiresAt, new Date())))
+    .orderBy(desc(otpVerifications.createdAt))
+    .limit(1)
+  return result[0] ?? null
+}
+
+export async function setOtpExpiry(otpId: number, expiresAt: Date) {
+  const db = getDb()
+  return db.update(otpVerifications).set({ expiresAt }).where(eq(otpVerifications.id, otpId))
+}
+
+export async function hasRecentlyVerifiedOtp(email: string, since: Date) {
+  const db = getDb()
+  const result = await db
+    .select({ id: otpVerifications.id })
+    .from(otpVerifications)
+    .where(and(eq(otpVerifications.email, email), eq(otpVerifications.verified, true), gte(otpVerifications.createdAt, since)))
+    .limit(1)
+  return result.length > 0
 }

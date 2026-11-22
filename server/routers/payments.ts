@@ -1,10 +1,10 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
-import { router, publicProcedure, adminProcedure } from "../trpc"
+import { router, adminProcedure } from "../trpc"
 import * as db from "../db"
 
 export const paymentsRouter = router({
-  create: publicProcedure
+  create: adminProcedure
     .input(
       z.object({
         registrationId: z.number(),
@@ -19,12 +19,12 @@ export const paymentsRouter = router({
       return db.createPayment(input)
     }),
 
-  get: publicProcedure
+  get: adminProcedure
     .input(z.object({ registrationId: z.number() }))
     .query(({ input }) => db.getPaymentByRegistrationId(input.registrationId)),
 
-  // Marks payment as completed (manual verification by admin or stub for QR flow)
-  verify: publicProcedure
+  // Marks payment as completed — admin only
+  verify: adminProcedure
     .input(z.object({ paymentId: z.number() }))
     .mutation(async ({ input }) => {
       await db.updatePayment(input.paymentId, {

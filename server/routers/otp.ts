@@ -1,3 +1,4 @@
+import { randomInt, timingSafeEqual } from "crypto"
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
 import { router, publicProcedure } from "../trpc"
@@ -8,7 +9,7 @@ export const otpRouter = router({
   send: publicProcedure
     .input(z.object({ email: z.string().email() }))
     .mutation(async ({ input }) => {
-      const otp = Math.floor(100000 + Math.random() * 900000).toString()
+      const otp = randomInt(100000, 1000000).toString()
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
 
       await db.createOtp(input.email, otp, expiresAt)
@@ -24,14 +25,17 @@ export const otpRouter = router({
         return { success: true }
       }
 
-      const record = await db.getOtpByEmailAndCode(input.email, input.otp)
-
+      const record = await db.getActiveOtpByEmail(input.email)
       if (!record) {
-        throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid OTP" })
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid or expired OTP" })
       }
 
-      if (record.expiresAt < new Date()) {
-        throw new TRPCError({ code: "BAD_REQUEST", message: "OTP expired" })
+      const expected = Buffer.from(record.otp)
+      const given = Buffer.from(input.otp.trim())
+      if (expected.length !== given.length || !timingSafeEqual(expected, given)) {
+        // Each wrong guess cuts 2 minutes off the code's lifetime (~5 guesses per code)
+        await db.setOtpExpiry(record.id, new Date(record.expiresAt.getTime() - 2 * 60 * 1000))
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid or expired OTP" })
       }
 
       await db.markOtpAsVerified(record.id)

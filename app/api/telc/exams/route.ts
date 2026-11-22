@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireTelcAdmin } from '@/lib/telc-admin-auth'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const region = searchParams.get('region')
   const levelId = searchParams.get('levelId')
+  const isAdminView = searchParams.get('admin') === 'true'
+  if (isAdminView) {
+    const auth = await requireTelcAdmin(req)
+    if (auth instanceof NextResponse) return auth
+  }
 
   let query = supabaseAdmin
     .from('exams')
@@ -18,7 +24,7 @@ export async function GET(req: Request) {
     query = query.gte('exam_date', new Date().toISOString())
   }
   // Public requests only see active exams; admin passes ?admin=true to see all
-  if (searchParams.get('admin') !== 'true') {
+  if (!isAdminView) {
     query = query.eq('is_active', true)
   }
 
@@ -49,6 +55,8 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const body = await req.json()
   const { levelId, region, address, examDate, startTime, endTime, capacity } = body
 
@@ -88,6 +96,8 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const body = await req.json()
   const { id, levelId, region, address, examDate, startTime, endTime, capacity } = body
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
@@ -111,6 +121,8 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })

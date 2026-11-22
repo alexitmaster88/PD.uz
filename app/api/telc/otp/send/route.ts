@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
+import { randomInt } from 'crypto'
 import { supabaseAdmin } from '@/lib/supabase'
 import { sendOtpEmail } from '@/server/email'
 
 function generateOtp() {
-  return Math.floor(100000 + Math.random() * 900000).toString()
+  return randomInt(100000, 1000000).toString()
 }
 
 export async function POST(req: Request) {

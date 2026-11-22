@@ -5,6 +5,7 @@ import { Plus, Trash2, Edit2, Save, X, Loader2, ChevronUp, ChevronDown, ChevronL
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
+import { adminFetch } from "@/lib/telc-admin-fetch"
 
 const REGIONS = ["tashkent","samarkand","fergana","kashkadarya","bukhara","urgench"]
 const REGION_LABELS: Record<string,string> = { tashkent:"Tashkent", samarkand:"Samarkand", fergana:"Fergana", kashkadarya:"Kashkadarya", bukhara:"Bukhara", urgench:"Urgench" }
@@ -47,8 +48,8 @@ export default function AdminExams({ lang }: Props) {
   const load = async () => {
     setLoading(true)
     const [e, l] = await Promise.all([
-      fetch("/api/telc/exams?admin=true", { cache: "no-store" }).then(r => r.json()).catch(() => []),
-      fetch("/api/telc/exam-levels").then(r => r.json()).catch(() => []),
+      adminFetch("/api/telc/exams?admin=true", { cache: "no-store" }).then(r => r.json()).catch(() => []),
+      adminFetch("/api/telc/exam-levels").then(r => r.json()).catch(() => []),
     ])
     setExams(Array.isArray(e) ? e : [])
     const lvls: any[] = Array.isArray(l) ? l : []
@@ -144,7 +145,7 @@ export default function AdminExams({ lang }: Props) {
   const handleSaveEdit = async () => {
     setSaving(true)
     try {
-      const res = await fetch("/api/telc/exams", {
+      const res = await adminFetch("/api/telc/exams", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -174,7 +175,7 @@ export default function AdminExams({ lang }: Props) {
 
   const handleDelete = async (id: number) => {
     if (!confirm(t("confirm_delete_exam"))) return
-    const res = await fetch(`/api/telc/exams?id=${id}`, { method: "DELETE" })
+    const res = await adminFetch(`/api/telc/exams?id=${id}`, { method: "DELETE" })
     if (res.ok) { toast.success(t("exam_deleted")); load() }
     else toast.error(t("exam_delete_failed"))
   }
@@ -182,7 +183,7 @@ export default function AdminExams({ lang }: Props) {
   const handleToggle = async (id: number, currentActive: boolean) => {
     setTogglingId(id)
     try {
-      const res = await fetch("/api/telc/exams", {
+      const res = await adminFetch("/api/telc/exams", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, isActive: !currentActive }),
@@ -202,7 +203,7 @@ export default function AdminExams({ lang }: Props) {
     if (!form.examDate) { toast.error(t("exam_date_required")); return }
     setSubmitting(true)
     try {
-      const res = await fetch("/api/telc/exams", {
+      const res = await adminFetch("/api/telc/exams", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

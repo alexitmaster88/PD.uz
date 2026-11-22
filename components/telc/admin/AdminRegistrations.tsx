@@ -5,6 +5,7 @@ import { Eye, X, Loader2, Pencil, Trash2, CheckCircle, XCircle, Ban, Download, C
 import { toast } from "sonner"
 import * as XLSX from "xlsx"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
+import { adminFetch } from "@/lib/telc-admin-fetch"
 
 const EXAM_TYPE_LABELS: Record<string, { label: string; cls: string }> = {
   oral_written: { label: "Oral+Written", cls: "bg-blue-100 text-blue-800" },
@@ -60,7 +61,7 @@ export default function AdminRegistrations({ lang }: Props) {
 
   const load = async () => {
     setLoading(true)
-    const data = await fetch("/api/telc/registrations").then(r => r.json()).catch(() => [])
+    const data = await adminFetch("/api/telc/registrations").then(r => r.json()).catch(() => [])
     setRegistrations(Array.isArray(data) ? data : [])
     setLoading(false)
   }
@@ -131,9 +132,9 @@ export default function AdminRegistrations({ lang }: Props) {
     setBatchBusy(true)
     try {
       await Promise.all(ids.map(id => {
-        if (action === "delete") return fetch(`/api/telc/registrations?id=${id}`, { method: "DELETE" })
+        if (action === "delete") return adminFetch(`/api/telc/registrations?id=${id}`, { method: "DELETE" })
         const status = action === "approve" ? "completed" : action === "cancel" ? "cancelled" : "denied"
-        return fetch("/api/telc/registrations", {
+        return adminFetch("/api/telc/registrations", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id, status }),
@@ -199,7 +200,7 @@ export default function AdminRegistrations({ lang }: Props) {
 
   const exportExcel = async () => {
     // Fetch payments separately (no DB-level FK so can't join via Supabase)
-    const allPayments: any[] = await fetch("/api/telc/payments")
+    const allPayments: any[] = await adminFetch("/api/telc/payments")
       .then(r => r.json()).catch(() => [])
     const paymentByReg: Record<number, any> = {}
     if (Array.isArray(allPayments)) {
@@ -258,7 +259,7 @@ export default function AdminRegistrations({ lang }: Props) {
   const handleStatusChange = async (id: number, status: string) => {
     setUpdatingId(id)
     try {
-      const res = await fetch("/api/telc/registrations", {
+      const res = await adminFetch("/api/telc/registrations", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status }),
@@ -278,7 +279,7 @@ export default function AdminRegistrations({ lang }: Props) {
     if (!editing) return
     setSaving(true)
     try {
-      const res = await fetch("/api/telc/registrations", {
+      const res = await adminFetch("/api/telc/registrations", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -306,7 +307,7 @@ export default function AdminRegistrations({ lang }: Props) {
     if (!confirm(adminT(lang, "confirm_delete_reg", { id }))) return
     setDeletingId(id)
     try {
-      const res = await fetch(`/api/telc/registrations?id=${id}`, { method: "DELETE" })
+      const res = await adminFetch(`/api/telc/registrations?id=${id}`, { method: "DELETE" })
       if (!res.ok) throw new Error()
       toast.success(t("reg_deleted"))
       if (selected?.id === id) setSelected(null)
@@ -325,7 +326,7 @@ export default function AdminRegistrations({ lang }: Props) {
     if (!confirm(adminT(lang, confirmKey, { id }))) return
     setUpdatingId(id)
     try {
-      const res = await fetch("/api/telc/registrations", {
+      const res = await adminFetch("/api/telc/registrations", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: statusMap[action] }),

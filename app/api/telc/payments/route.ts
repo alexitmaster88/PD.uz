@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireTelcAdmin } from '@/lib/telc-admin-auth'
 
-export async function GET() {
+export async function GET(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { data, error } = await supabaseAdmin
     .from('payments')
     .select('*, registrations(id, first_name, last_name, email, passport_number, phone_number)')
@@ -13,11 +16,27 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const { registrationId, amount, paymentMethod, personalId, checkId } = body
+  const { registrationId, paymentMethod, personalId, checkId } = body
 
-  if (!registrationId || !amount || !paymentMethod) {
+  if (!registrationId || !paymentMethod || typeof paymentMethod !== 'string' || paymentMethod.length > 50) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+
+  // Never trust the client-sent amount: derive it from the registration's exam level price.
+  const { data: reg } = await supabaseAdmin
+    .from('registrations')
+    .select('id, payment_verified, exams(exam_levels(price))')
+    .eq('id', Number(registrationId))
+    .maybeSingle()
+
+  const price = (reg as any)?.exams?.exam_levels?.price
+  if (!reg || price === undefined || price === null) {
+    return NextResponse.json({ error: 'Registration not found' }, { status: 404 })
+  }
+  if (reg.payment_verified) {
+    return NextResponse.json({ error: 'Registration already paid' }, { status: 409 })
+  }
+  const amount = String(price)
 
   // Try inserting with new columns; fall back gracefully if columns not yet migrated in DB
   let result = await supabaseAdmin
@@ -52,6 +71,8 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const body = await req.json()
   const { paymentId, registrationId, action = 'accept' } = body
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { CheckCircle, XCircle, Loader2, Eye, X } from "lucide-react"
 import { toast } from "sonner"
 import { type AdminLang, adminT } from "@/lib/admin-i18n"
+import { adminFetch } from "@/lib/telc-admin-fetch"
 
 const STATUS_COLORS: Record<string, string> = {
   completed: "bg-green-100 text-green-800",
@@ -23,7 +24,7 @@ export default function AdminPayments({ lang }: Props) {
 
   const load = async () => {
     setLoading(true)
-    const data = await fetch("/api/telc/payments").then(r => r.json()).catch(() => [])
+    const data = await adminFetch("/api/telc/payments").then(r => r.json()).catch(() => [])
     setPayments(Array.isArray(data) ? data : [])
     setLoading(false)
   }
@@ -33,7 +34,7 @@ export default function AdminPayments({ lang }: Props) {
   const handleAction = async (payment: any, action: "accept" | "cancel") => {
     setActingId(payment.id)
     try {
-      const res = await fetch("/api/telc/payments", {
+      const res = await adminFetch("/api/telc/payments", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

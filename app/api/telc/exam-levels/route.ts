@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { requireTelcAdmin } from '@/lib/telc-admin-auth'
 
 export async function GET() {
   const { data, error } = await supabaseAdmin
@@ -14,6 +15,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { level, price } = await req.json()
   if (!level || price === undefined) {
     return NextResponse.json({ error: 'level and price required' }, { status: 400 })
@@ -30,6 +33,8 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
@@ -58,6 +63,8 @@ export async function DELETE(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const auth = await requireTelcAdmin(req)
+  if (auth instanceof NextResponse) return auth
   const { levelId, price } = await req.json()
   if (!levelId || price === undefined) {
     return NextResponse.json({ error: 'levelId and price required' }, { status: 400 })
