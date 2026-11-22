@@ -74,7 +74,7 @@ const ui: Record<string, Record<string, string>> = {
     emailNote: "Tasdiqlash xati yuborildi:",
     download: "Chiptani yuklab olish / chop etish", backHome: "Bosh sahifaga",
     tgReminderTitle: "To'lov chekini yuboring",
-    tgReminderMsg: "Agar to'lov chekini Telegram orqali yuborishni tanlaган bo'lsangiz, buni 24 soat ichida bajaring. Aks holda ro'yxatdan o'tish va band qilingan imtihon o'rni bekor qilinishi mumkin.",
+    tgReminderMsg: "Agar to'lov chekini Telegram orqali yuborishni tanlagan bo'lsangiz, buni 24 soat ichida bajaring. Aks holda ro'yxatdan o'tish va band qilingan imtihon o'rni bekor qilinishi mumkin.",
     tgReminderBtn: "Telegram orqali chek yuborish →",
   },
 }
@@ -91,26 +91,48 @@ const regionContact: Record<string, { phone: string; email: string }> = {
   samarkand: { phone: CONTACT.phone1, email: CONTACT.email },
 }
 
-function generatePDF(registrationId: number, formData: any, lang: string) {
+const LOCALES: Record<string, string> = { de: "de-DE", en: "en-GB", ru: "ru-RU", uz: "uz-Latn-UZ" }
+
+function escapeHtml(v: unknown): string {
+  return String(v ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;")
+}
+
+// Exam dates are calendar dates ("YYYY-MM-DD"); format them in UTC so no timezone can shift the day.
+function fmtExamDate(d: string, lang: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d)
+  if (!m) return d
+  const date = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])))
+  try {
+    return date.toLocaleDateString(LOCALES[lang] ?? "en-GB", { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" })
+  } catch {
+    return `${m[3]}.${m[2]}.${m[1]}`
+  }
+}
+
+function fmtDateTime(d: string, lang: string): string {
+  const date = new Date(d)
+  if (Number.isNaN(date.getTime())) return d
+  return date.toLocaleString(LOCALES[lang] ?? "en-GB", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+}
+
+// Opens the ticket in a new window and starts the print dialog ("Save as PDF").
+// Falls back to a hidden iframe when the popup is blocked.
+function printTicket(registrationId: number, formData: any, lang: string) {
   const l: Record<string, string> = ui[lang] ?? ui['en'] ?? {}
   const rl: Record<string, string> = regionLabels[lang] ?? regionLabels['en'] ?? {}
   const contact = regionContact[formData.region] ?? { phone: "", email: "" }
 
-  const fmtDate = (d: string) => {
-    try { return new Date(d).toLocaleDateString() } catch { return d }
-  }
-  const fmtDateTime = (d: string) => {
-    try { return new Date(d).toLocaleString(undefined, { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) } catch { return d }
-  }
-
-  const address = (formData.examAddress || "").replace(/\n/g, "<br>")
+  const e = escapeHtml
+  const address = e(formData.examAddress || "").replace(/\n/g, "<br>")
   const contactLine = [contact.phone, contact.email].filter(Boolean).join(" · ")
 
   const html = `<!DOCTYPE html>
-<html lang="${lang}">
+<html lang="${e(lang)}">
 <head>
 <meta charset="UTF-8" />
-<title>PROFI DEUTSCH – ${l.regId} #${registrationId}</title>
+<title>PROFI DEUTSCH – ${e(l.regId)} #${e(registrationId)}</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Arial, sans-serif; font-size: 13px; color: #1e293b; background: #fff; padding: 24px; }
@@ -143,49 +165,72 @@ function generatePDF(registrationId: number, formData: any, lang: string) {
     <div style="font-size:11px;color:#64748b;">Ta'lim va Imtihon Markazi · Bildungs- und Prüfungszentrum</div>
   </div>
   <div class="reg-id">
-    ${l.regId}<strong>#${registrationId}</strong>
+    ${e(l.regId)}<strong>#${e(registrationId)}</strong>
   </div>
 </div>
 
 <div class="section">
-  <div class="section-title">${l.confirmDetails}</div>
+  <div class="section-title">${e(l.confirmDetails)}</div>
   <div class="grid">
-    <div class="field"><label>${l.name}</label><span>${formData.firstName ?? ""} ${formData.lastName ?? ""}</span></div>
-    <div class="field"><label>${l.passport}</label><span>${formData.passportNumber ?? "—"}</span></div>
-    <div class="field"><label>Email</label><span>${formData.email ?? "—"}</span></div>
-    <div class="field"><label>${l.level}</label><span>${formData.levelName ?? formData.levelId ?? "—"}</span></div>
-    <div class="field"><label>${l.region}</label><span>${rl[formData.region] ?? formData.region ?? "—"}</span></div>
-    <div class="field"><label>${l.date}</label><span>${formData.selectedDate ? fmtDate(formData.selectedDate) : "—"}</span></div>
-    <div class="field"><label>${l.time}</label><span>${formData.selectedTime ?? "—"}</span></div>
-    <div class="field"><label>${l.registeredAt}</label><span>${formData.registeredAt ? fmtDateTime(formData.registeredAt) : fmtDateTime(new Date().toISOString())}</span></div>
-    ${address ? `<div class="field" style="grid-column:1/-1"><label>${l.address}</label><span>${address}</span></div>` : ""}
-    ${contactLine ? `<div class="field" style="grid-column:1/-1"><label>${l.contact}</label><span>${contactLine}</span></div>` : ""}
+    <div class="field"><label>${e(l.name)}</label><span>${e(formData.firstName)} ${e(formData.lastName)}</span></div>
+    <div class="field"><label>${e(l.passport)}</label><span>${e(formData.passportNumber || "—")}</span></div>
+    <div class="field"><label>Email</label><span>${e(formData.email || "—")}</span></div>
+    <div class="field"><label>${e(l.level)}</label><span>${e(formData.levelName || formData.levelId || "—")}</span></div>
+    <div class="field"><label>${e(l.region)}</label><span>${e(rl[formData.region] ?? (formData.region || "—"))}</span></div>
+    <div class="field"><label>${e(l.date)}</label><span>${e(formData.selectedDate ? fmtExamDate(formData.selectedDate, lang) : "—")}</span></div>
+    <div class="field"><label>${e(l.time)}</label><span>${e(formData.selectedTime || "—")}</span></div>
+    <div class="field"><label>${e(l.registeredAt)}</label><span>${e(fmtDateTime(formData.registeredAt || new Date().toISOString(), lang))}</span></div>
+    ${address ? `<div class="field" style="grid-column:1/-1"><label>${e(l.address)}</label><span>${address}</span></div>` : ""}
+    ${contactLine ? `<div class="field" style="grid-column:1/-1"><label>${e(l.contact)}</label><span>${e(contactLine)}</span></div>` : ""}
   </div>
 </div>
 
 <div class="reminders">
-  <h3>${l.reminders}</h3>
+  <h3>${e(l.reminders)}</h3>
   <ul>
-    <li>${l.r1}</li>
-    <li>${l.r2}</li>
-    <li>${l.r3}</li>
-    <li>${l.r4}</li>
+    <li>${e(l.r1)}</li>
+    <li>${e(l.r2)}</li>
+    <li>${e(l.r3)}</li>
+    <li>${e(l.r4)}</li>
   </ul>
 </div>
 
 <div class="footer">
   <div class="badge">PROFI DEUTSCH</div><br/>
-  ${CONTACT.website} · ${CONTACT.email} · ${CONTACT.phone1}
+  ${e(CONTACT.website)} · ${e(CONTACT.email)} · ${e(CONTACT.phone1)}
 </div>
 
-<script>window.onload = function() { window.print(); }</script>
 </body>
 </html>`
 
   const win = window.open("", "_blank", "width=800,height=700")
-  if (!win) return
-  win.document.write(html)
-  win.document.close()
+  if (win) {
+    win.document.write(html)
+    win.document.close()
+    win.focus()
+    // Give the new document a moment to lay out before printing
+    setTimeout(() => win.print(), 300)
+    return
+  }
+
+  // Popup blocked: print from a hidden iframe on this page instead
+  const iframe = document.createElement("iframe")
+  iframe.setAttribute("aria-hidden", "true")
+  iframe.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0;"
+  document.body.appendChild(iframe)
+  const doc = iframe.contentWindow?.document
+  if (!doc || !iframe.contentWindow) {
+    iframe.remove()
+    return
+  }
+  doc.open()
+  doc.write(html)
+  doc.close()
+  setTimeout(() => {
+    iframe.contentWindow?.focus()
+    iframe.contentWindow?.print()
+    setTimeout(() => iframe.remove(), 60_000)
+  }, 300)
 }
 
 export default function SuccessScreen({ registrationId, formData, lang }: Props) {
@@ -206,9 +251,6 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
       }),
     }).catch(() => {})
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const fmtDateTime = (d: string) =>
-    new Date(d).toLocaleString(undefined, { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
@@ -241,7 +283,7 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
           <div>
             <p className="text-xs text-slate-500 mb-1">{l.date}</p>
             <p className="font-semibold text-slate-900">
-              {formData.selectedDate ? new Date(formData.selectedDate).toLocaleDateString() : "—"}
+              {formData.selectedDate ? fmtExamDate(formData.selectedDate, lang) : "—"}
             </p>
           </div>
           <div>
@@ -251,7 +293,7 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
           <div>
             <p className="text-xs text-slate-500 mb-1">{l.registeredAt}</p>
             <p className="font-semibold text-slate-900">
-              {fmtDateTime(formData.registeredAt || new Date().toISOString())}
+              {fmtDateTime(formData.registeredAt || new Date().toISOString(), lang)}
             </p>
           </div>
           {formData.examAddress && (
@@ -309,7 +351,7 @@ export default function SuccessScreen({ registrationId, formData, lang }: Props)
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <button type="button" onClick={() => generatePDF(registrationId, formData, lang)}
+        <button type="button" onClick={() => printTicket(registrationId, formData, lang)}
           className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-3.5 text-sm font-medium text-slate-700 hover:border-primary/40 hover:text-primary transition-colors">
           <Download size={16} />
           {l.download}

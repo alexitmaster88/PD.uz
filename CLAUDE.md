@@ -112,7 +112,7 @@ NEXT_PUBLIC_PAYME_ENV=test             # Set to "test" for sandbox; omit or set 
 - Contact info (phone, email, coordinates, Telegram URLs) is hardcoded and duplicated across `map-section.tsx`, `contact-section.tsx`, and `footer.tsx` — no central config file
 - `language-specific-reviews.tsx`, `language-specific-testimonials.tsx`, and `social-media-feed.tsx` are oversized (350–440 lines) and mix data with presentation
 - `contexts/language-context.tsx` has unguarded `JSON.parse`, unhandled dynamic import failure, and localStorage calls without try/catch
-- `SuccessScreen.tsx` has `alert("Ticket download coming soon")` — PDF generation not implemented
+- Ticket download (`SuccessScreen.tsx`) is browser print → "Save as PDF", not a generated PDF file, and is only available on the success screen (refreshing loses it). A server-generated PDF would need per-registration access control and embedded Cyrillic fonts
 - `StepPayment.tsx` — Payme QR/button is wired up via CDN script; Click method still shows placeholder QR icon (Click SDK integration pending)
 - `xlsx` is installed from the SheetJS CDN tarball (the npm package is abandoned/vulnerable) — keep it that way
 - `pnpm.overrides` in `package.json` force patched versions of Next's bundled `postcss`/`sharp` and transitive `nanoid`/`source-map-js` — re-check with `pnpm audit` before removing
