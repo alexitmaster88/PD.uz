@@ -110,7 +110,8 @@ export default function AdminRegistrations({ lang }: Props) {
   const toggleRow = (id: number) => {
     setSelectedIds(prev => {
       const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
       return next
     })
   }
@@ -569,8 +570,8 @@ export default function AdminRegistrations({ lang }: Props) {
                         <td className="px-4 py-3 text-slate-600 text-xs">{reg.exams?.exam_levels?.level ?? "—"}</td>
                         <td className="px-4 py-3 text-xs">
                           {reg.exam_type && EXAM_TYPE_LABELS[reg.exam_type] ? (
-                            <span className={`inline-block rounded-full px-2 py-0.5 font-medium ${EXAM_TYPE_LABELS[reg.exam_type].cls}`}>
-                              {EXAM_TYPE_LABELS[reg.exam_type].label}
+                            <span className={`inline-block rounded-full px-2 py-0.5 font-medium ${EXAM_TYPE_LABELS[reg.exam_type]!.cls}`}>
+                              {EXAM_TYPE_LABELS[reg.exam_type]!.label}
                             </span>
                           ) : "—"}
                         </td>

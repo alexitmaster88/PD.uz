@@ -110,18 +110,18 @@ export async function sendRegistrationConfirmation(
     registrationId: number
     firstName: string
     lastName: string
-    passportNumber?: string
+    passportNumber?: string | undefined
     level: string
     region: string
     examDate: Date
     startTime: string
-    examAddress?: string
+    examAddress?: string | undefined
     lang?: string
   }
 ): Promise<void> {
   const lang = data.lang && emailStrings[data.lang] ? data.lang : 'en'
-  const s = emailStrings[lang]
-  const rl = regionNames[lang] ?? regionNames.en
+  const s = (emailStrings[lang] ?? emailStrings.en)!
+  const rl = (regionNames[lang] ?? regionNames.en)!
 
   const dateStr = data.examDate.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
   const regionLabel = rl[data.region] ?? data.region

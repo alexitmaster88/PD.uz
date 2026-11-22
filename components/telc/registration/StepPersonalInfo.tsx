@@ -191,7 +191,7 @@ const labels: Record<string, Record<string, string>> = {
 }
 
 export default function StepPersonalInfo({ data, lang, onDataChange, onRegistrationComplete, onPrevious }: Props) {
-  const l = labels[lang] ?? labels.en
+  const l = (labels[lang] ?? labels.en)!
   const [errors, setErrors] = useState<Record<string, string | undefined>>({})
   const [otpVisible, setOtpVisible] = useState(false)
   const [otp, setOtp] = useState("")

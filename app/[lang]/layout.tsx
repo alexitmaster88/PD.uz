@@ -13,9 +13,8 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] })
 const languages = ["de", "en", "ru", "uz"]
 
 // Generate metadata
-export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
-  // `params` may be a promise in some Next.js runtimes — await it before use
-  const resolvedParams = await params as { lang: string }
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const resolvedParams = await params
   // Validate language
   const lang = languages.includes(resolvedParams.lang) ? resolvedParams.lang : "de"
 
@@ -57,10 +56,9 @@ export default async function LangLayout({
   params,
 }: {
   children: React.ReactNode
-  params: { lang: string }
+  params: Promise<{ lang: string }>
 }) {
-  // Await params to satisfy Next.js async dynamic param requirements
-  const resolvedParams = await params as { lang: string }
+  const resolvedParams = await params
   // Validate language
   const lang = languages.includes(resolvedParams.lang) ? resolvedParams.lang : "de"
 

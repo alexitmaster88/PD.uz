@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // Type and lint errors fail the build (previously ignored). Run `pnpm typecheck` / `pnpm lint` locally.
   images: {
     unoptimized: true,
   },
