@@ -53,7 +53,7 @@ Three-step wizard under `app/telc/[lang]/register/`:
 Step 1 — StepPersonalInfo    Email OTP verification + personal details
 Step 2 — StepExamSelection   Region → Level → Date → Time → Submit registration
 Step 3 — StepPayment         Payment method selection (Click / Payme / Other)
-         SuccessScreen        Confirmation + ticket download stub
+         SuccessScreen        Confirmation + printable ticket (browser "Save as PDF")
 ```
 
 The steps call the REST routes in `app/api/telc/*` with `fetch()`.

@@ -45,7 +45,7 @@ The primary audience is Uzbek citizens seeking to:
 
 ### Success Screen
 - Shows registration summary: name, exam, date, time, location
-- Offers ticket download (PDF generation not yet implemented — stub alert)
+- Offers ticket download: opens a printable ticket and the browser's print dialog ("Save as PDF")
 - Shows contact information for questions
 
 ---
@@ -124,7 +124,7 @@ Paynet is widely used at physical kiosks; Payme is dominant for mobile QR paymen
 |---------|--------------|-------|
 | Email delivery | `console.log` stub | Needs Resend or SendGrid |
 | OTP emails | Logged to console only | Works end-to-end once email is wired |
-| Ticket PDF | Alert stub in `SuccessScreen.tsx` | Needs PDF generation library |
+| Ticket PDF | Browser print → "Save as PDF" from `SuccessScreen.tsx` | Only on the success screen; no re-download later |
 | Click QR | Placeholder icon | Needs Click API/SDK integration |
 | Contact form | Submits via Telegram deep-link | Opens `t.me/UZ_profideutsch?text=…` with pre-filled fields; no server-side storage |
 | Admin auth gate | Login page + session token | Every admin API route checks the token server-side (`requireTelcAdmin`) |
